@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AMD · Lab Site — STA Production</title>
+<style>
+  :root{--slate:#334155;--slate-d:#1e293b;--bg:#f4f6f8;--card:#fff;--ink:#0f172a;--muted:#64748b;
+    --line:#e5e9ef;--shadow:0 2px 10px rgba(30,40,60,.06);--teal:#0f766e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+  .app{display:flex;min-height:100vh}
+  .side{width:210px;background:#1e293b;color:#cbd5e1;padding:18px 12px;position:sticky;top:0;height:100vh;flex:0 0 auto}
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;padding:6px 8px 16px}
+  .brand .lg{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,#475569,#94a3b8);display:flex;align-items:center;justify-content:center;font-weight:800}
+  .nav a{display:flex;gap:10px;padding:10px 12px;border-radius:9px;color:#cbd5e1;text-decoration:none;font-size:14px;cursor:pointer;margin-bottom:2px}
+  .nav a:hover{background:#ffffff12}.nav a.on{background:var(--slate);color:#fff}
+  .role{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.6px;padding:0 8px;margin:10px 0 4px}
+  .back a{color:#94a3b8;font-size:12px;text-decoration:none}
+  .main{flex:1;min-width:0}
+  .bar{background:var(--card);border-bottom:1px solid var(--line);padding:14px 26px;display:flex;gap:14px;align-items:center;position:sticky;top:0;z-index:5}
+  .bar h2{flex:1;font-size:17px}.bar .who{font-size:13px;color:var(--muted)}
+  .content{padding:24px 26px 60px;max-width:1000px}
+  .banner{background:#f1f5f9;border:1px solid #cbd5e1;color:#334155;padding:11px 15px;border-radius:10px;font-size:13px;margin-bottom:18px;line-height:1.5}
+  .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .card h3{font-size:15px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:8px 10px;border-bottom:1px solid var(--line)}
+  td{padding:11px 10px;border-bottom:1px solid var(--line)}
+  tr:hover td{background:#f8fafc}
+  .st{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
+  .s-new{background:#dbeafe;color:#1e40af}.s-prod{background:#fef3c7;color:#92400e}.s-ship{background:#e0e7ff;color:#3730a3}.s-done{background:#dcfce7;color:#166534}
+  .btn{background:var(--slate);color:#fff;border:none;border-radius:8px;padding:7px 13px;font-weight:600;cursor:pointer;font-size:12px}
+  .track{display:flex;gap:8px;margin:12px 0}
+  .track .stp{flex:1;text-align:center;font-size:11px;padding:8px 4px;border-radius:8px;background:#f1f5f9;color:var(--muted)}
+  .track .stp.done{background:var(--slate);color:#fff}
+  .kv{display:flex;gap:8px;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}
+  .kv b{width:150px;color:var(--muted);font-weight:600;flex:0 0 auto}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none}
+  .toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="lg">🔧</div> STA Lab</div>
+    <div class="role">Production</div>
+    <nav class="nav">
+      <a class="on" data-s="queue" onclick="go('queue')">📥 Order queue</a>
+      <a data-s="order" onclick="go('order')">📦 Order detail</a>
+    </nav>
+    <div class="nav back" style="padding:8px"><a href="../index.html">← Portal</a></div>
+  </aside>
+  <div class="main">
+    <div class="bar"><h2 id="title">Order queue</h2><span class="who">Conova Lab · technician</span></div>
+    <div class="content">
+      <section class="screen on" id="s-queue">
+        <div class="banner">STA design orders dispatched from AMD Taiwan HQ. Update status here — it flows back to HQ and the Doctor site so ATCs can track delivery.</div>
+        <div class="card"><h3>Incoming orders</h3>
+          <table>
+            <tr><th>Order</th><th>Patient code</th><th>Received</th><th>Due</th><th>Status</th><th></th></tr>
+            <tr onclick="go('order')" style="cursor:pointer"><td>STA-2041</td><td>AMD-0021</td><td>Jul 15</td><td>Jul 29</td><td><span class="st s-prod">In production</span></td><td><button class="btn">Open</button></td></tr>
+            <tr onclick="go('order')" style="cursor:pointer"><td>STA-2038</td><td>AMD-0015</td><td>Jul 18</td><td>Aug 1</td><td><span class="st s-new">New</span></td><td><button class="btn">Open</button></td></tr>
+            <tr onclick="go('order')" style="cursor:pointer"><td>STA-2035</td><td>AMD-0012</td><td>Jul 8</td><td>Jul 22</td><td><span class="st s-ship">Shipped</span></td><td><button class="btn">Open</button></td></tr>
+            <tr onclick="go('order')" style="cursor:pointer"><td>STA-2030</td><td>AMD-0009</td><td>Jun 30</td><td>Jul 14</td><td><span class="st s-done">Delivered</span></td><td><button class="btn">Open</button></td></tr>
+          </table>
+        </div>
+      </section>
+      <section class="screen" id="s-order">
+        <div class="card"><h3>Order STA-2041 · AMD-0021</h3>
+          <div class="kv"><b>Design file</b> sta_amd0021_v2.stl <button class="btn" style="margin-left:8px" onclick="toast('Downloading design…')">Download</button></div>
+          <div class="kv"><b>Received from HQ</b> Jul 15, 2026</div>
+          <div class="kv"><b>Due to clinic</b> Jul 29, 2026 (Dr. Chen, Taipei)</div>
+          <div class="kv"><b>Courier / tracking</b> — (add when shipped)</div>
+          <div class="track">
+            <div class="stp done">Received</div><div class="stp done">In production</div><div class="stp">QC</div><div class="stp">Shipped</div><div class="stp">Delivered</div>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn" onclick="toast('Marked: QC complete')">Mark QC done</button>
+            <button class="btn" onclick="toast('Marked shipped → HQ + Doctor site notified')">Mark shipped + add tracking</button>
+            <button class="btn" onclick="toast('Marked delivered')">Mark delivered</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
+  document.getElementById('s-'+s).classList.add('on');
+  document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
+  document.getElementById('title').textContent = s==='queue'?'Order queue':'Order detail';window.scrollTo(0,0);}
+let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+</script>
+</body>
+</html>

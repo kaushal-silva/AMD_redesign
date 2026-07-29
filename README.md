@@ -1,57 +1,46 @@
-# AMD · Patient App (PWA mock — v1 draft)
+# AMD Platform — Prototype Portal
 
-A mobile-first **Progressive Web App** mock of the AMD patient journey app. Pure static files (HTML/CSS/JS) — no build step, no backend. Designed to be dropped into GitHub and deployed on Netlify in minutes, and installable to a phone home screen.
+A single deployable folder containing a **landing page** plus **six role-specific site mocks**. Deploy the whole `amd-portal` folder to Netlify; the landing page (`index.html`) links to each site.
 
-> This is a **clickable prototype with sample data** to align with Nancy and show a dev partner — not the production app. All data is hard-coded in `index.html`.
+> All sites are **clickable front-end mocks with sample data** — no login, no backend, no real records. They exist to run per-site feedback sessions before handing specs to engineers.
 
-## What's included
+## Structure
 
-| File | Purpose |
-|------|---------|
-| `index.html` | The whole app: 5 tabs (Home, Journey, Progress, Learn, Me) + chat sub-screen |
-| `manifest.json` | PWA metadata (name, icons, theme) so it installs like an app |
-| `service-worker.js` | Offline caching so it opens without a connection |
-| `icons/` | App icons (192 & 512px) |
-| `netlify.toml` | Netlify config (static publish + no-cache on SW/manifest) |
+```
+amd-portal/
+  index.html          ← landing page (links to all sites)
+  patient-app/        ← Patient PWA (mobile, installable)   [MVP]
+  doctor-site/        ← AMD + ATC clinical tool             [MVP]
+  hq-site/            ← AMD Taiwan HQ: IP upload, STA, KPIs  [MVP core]
+  md-pt-site/         ← Referred specialists (least-access) [Phase 2]
+  felix-site/         ← Dr. Liao, de-identified (US)        [Phase 2]
+  lab-site/           ← STA production tracking             [Phase 2]
+  README.md
+```
 
-## What the mock shows (MVP screens)
+**Each site is its own folder** so you can edit / redesign one after a feedback session without touching the others. Each `index.html` is self-contained (its own CSS/JS inline).
 
-- **Home – "Today's card":** three health goals, the **STA turn reminder** (hero, with a done animation), a **daily-task checklist** with XP + streak + progress ring, and a next-visit countdown.
-- **Journey:** the treatment **timeline** (Consultation → … → Graduation) with the current stage highlighted, plus the plan summary.
-- **Progress:** a **drag-to-compare before/after** slider and a list of images/reports.
-- **Learn:** shareable education articles + a shop link-out.
-- **Me:** **health achievements**, reward-points progress, chat with the ATC, and a **中文 / English** toggle (tap the language button top-right).
+## Deploy to Netlify
 
-## Deploy to Netlify via GitHub
+1. Put the **contents of `amd-portal/`** at the root of a GitHub repo (so the landing `index.html` is at the top level).
+2. Netlify → Add new site → Import from GitHub → pick the repo.
+3. Build command: **empty**. Publish directory: **`.`**
+4. Open the URL — the landing page appears; click into any site.
+   (Or drag the `amd-portal` folder onto Netlify's manual-deploy drop zone to test instantly.)
 
-1. Create a new GitHub repo (e.g. `amd-patient-app`).
-2. Upload the **contents of this `patient-app` folder** to the repo root (so `index.html` is at the top level). Either drag-drop in GitHub's web uploader, or:
-   ```bash
-   git init && git add . && git commit -m "AMD patient app v1"
-   git branch -M main
-   git remote add origin https://github.com/<you>/amd-patient-app.git
-   git push -u origin main
-   ```
-3. Go to **netlify.com → Add new site → Import an existing project → GitHub** and pick the repo.
-4. Leave build command **empty** and publish directory as **`.`** (the `netlify.toml` already sets this). Click **Deploy**.
-5. Open the Netlify URL **on your phone** → browser menu → **Add to Home Screen**. It now launches full-screen like a native app.
+The patient app is a PWA: open its URL on a phone → **Add to Home Screen** to install.
 
-*(Fastest test without GitHub: drag this folder straight onto the Netlify "deploy manually" drop zone.)*
+## What each mock demonstrates
 
-## Assumptions made (change freely)
+- **Patient app** — Home task card (STA reminder + daily tasks + goals), journey timeline, before/after comparison, learn, chat, achievements, 中文/EN toggle.
+- **Doctor site** — patient dashboard (difficulty color-coded), add-patient flow, patient record with the full **follow-up-record form** (A–J incl. STA gear adjustment, in-clinic questionnaire, hidden internal note), daily-task assignment, **referral creation**, chat, finish/graduate.
+- **HQ site** — upload the IP (S+, Schwarz, diagnosis & plan), set case difficulty, **STA dispatch tracking**, and a **KPI analytics** dashboard (clinical / doctor / marketing).
+- **MD/PT site** — referred patients only; add follow-up records + chat; **least-access** (full airway history is locked).
+- **Felix site** — **de-identified** cases (patient code, age range, masked faces, view-only) for cross-border privacy compliance.
+- **Lab site** — STA order queue and production/shipping status that feeds back to HQ + Doctor site.
 
-- Sample patient **"Wang Xiaoming"**, mid-treatment (stage 6/9), with placeholder photos drawn as SVG silhouettes so no external images are needed.
-- Bilingual EN/中文 throughout; English default.
-- 5 daily tasks, sample XP/streak/points values.
-- Colours: teal/green health palette, AMD "A" icon (placeholder — swap for your real logo in `icons/`).
-- No login screen yet (this is the in-app experience). Auth comes with the real backend.
+## Reflects feedback from the 23 Jul 2026 session
+Equal task points, gamification is opt-out, questionnaire done in-clinic on iPad, referrals originate on the Doctor side with least-access sharing, de-identification for cross-border, STA photos uploaded by AMD/ATC. See `../Feedback_Actions_2026-07-23.md` for the full list.
 
-## What this mock deliberately does NOT do
-
-No real data, login, notifications, payments, or connection to the Doctor/HQ sites. Those need the shared backend from the platform plan. This is the front-end feel only — enough to react to, refine, and hand to a developer.
-
-## Easy next tweaks
-
-- Replace `icons/icon-*.png` with your real logo.
-- Edit sample content in the `TASKS`, `STEPS`, and `I18N` blocks near the bottom of `index.html`.
-- Add real before/after images by dropping files in and pointing the `.ph` backgrounds at them.
+## Known simplifications
+Sample data only; before/after and imaging are placeholders; no auth or real permissions (the least-access / de-identification is shown in the UI but must be enforced at the API layer in the real build). The patient app still uses its earlier nav (Home/Journey/Progress/Learn/Me) — the feedback nav changes (separate Appointment Records, merged Journey+Progress, gamification settings) are queued as the next patch.

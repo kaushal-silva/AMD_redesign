@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AMD Taiwan · HQ Site</title>
+<style>
+  :root{--pur:#6d28d9;--pur-d:#4c1d95;--bg:#f6f5fb;--card:#fff;--ink:#1a172a;--muted:#726c85;
+    --line:#eae6f4;--shadow:0 2px 10px rgba(60,20,120,.06);--teal:#0f766e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC",sans-serif;background:var(--bg);color:var(--ink)}
+  .app{display:flex;min-height:100vh}
+  .side{width:230px;background:#2a1758;color:#d9cff0;padding:18px 12px;position:sticky;top:0;height:100vh;flex:0 0 auto}
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;padding:6px 8px 16px}
+  .brand .lg{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,#7c3aed,#a78bfa);
+    display:flex;align-items:center;justify-content:center;font-weight:800}
+  .nav a{display:flex;gap:10px;padding:10px 12px;border-radius:9px;color:#d9cff0;text-decoration:none;font-size:14px;cursor:pointer;margin-bottom:2px}
+  .nav a:hover{background:#ffffff12}.nav a.on{background:var(--pur);color:#fff}
+  .role{font-size:10px;color:#a99bd0;text-transform:uppercase;letter-spacing:.6px;padding:0 8px;margin:10px 0 4px}
+  .back a{color:#a99bd0;font-size:12px;text-decoration:none}
+  .main{flex:1;min-width:0}
+  .bar{background:var(--card);border-bottom:1px solid var(--line);padding:14px 26px;display:flex;gap:14px;align-items:center;position:sticky;top:0;z-index:5}
+  .bar h2{flex:1;font-size:17px}.bar .who{font-size:13px;color:var(--muted)}
+  .content{padding:24px 26px 60px;max-width:1080px}
+  .screen{display:none}.screen.on{display:block}
+  .banner{background:#f5f3ff;border:1px solid #ddd6fe;color:#5b21b6;padding:11px 15px;border-radius:10px;font-size:13px;margin-bottom:18px;line-height:1.5}
+  .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .card h3{font-size:15px;margin-bottom:12px}
+  .tree a{display:block;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:14px;text-decoration:none;color:var(--ink)}
+  .tree a:hover{background:#f5f3ff}
+  .tree .amd{font-weight:700}.tree .pt{padding-left:28px;color:var(--muted);font-size:13px}
+  .up{border:1px dashed #c4b5fd;border-radius:12px;padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;background:#faf9ff}
+  .up .ic{width:42px;height:42px;border-radius:10px;background:#ede9fe;color:var(--pur);display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto}
+  .up .t{flex:1}.up .t b{font-size:14px}.up .t div{font-size:12px;color:var(--muted)}
+  .btn{background:var(--pur);color:#fff;border:none;border-radius:9px;padding:9px 15px;font-weight:600;cursor:pointer;font-size:13px}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  select,input{border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:14px}
+  .grade{display:flex;gap:8px;margin-top:6px}
+  .grade span{padding:6px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;border:2px solid transparent}
+  .g1{background:#dcfce7;color:#166534}.g2{background:#ecfccb;color:#3f6212}.g3{background:#fef3c7;color:#92400e}.g4{background:#fee2e2;color:#991b1b}
+  .grade span.sel{border-color:var(--pur)}
+  /* KPI */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:8px}
+  .kpi{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .kpi .n{font-size:26px;font-weight:800;color:var(--pur)}.kpi .l{font-size:12px;color:var(--muted);margin-top:3px}
+  .kpi .d{font-size:11px;font-weight:700;margin-top:6px}.up-g{color:#16a34a}.dn{color:#dc2626}
+  .bars{display:flex;align-items:flex-end;gap:14px;height:150px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .bars .b{flex:1;background:linear-gradient(180deg,#a78bfa,#7c3aed);border-radius:6px 6px 0 0;position:relative}
+  .bars .b span{position:absolute;bottom:-20px;left:0;right:0;text-align:center;font-size:10px;color:var(--muted)}
+  .bars .b b{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:11px;color:var(--ink)}
+  .track{display:flex;gap:8px;margin:10px 0}
+  .track .st{flex:1;text-align:center;font-size:11px;padding:8px 4px;border-radius:8px;background:#f5f3ff;color:var(--muted)}
+  .track .st.done{background:var(--pur);color:#fff}
+  .kv{display:flex;gap:8px;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}
+  .kv b{width:140px;color:var(--muted);font-weight:600;flex:0 0 auto}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a172a;color:#fff;padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none}
+  .toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="lg">A</div> AMD Taiwan HQ</div>
+    <div class="role">Control</div>
+    <nav class="nav">
+      <a class="on" data-s="ip" onclick="go('ip')">📤 Upload IP</a>
+      <a data-s="sta" onclick="go('sta')">🚚 STA dispatch</a>
+      <a data-s="kpi" onclick="go('kpi')">📊 Analytics</a>
+    </nav>
+    <div class="role">Partners</div>
+    <nav class="nav">
+      <a onclick="toast('AMD partners & their patients')">🩺 AMD clinics</a>
+      <a onclick="toast('Chat hub: AMD / MD / PT / Felix')">💬 Message hub</a>
+    </nav>
+    <div class="nav back" style="padding:8px"><a href="../index.html">← Portal</a></div>
+  </aside>
+  <div class="main">
+    <div class="bar"><h2 id="title">Upload IP</h2><span class="who">AMD Taiwan · admin</span></div>
+    <div class="content">
+
+      <!-- IP UPLOAD -->
+      <section class="screen on" id="s-ip">
+        <div class="banner">🔐 The strategic IP lives here. S+, Schwarz, diagnosis & treatment plan, and STA design can <b>only</b> be uploaded from HQ. AMDs read/print but never create them.</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <div class="card" style="flex:1;min-width:240px"><h3>Navigate</h3>
+            <div class="tree">
+              <a class="amd">▸ Dr. Chen clinic (Taipei)</a>
+              <a class="pt">• Wang Xiaoming · AMD-0021 ✓ open</a>
+              <a class="pt">• Li Meihua · AMD-0018</a>
+              <a class="amd">▸ Dr. Wu clinic (Taichung)</a>
+              <a class="pt">• Huang Shufen · AMD-0007</a>
+            </div>
+          </div>
+          <div class="card" style="flex:2;min-width:320px"><h3>Wang Xiaoming · AMD-0021 — key reports</h3>
+            <div class="up"><div class="ic">📐</div><div class="t"><b>S+ analysis</b><div>3D jaw · from our software</div></div><button class="btn ghost" onclick="toast('S+ uploaded')">Upload</button></div>
+            <div class="up"><div class="ic">📊</div><div class="t"><b>Schwarz analysis</b><div>arch analysis</div></div><button class="btn ghost" onclick="toast('Schwarz uploaded')">Upload</button></div>
+            <div class="up"><div class="ic">📄</div><div class="t"><b>Diagnosis & treatment plan</b><div>authored by Dr. Liao → shown to patient</div></div><button class="btn ghost" onclick="toast('Plan uploaded → timeline: Diagnosis & Plan')">Upload</button></div>
+            <label style="font-size:12px;color:var(--muted);font-weight:600;display:block;margin:6px 0">Case difficulty grade (shown in patient profile)</label>
+            <div class="grade">
+              <span class="g1" onclick="grade(this)">1 · Easy</span><span class="g2" onclick="grade(this)">2</span>
+              <span class="g3 sel" onclick="grade(this)">3</span><span class="g4" onclick="grade(this)">4 · Complex</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STA DISPATCH -->
+      <section class="screen" id="s-sta">
+        <div class="banner">When an AMD marks a plan as signed, HQ dispatches the STA design to the lab and tracks it. Status also surfaces on the Doctor site for ATCs.</div>
+        <div class="card"><h3>STA orders</h3>
+          <div class="kv"><b>AMD-0021</b> Design → lab · <span style="color:#16a34a">In production</span></div>
+          <div class="track">
+            <div class="st done">Signed</div><div class="st done">Design sent</div><div class="st done">In production</div>
+            <div class="st">Shipped</div><div class="st">Delivered</div>
+          </div>
+          <div style="margin-top:14px"><button class="btn" onclick="toast('Design dispatched to lab (see Lab site)')">Dispatch new design to lab</button></div>
+        </div>
+        <div class="card"><h3>AMD-0018 · awaiting signature</h3>
+          <div class="track">
+            <div class="st done">Plan sent</div><div class="st">Signed</div><div class="st">Design sent</div><div class="st">In production</div><div class="st">Delivered</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section class="screen" id="s-kpi">
+        <div class="banner">Database analytics across all AMD clinics. (AI Q&A over this data is a later phase — needs clean data first.)</div>
+        <div class="card"><h3>Clinical KPIs</h3>
+          <div class="kpis">
+            <div class="kpi"><div class="n">142</div><div class="l">Active patients</div><div class="d up-g">▲ 18 this month</div></div>
+            <div class="kpi"><div class="n">71%</div><div class="l">Treatment completion</div><div class="d up-g">▲ 4%</div></div>
+            <div class="kpi"><div class="n">11.2mo</div><div class="l">Avg active duration</div><div class="d">—</div></div>
+            <div class="kpi"><div class="n">88%</div><div class="l">Follow-up rate</div><div class="d up-g">▲ 2%</div></div>
+            <div class="kpi"><div class="n">1.9</div><div class="l">Referrals / patient</div><div class="d up-g">▲ 0.3</div></div>
+          </div>
+        </div>
+        <div class="card"><h3>New patients by month</h3>
+          <div class="bars">
+            <div class="b" style="height:40%"><b>9</b><span>Mar</span></div>
+            <div class="b" style="height:55%"><b>12</b><span>Apr</span></div>
+            <div class="b" style="height:48%"><b>11</b><span>May</span></div>
+            <div class="b" style="height:70%"><b>15</b><span>Jun</span></div>
+            <div class="b" style="height:85%"><b>18</b><span>Jul</span></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <div class="card" style="flex:1;min-width:260px"><h3>Marketing KPIs</h3>
+            <div class="kv"><b>Top referral source</b> Friend/family (46%)</div>
+            <div class="kv"><b>Conversion rate</b> 32% consult → signed</div>
+            <div class="kv"><b>CAC</b> NT$ 3,400</div>
+            <div class="kv"><b>App 30-day retention</b> 64%</div>
+            <div class="kv"><b>Store revenue (Jul)</b> NT$ 128,000</div>
+          </div>
+          <div class="card" style="flex:1;min-width:260px"><h3>Doctor KPIs</h3>
+            <div class="kv"><b>Dr. Chen</b> 21 patients · 6 completed</div>
+            <div class="kv"><b>Dr. Wu</b> 14 patients · 3 completed</div>
+            <div class="kv"><b>Avg improvement (ESS)</b> −5.8 points</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
+  document.getElementById('s-'+s).classList.add('on');
+  document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
+  const t={ip:'Upload IP',sta:'STA dispatch',kpi:'Analytics'};document.getElementById('title').textContent=t[s];window.scrollTo(0,0);}
+function grade(el){document.querySelectorAll('.grade span').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');toast('Difficulty grade set');}
+let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+</script>
+</body>
+</html>

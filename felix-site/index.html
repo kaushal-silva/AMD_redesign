@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AMD · Dr. Liao (Felix) Site — De-identified</title>
+<style>
+  :root{--rose:#be123c;--rose-d:#881337;--bg:#faf7f8;--card:#fff;--ink:#1c1420;--muted:#7c6b74;
+    --line:#efe4e8;--shadow:0 2px 10px rgba(120,20,60,.06)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+  .app{display:flex;min-height:100vh}
+  .side{width:220px;background:#3a1220;color:#f0d5de;padding:18px 12px;position:sticky;top:0;height:100vh;flex:0 0 auto}
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;padding:6px 8px 8px}
+  .brand .lg{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,#e11d48,#fb7185);
+    display:flex;align-items:center;justify-content:center;font-weight:800}
+  .lock{font-size:10px;color:#e6a3b4;padding:6px 8px 14px}
+  .nav a{display:flex;gap:10px;padding:10px 12px;border-radius:9px;color:#f0d5de;text-decoration:none;
+    font-size:14px;cursor:pointer;margin-bottom:2px}
+  .nav a:hover{background:#ffffff12}.nav a.on{background:var(--rose);color:#fff}
+  .role{font-size:10px;color:#c98ea0;text-transform:uppercase;letter-spacing:.6px;padding:0 8px;margin:10px 0 4px}
+  .back a{color:#c98ea0;font-size:12px;text-decoration:none}
+  .main{flex:1;min-width:0}
+  .bar{background:var(--card);border-bottom:1px solid var(--line);padding:14px 26px;display:flex;gap:14px;
+    align-items:center;position:sticky;top:0;z-index:5}
+  .bar h2{flex:1;font-size:17px}.bar .who{font-size:13px;color:var(--muted)}
+  .content{padding:24px 26px 60px;max-width:900px}
+  .banner{background:#fff1f2;border:1px solid #fecdd3;color:#9f1239;padding:12px 15px;border-radius:10px;
+    font-size:13px;margin-bottom:18px;line-height:1.55}
+  .screen{display:none}.screen.on{display:block}
+  .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .card h3{font-size:15px;margin-bottom:12px}
+  .p-row{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:12px;
+    margin-bottom:10px;cursor:pointer;background:#fff}
+  .p-row:hover{box-shadow:0 6px 18px rgba(120,20,60,.1)}
+  .av{width:42px;height:42px;border-radius:10px;background:#ffe4e6;color:var(--rose);display:flex;
+    align-items:center;justify-content:center;font-weight:700;flex:0 0 auto;font-size:12px}
+  .nm{font-weight:700}.sub{font-size:12px;color:var(--muted)}
+  .badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;background:#dbeafe;color:#1e40af}
+  .kv{display:flex;gap:8px;font-size:13px;padding:7px 0;border-bottom:1px solid var(--line)}
+  .kv b{width:130px;color:var(--muted);font-weight:600;flex:0 0 auto}
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .ph{aspect-ratio:4/3;border-radius:10px;background:#1c1420;color:#fff;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;font-size:12px;text-align:center;padding:10px;position:relative;overflow:hidden}
+  .ph .blur{filter:blur(6px);font-size:34px;opacity:.5}
+  .ph small{opacity:.7;margin-top:6px}
+  .viewonly{font-size:10px;background:#e5e7eb;color:#6b7280;padding:2px 8px;border-radius:20px;font-weight:700}
+  .chatlog{background:#faf7f8;border-radius:10px;padding:14px}
+  .m{max-width:72%;padding:9px 13px;border-radius:14px;font-size:13px;margin-bottom:8px}
+  .m.them{background:#fff;box-shadow:var(--shadow)}.m.me{background:var(--rose);color:#fff;margin-left:auto}
+  input{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px}
+  .btn{background:var(--rose);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer;font-size:14px}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c1420;color:#fff;
+    padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none}
+  .toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="lg">Dr</div> Dr. Liao</div>
+    <div class="lock">🌏 Cross-border · de-identified access only</div>
+    <div class="role">Referred to me</div>
+    <nav class="nav">
+      <a class="on" data-s="home" onclick="go('home')">👥 Referred cases</a>
+      <a data-s="case" onclick="go('case')">📋 Case (de-identified)</a>
+    </nav>
+    <div class="role">Account</div>
+    <nav class="nav"><a onclick="toast('Contact AMD Taiwan')">💬 Contact AMD Taiwan</a></nav>
+    <div class="nav back" style="padding:8px"><a href="../index.html">← Portal</a></div>
+  </aside>
+  <div class="main">
+    <div class="bar"><h2 id="title">Referred cases</h2><span class="who">Dr. Liao · USA</span></div>
+    <div class="content">
+      <section class="screen on" id="s-home">
+        <div class="banner">🔒 <b>Cross-border privacy (Taiwan PDPA + AI-era rules).</b> You see <b>de-identified</b> cases only: patient code + age range, no name, address or DOB. Faces are masked and voice is shared as text transcripts. You have <b>view-only</b> access and communicate via the referral chat.</div>
+        <div class="card"><h3>Cases shared for your guidance</h3>
+          <div class="p-row" onclick="go('case')">
+            <div class="av">KS<br>0021</div>
+            <div style="flex:1"><div class="nm">Patient KS-0021</div>
+              <div class="sub">Female · age 35–37 · airway case · shared by Dr. Chen</div></div>
+            <span class="badge">New message</span>
+          </div>
+          <div class="p-row" onclick="go('case')">
+            <div class="av">KS<br>0015</div>
+            <div style="flex:1"><div class="nm">Patient KS-0015</div>
+              <div class="sub">Male · age 45–47 · TMJ + SDB · shared by Dr. Chen</div></div>
+            <span class="viewonly">View only</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="s-case">
+        <div class="banner">🔒 All identifying data removed. Images are de-identified (features preserved, identity altered) via a Taiwan-certified vendor before reaching you.</div>
+        <div class="card"><h3>Case KS-0021</h3>
+          <div class="kv"><b>Code</b> KS-0021</div>
+          <div class="kv"><b>Demographics</b> Female · age 35–37 (range, no DOB)</div>
+          <div class="kv"><b>Name / address</b> <span class="viewonly">Not shared</span></div>
+          <div class="kv"><b>Case</b> Narrow arch, mouth breathing, sleep-disordered breathing</div>
+        </div>
+        <div class="card"><h3>Imaging (de-identified) <span class="viewonly">view only</span></h3>
+          <div class="cmp">
+            <div class="ph"><span class="blur">🙂</span><small>Face — de-identified</small></div>
+            <div class="ph"><span class="blur">🦷</span><small>CBCT — de-identified DICOM</small></div>
+          </div>
+        </div>
+        <div class="card"><h3>Follow-up records <span class="viewonly">view only</span></h3>
+          <div class="kv"><b>Jul 12</b> Sleeping better; STA turning 2 gears ½ each, Sun & Wed.</div>
+          <div class="kv"><b>May 24</b> STA delivery. Baseline ESS 14.</div>
+        </div>
+        <div class="card"><h3>Guidance chat with AMD</h3>
+          <div class="chatlog">
+            <div class="m them">Felix, would you widen faster given the CBCT airway? Transcript of her feedback attached (text only).</div>
+            <div class="m me">Hold current rate 2 more weeks, then reassess airway cross-section. Good progress.</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px"><input placeholder="Reply to AMD…" /><button class="btn">Send</button></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
+  document.getElementById('s-'+s).classList.add('on');
+  document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
+  document.getElementById('title').textContent = s==='home'?'Referred cases':'Case · de-identified';window.scrollTo(0,0);}
+let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
+  clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AMD · MD / PT Specialist Site</title>
+<style>
+  :root{--amber:#b45309;--amber-d:#78350f;--bg:#faf7f2;--card:#fff;--ink:#1c1917;--muted:#78716c;
+    --line:#eee6dc;--shadow:0 2px 10px rgba(120,80,20,.06)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC",sans-serif;
+    background:var(--bg);color:var(--ink)}
+  .app{display:flex;min-height:100vh}
+  .side{width:220px;background:#3a2a12;color:#e7d9c3;padding:18px 12px;position:sticky;top:0;height:100vh;flex:0 0 auto}
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;padding:6px 8px 16px}
+  .brand .lg{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,#d97706,#f59e0b);
+    display:flex;align-items:center;justify-content:center;font-weight:800}
+  .nav a{display:flex;gap:10px;padding:10px 12px;border-radius:9px;color:#e7d9c3;text-decoration:none;
+    font-size:14px;cursor:pointer;margin-bottom:2px}
+  .nav a:hover{background:#ffffff12}.nav a.on{background:var(--amber);color:#fff}
+  .role{font-size:10px;color:#c9a26b;text-transform:uppercase;letter-spacing:.6px;padding:0 8px;margin:10px 0 4px}
+  .main{flex:1;min-width:0}
+  .bar{background:var(--card);border-bottom:1px solid var(--line);padding:14px 26px;display:flex;
+    align-items:center;gap:14px;position:sticky;top:0;z-index:5}
+  .bar h2{flex:1;font-size:17px}.bar .who{font-size:13px;color:var(--muted)}
+  .content{padding:24px 26px 60px;max-width:920px}
+  .banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;padding:11px 15px;border-radius:10px;
+    font-size:13px;margin-bottom:18px;line-height:1.5}
+  .screen{display:none}.screen.on{display:block}
+  .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .card h3{font-size:15px;margin-bottom:12px}
+  .p-row{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:12px;
+    margin-bottom:10px;cursor:pointer;background:#fff;transition:.15s}
+  .p-row:hover{box-shadow:0 6px 18px rgba(120,80,20,.1)}
+  .av{width:42px;height:42px;border-radius:50%;background:#fef3c7;color:var(--amber);display:flex;
+    align-items:center;justify-content:center;font-weight:700;flex:0 0 auto}
+  .p-row .nm{font-weight:700}.p-row .sub{font-size:12px;color:var(--muted)}
+  .badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;background:#fee2e2;color:#b91c1c}
+  .badge.new{background:#dbeafe;color:#1e40af}
+  label{font-size:12px;color:var(--muted);font-weight:600;display:block;margin:10px 0 5px}
+  input,textarea,select{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px;font-family:inherit}
+  textarea{min-height:90px;resize:vertical}
+  .btn{background:var(--amber);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer;font-size:14px}
+  .lock{background:#f5f5f4;border:1px dashed #d6d3d1;border-radius:10px;padding:16px;color:var(--muted);
+    font-size:13px;text-align:center}
+  .kv{display:flex;gap:8px;font-size:13px;padding:7px 0;border-bottom:1px solid var(--line)}
+  .kv b{width:130px;color:var(--muted);font-weight:600;flex:0 0 auto}
+  .chatlog{background:#faf7f2;border-radius:10px;padding:14px}
+  .m{max-width:72%;padding:9px 13px;border-radius:14px;font-size:13px;margin-bottom:8px}
+  .m.them{background:#fff;box-shadow:var(--shadow)}.m.me{background:var(--amber);color:#fff;margin-left:auto}
+  .back a{color:#c9a26b;font-size:12px;text-decoration:none}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c1917;color:#fff;
+    padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none}
+  .toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="lg">PT</div> Specialist</div>
+    <div class="role">Referred to me</div>
+    <nav class="nav">
+      <a class="on" data-s="home" onclick="go('home')">👥 Referred patients</a>
+      <a data-s="patient" onclick="go('patient')">📋 Patient (referral)</a>
+    </nav>
+    <div class="role">Account</div>
+    <nav class="nav">
+      <a onclick="toast('Patient stats (to be expanded)')">📊 Patient management</a>
+      <a onclick="toast('Contact AMD Taiwan')">💬 Contact AMD Taiwan</a>
+      <a onclick="toast('Online shop')">🛒 Online shop</a>
+      <a onclick="toast('Education')">🎓 Education</a>
+    </nav>
+    <div class="role"> </div>
+    <div class="nav back" style="padding:8px"><a href="../index.html">← Portal</a></div>
+  </aside>
+  <div class="main">
+    <div class="bar"><h2 id="title">Referred patients</h2><span class="who">Felicity · Physiotherapist</span></div>
+    <div class="content">
+      <section class="screen on" id="s-home">
+        <div class="banner">🔒 <b>Least-access:</b> you only see patients an AMD has referred to you, and only the referral information — not their full airway history. You can add your own follow-up records and chat with the referring AMD/ATC.</div>
+        <div class="card"><h3>Patients referred to you</h3>
+          <div class="p-row" onclick="go('patient')">
+            <div class="av">王</div>
+            <div style="flex:1"><div class="nm">Wang Xiaoming · AMD-0021</div>
+              <div class="sub">Referred by Dr. Chen · lower-back pain during myofunctional therapy</div></div>
+            <span class="badge new">New message</span>
+          </div>
+          <div class="p-row" onclick="go('patient')">
+            <div class="av">陳</div>
+            <div style="flex:1"><div class="nm">Chen Zhiming · AMD-0015</div>
+              <div class="sub">Referred by Nurse Lin · neck tension / posture</div></div>
+            <span class="badge">Referral</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="s-patient">
+        <div class="banner">🔒 This is everything shared with you for this referral. AMD airway records, diagnosis, S+/Schwarz and STA design are <b>not</b> visible.</div>
+        <div class="card"><h3>Referral information</h3>
+          <div class="kv"><b>Patient</b> Wang Xiaoming (AMD-0021)</div>
+          <div class="kv"><b>Referred by</b> Dr. Chen (AMD)</div>
+          <div class="kv"><b>Reason</b> Lower-back pain reported during myofunctional therapy</div>
+          <div class="kv"><b>Note</b> Please assess posture; patient wears an oral appliance day + night.</div>
+        </div>
+        <div class="card"><h3>Full airway history</h3>
+          <div class="lock">🔒 Hidden — not needed for this referral (principle of least access)</div>
+        </div>
+        <div class="card"><h3>Add my follow-up record <span style="font-size:11px;color:var(--muted)">→ visible to patient + referring AMD</span></h3>
+          <label>Date</label><input type="date" />
+          <label>Assessment / recommendation / next step</label>
+          <textarea placeholder="Postural assessment findings and plan…"></textarea>
+          <label>Next appointment (you manage follow-ons)</label><input type="datetime-local" />
+          <div style="margin-top:12px"><button class="btn" onclick="toast('Record saved → patient + AMD notified')">Save record</button></div>
+        </div>
+        <div class="card"><h3>Chat with referring AMD/ATC</h3>
+          <div class="chatlog">
+            <div class="m them">Thanks for taking this one — she's mid-treatment so please avoid neck manipulation.</div>
+            <div class="m me">Understood. I'll focus on lumbar mobility. Will update after first session.</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px"><input placeholder="Message the AMD…" /><button class="btn">Send</button></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
+  document.getElementById('s-'+s).classList.add('on');
+  document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
+  document.getElementById('title').textContent = s==='home'?'Referred patients':'Patient · referral';window.scrollTo(0,0);}
+let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
+  clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+</script>
+</body>
+</html>

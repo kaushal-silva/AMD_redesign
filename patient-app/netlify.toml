@@ -1,0 +1,14 @@
+# Netlify config for the AMD patient PWA (static site, no build step)
+[build]
+  publish = "."
+
+# Service workers and manifest must not be long-cached while iterating
+[[headers]]
+  for = "/service-worker.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Cache-Control = "no-cache"
