@@ -19,164 +19,133 @@
     }
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{margin:0;padding:0}
-    body{
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang TC","Microsoft JhengHei",sans-serif;
-      background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased;
-    }
-    /* phone frame on desktop */
-    #app{max-width:440px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;
-      padding-bottom:84px;overflow:hidden}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang TC","Microsoft JhengHei",sans-serif;
+      background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased;}
+    #app{max-width:440px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;padding-bottom:84px;overflow:hidden}
     @media(min-width:520px){
       body{background:#e2e8e6;padding:24px 0}
       #app{min-height:calc(100vh - 48px);border-radius:32px;box-shadow:0 20px 60px rgba(0,0,0,.15);overflow:hidden}
     }
-    /* header */
-    .top{padding:20px 20px 10px;background:linear-gradient(160deg,var(--teal),var(--teal-d));color:#fff;
-      border-radius:0 0 26px 26px}
+    .top{padding:20px 20px 10px;background:linear-gradient(160deg,var(--teal),var(--teal-d));color:#fff;border-radius:0 0 26px 26px}
     .top .row{display:flex;align-items:center;justify-content:space-between}
-    .hi{font-size:14px;opacity:.85}
-    .name{font-size:22px;font-weight:700;margin-top:2px}
-    .avatar{width:44px;height:44px;border-radius:50%;background:#fff3;display:flex;align-items:center;
-      justify-content:center;font-weight:700;border:2px solid #ffffff55}
-    .lang{font-size:12px;background:#ffffff22;border:1px solid #ffffff44;color:#fff;padding:4px 10px;
-      border-radius:20px;margin-left:8px}
-    /* goals chips */
+    .hi{font-size:14px;opacity:.85}.name{font-size:22px;font-weight:700;margin-top:2px}
+    .avatar{width:44px;height:44px;border-radius:50%;background:#fff3;display:flex;align-items:center;justify-content:center;font-weight:700;border:2px solid #ffffff55}
+    .lang{font-size:12px;background:#ffffff22;border:1px solid #ffffff44;color:#fff;padding:4px 10px;border-radius:20px;margin-left:8px}
     .goals{display:flex;gap:8px;margin-top:16px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
     .goals::-webkit-scrollbar{display:none}
-    .goal{flex:0 0 auto;background:#ffffff1f;border:1px solid #ffffff33;border-radius:14px;
-      padding:10px 12px;min-width:120px}
+    .goal{flex:0 0 auto;background:#ffffff1f;border:1px solid #ffffff33;border-radius:14px;padding:10px 12px;min-width:120px}
     .goal .lbl{font-size:10px;opacity:.8;text-transform:uppercase;letter-spacing:.5px}
     .goal .v{font-size:13px;font-weight:600;margin-top:3px}
-    /* screens */
     .screen{display:none;padding:16px 16px 8px;animation:fade .25s ease}
     .screen.active{display:block}
     @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
     .card{background:var(--card);border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
     .card h3{margin:0 0 4px;font-size:16px}
     .sub{color:var(--muted);font-size:12px}
-    .section-title{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;
-      letter-spacing:.6px;margin:6px 4px 10px}
-    /* STA hero */
+    .section-title{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:6px 4px 10px}
     .sta{background:linear-gradient(150deg,#0f766e,#14b8a6);color:#fff;position:relative;overflow:hidden}
-    .sta .pill{display:inline-block;background:#ffffff2e;padding:4px 10px;border-radius:20px;font-size:11px;
-      font-weight:600;margin-bottom:10px}
-    .sta h3{color:#fff;font-size:19px}
-    .sta .meta{font-size:12px;opacity:.9;margin-top:2px}
-    .sta-btn{margin-top:14px;width:100%;border:none;background:#fff;color:var(--teal);font-weight:700;
-      padding:13px;border-radius:14px;font-size:15px;cursor:pointer;transition:.15s}
-    .sta-btn:active{transform:scale(.98)}
-    .sta-btn.done{background:#ffffff2e;color:#fff}
-    .burst{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-      font-size:15px;font-weight:700;background:#0b5c55e6;opacity:0;pointer-events:none;transition:.3s;text-align:center;padding:20px}
+    .sta .pill{display:inline-block;background:#ffffff2e;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:10px}
+    .sta h3{color:#fff;font-size:19px}.sta .meta{font-size:12px;opacity:.9;margin-top:2px}
+    .sta-btn{margin-top:14px;width:100%;border:none;background:#fff;color:var(--teal);font-weight:700;padding:13px;border-radius:14px;font-size:15px;cursor:pointer;transition:.15s}
+    .sta-btn:active{transform:scale(.98)}.sta-btn.done{background:#ffffff2e;color:#fff}
+    .burst{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;background:#0b5c55e6;opacity:0;pointer-events:none;transition:.3s;text-align:center;padding:20px}
     .burst.show{opacity:1}
-    /* daily tasks */
     .prog-ring{display:flex;align-items:center;gap:12px;margin-bottom:8px}
     .ring{width:52px;height:52px;flex:0 0 auto}
-    .xp{display:flex;gap:14px;margin-top:2px}
-    .xp span{font-size:12px;color:var(--muted)}
-    .xp b{color:var(--ink)}
+    .xp{display:flex;gap:14px;margin-top:2px}.xp span{font-size:12px;color:var(--muted)}.xp b{color:var(--ink)}
     .task{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
     .task:first-of-type{border-top:none}
-    .check{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);flex:0 0 auto;
-      display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;font-size:14px;color:#fff}
+    .check{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);flex:0 0 auto;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;font-size:14px;color:#fff}
     .check.on{background:var(--good);border-color:var(--good)}
-    .task .t-name{flex:1;font-size:14px}
+    .task .t-main{flex:1}.task .t-name{font-size:14px}
     .task.done .t-name{color:var(--muted);text-decoration:line-through}
+    .task .t-links{margin-top:3px;display:flex;gap:12px}
+    .task .t-links a{font-size:11px;color:var(--teal);text-decoration:none;cursor:pointer}
     .task .xp-tag{font-size:11px;color:var(--teal);font-weight:700;background:var(--mint);padding:3px 8px;border-radius:10px}
-    .link-i{font-size:11px;color:var(--muted);text-decoration:underline}
-    /* countdown */
     .count{display:flex;align-items:center;justify-content:space-between}
     .count .big{font-size:30px;font-weight:800;color:var(--teal);line-height:1}
     .count .lbl{font-size:12px;color:var(--muted)}
-    .btn-ghost{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;
-      font-size:13px;font-weight:600;color:var(--ink);cursor:pointer}
-    /* journey timeline */
-    .tl{position:relative;padding-left:8px}
-    .step{display:flex;gap:14px;position:relative;padding-bottom:4px}
-    .step .dotcol{display:flex;flex-direction:column;align-items:center}
-    .dot{width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--line);
-      display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;z-index:2;flex:0 0 auto}
-    .dot.done{background:var(--good);border-color:var(--good)}
-    .dot.now{background:var(--teal);border-color:var(--teal);box-shadow:0 0 0 5px #0f766e22}
-    .bar{width:2px;flex:1;background:var(--line);margin:2px 0}
-    .bar.done{background:var(--good)}
-    .step .body{padding-bottom:18px;flex:1}
-    .step .body .s-t{font-size:14px;font-weight:600}
-    .step.now .s-t{color:var(--teal)}
-    .step .body .s-d{font-size:12px;color:var(--muted);margin-top:1px}
-    .badge-now{font-size:10px;background:var(--teal);color:#fff;padding:2px 8px;border-radius:10px;margin-left:6px}
+    .btn-ghost{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer}
+    .btn-teal{border:none;background:var(--teal);color:#fff;border-radius:12px;padding:11px 14px;font-size:14px;font-weight:700;cursor:pointer;width:100%}
     .progbar{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin:6px 0 2px}
     .progbar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-l))}
-    /* before/after */
+    .tl{position:relative}
+    .step{display:flex;gap:14px;position:relative}
+    .step .dotcol{display:flex;flex-direction:column;align-items:center}
+    .dot{width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;z-index:2;flex:0 0 auto}
+    .dot.done{background:var(--good);border-color:var(--good)}
+    .dot.now{background:var(--teal);border-color:var(--teal);box-shadow:0 0 0 5px #0f766e22}
+    .bar{width:2px;flex:1;background:var(--line);margin:2px 0}.bar.done{background:var(--good)}
+    .step .body{padding-bottom:18px;flex:1}.step .body .s-t{font-size:14px;font-weight:600}
+    .step.now .s-t{color:var(--teal)}.step .body .s-d{font-size:12px;color:var(--muted);margin-top:1px}
+    .badge-now{font-size:10px;background:var(--teal);color:#fff;padding:2px 8px;border-radius:10px;margin-left:6px}
     .ba{position:relative;border-radius:16px;overflow:hidden;user-select:none;touch-action:none;aspect-ratio:4/3;background:#000}
-    .ba img,.ba .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+    .ba .ph{position:absolute;inset:0;width:100%;height:100%;background-size:cover;background-position:center;pointer-events:none}
     .ba .after-wrap{position:absolute;inset:0;overflow:hidden;width:50%}
-    .ba .after-wrap .ph{width:auto}
+    .ba .after-wrap .ph{width:var(--w,420px)}
     .handle{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;transform:translateX(-50%);z-index:3}
-    .handle::after{content:"⇆";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      width:34px;height:34px;background:#fff;color:var(--teal);border-radius:50%;display:flex;
-      align-items:center;justify-content:center;font-size:15px;box-shadow:0 2px 8px #0006}
-    .ba-lbl{position:absolute;bottom:8px;padding:3px 9px;background:#0000008c;color:#fff;font-size:11px;
-      border-radius:10px;z-index:4}
+    .handle::after{content:"⇆";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;background:#fff;color:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 2px 8px #0006}
+    .ba-lbl{position:absolute;bottom:8px;padding:3px 9px;background:#0000008c;color:#fff;font-size:11px;border-radius:10px;z-index:4}
     .ba-lbl.l{left:8px}.ba-lbl.r{right:8px}
     .rep{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
     .rep:first-of-type{border-top:none}
-    .rep .ic{width:38px;height:38px;border-radius:11px;background:var(--mint);color:var(--teal);
-      display:flex;align-items:center;justify-content:center;font-size:17px;flex:0 0 auto}
-    .rep .r-t{flex:1;font-size:13px;font-weight:600}
-    .rep .r-d{font-size:11px;color:var(--muted)}
-    /* learn */
+    .rep .ic{width:38px;height:38px;border-radius:11px;background:var(--mint);color:var(--teal);display:flex;align-items:center;justify-content:center;font-size:17px;flex:0 0 auto}
+    .rep .r-t{flex:1;font-size:13px;font-weight:600}.rep .r-d{font-size:11px;color:var(--muted)}
+    .link-i{font-size:11px;color:var(--muted);text-decoration:underline;cursor:pointer}
+    .appt{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+    .appt:first-of-type{border-top:none}
+    .appt .d{width:56px;flex:0 0 auto;text-align:center;background:var(--mint);border-radius:12px;padding:8px 4px}
+    .appt .d b{display:block;font-size:18px;color:var(--teal)}.appt .d span{font-size:10px;color:var(--muted)}
+    .appt .info{flex:1}.appt .info b{font-size:13px}.appt .info div{font-size:12px;color:var(--muted);margin-top:2px}
+    .tagm{font-size:10px;background:#eef2f1;color:#334;padding:2px 8px;border-radius:20px;font-weight:700}
     .art{border-radius:16px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:14px;background:#fff}
-    .art .cover{height:110px;background:linear-gradient(135deg,var(--teal-l),var(--teal));display:flex;
-      align-items:flex-end;padding:12px;color:#fff;font-size:26px}
-    .art .a-body{padding:12px 14px}
-    .art .a-t{font-size:14px;font-weight:700}
-    .art .a-x{font-size:12px;color:var(--muted);margin-top:3px}
-    .art .share{margin-top:8px;font-size:12px;color:var(--teal);font-weight:600}
-    .shop-cta{display:flex;align-items:center;gap:12px;background:linear-gradient(120deg,#fff7ed,#ffedd5);
-      border-radius:16px;padding:14px}
+    .art .cover{height:96px;background:linear-gradient(135deg,var(--teal-l),var(--teal));display:flex;align-items:flex-end;padding:12px;color:#fff;font-size:26px}
+    .art .a-body{padding:12px 14px}.art .a-t{font-size:14px;font-weight:700}.art .a-x{font-size:12px;color:var(--muted);margin-top:3px}
+    .art .a-actions{margin-top:10px;display:flex;justify-content:space-between;align-items:center}
+    .art .read{font-size:12px;color:var(--teal);font-weight:700;cursor:pointer;border:1px solid var(--teal);border-radius:10px;padding:5px 12px}
+    .art .read.done{background:var(--mint);border-color:var(--mint)}
+    .art .share{font-size:12px;color:var(--muted);cursor:pointer}
+    .shop-cta{display:flex;align-items:center;gap:12px;background:linear-gradient(120deg,#fff7ed,#ffedd5);border-radius:16px;padding:14px;margin-bottom:14px}
     .shop-cta .ic{font-size:26px}
-    /* me / achievements */
+    .refer{display:flex;align-items:center;gap:12px;background:linear-gradient(120deg,#ecfeff,#ccfbf1);border-radius:16px;padding:14px}
     .ach-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .ach{background:#fff;border-radius:14px;padding:14px;box-shadow:var(--shadow);text-align:center}
-    .ach .n{font-size:24px;font-weight:800;color:var(--teal)}
-    .ach .l{font-size:11px;color:var(--muted);margin-top:2px}
+    .ach .n{font-size:24px;font-weight:800;color:var(--teal)}.ach .l{font-size:11px;color:var(--muted);margin-top:2px}
     .me-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--line);cursor:pointer}
-    .me-row .ic{width:34px;height:34px;border-radius:10px;background:var(--mint);color:var(--teal);
-      display:flex;align-items:center;justify-content:center;font-size:16px}
-    .me-row .m-t{flex:1;font-size:14px}
-    .me-row .arr{color:var(--muted)}
-    /* chat */
-    .chat-log{max-height:none}
+    .me-row:first-of-type{border-top:none}
+    .me-row .ic{width:34px;height:34px;border-radius:10px;background:var(--mint);color:var(--teal);display:flex;align-items:center;justify-content:center;font-size:16px}
+    .me-row .m-t{flex:1;font-size:14px}.me-row .arr{color:var(--muted)}
+    .tog{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+    .tog:first-of-type{border-top:none}
+    .tog .m-t{flex:1;font-size:14px}
+    .switch{width:44px;height:26px;border-radius:20px;background:var(--line);position:relative;cursor:pointer;transition:.2s;flex:0 0 auto}
+    .switch.on{background:var(--good)}
+    .switch::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}
+    .switch.on::after{left:21px}
+    .lb{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+    .lb:first-of-type{border-top:none}
+    .lb .rk{width:24px;font-weight:800;color:var(--muted);text-align:center}.lb .rk.me{color:var(--teal)}
+    .lb .who{flex:1;font-size:13px}.lb .pts2{font-size:12px;font-weight:700;color:var(--teal)}
+    .lb.mine{background:var(--mint);border-radius:10px;padding:10px;border-top:none}
     .msg{max-width:78%;padding:10px 13px;border-radius:16px;font-size:13px;margin-bottom:8px;line-height:1.4}
     .msg.them{background:#fff;box-shadow:var(--shadow);border-bottom-left-radius:4px}
     .msg.me{background:var(--teal);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
     .msg .who{font-size:10px;opacity:.7;margin-bottom:2px}
-    /* bottom nav */
-    .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:440px;
-      background:#fff;border-top:1px solid var(--line);display:flex;padding:8px 4px calc(8px + env(safe-area-inset-bottom));
-      z-index:50}
-    .nav a{flex:1;text-align:center;color:var(--muted);text-decoration:none;font-size:10px;
-      display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
-    .nav a.on{color:var(--teal)}
-    .nav .nic{font-size:20px;line-height:1}
-    .toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:#12211f;color:#fff;
-      padding:10px 16px;border-radius:20px;font-size:13px;opacity:0;transition:.3s;z-index:60;pointer-events:none;white-space:nowrap}
+    .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:440px;background:#fff;border-top:1px solid var(--line);display:flex;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:50}
+    .nav a{flex:1;text-align:center;color:var(--muted);text-decoration:none;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+    .nav a.on{color:var(--teal)}.nav .nic{font-size:20px;line-height:1}
+    .toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:#12211f;color:#fff;padding:10px 16px;border-radius:20px;font-size:13px;opacity:0;transition:.3s;z-index:60;pointer-events:none;max-width:90%;text-align:center}
     .toast.show{opacity:1}
-    .install{margin:0 16px 14px;background:#fff;border:1px dashed var(--teal);border-radius:14px;
-      padding:12px 14px;font-size:12px;color:var(--teal);display:none;align-items:center;gap:10px}
+    .phase2{font-size:10px;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:20px;font-weight:700}
+    .install{margin:0 16px 14px;background:#fff;border:1px dashed var(--teal);border-radius:14px;padding:12px 14px;font-size:12px;color:var(--teal);display:none;align-items:center;gap:10px}
   </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- ===== HEADER ===== -->
   <div class="top">
     <div class="row">
-      <div>
-        <div class="hi" data-i18n="hi">Good morning</div>
-        <div class="name">Wang Xiaoming</div>
-      </div>
+      <div><div class="hi" data-i18n="hi">Good morning</div><div class="name">Wang Xiaoming</div></div>
       <div style="display:flex;align-items:center">
         <div class="avatar">王</div>
         <button class="lang" onclick="toggleLang()" id="langBtn">中文</button>
@@ -189,9 +158,8 @@
     </div>
   </div>
 
-  <!-- ===== HOME ===== -->
+  <!-- HOME -->
   <section class="screen active" id="s-home">
-    <!-- STA reminder hero -->
     <div class="card sta" id="staCard">
       <span class="pill">⏰ <span data-i18n="staDue">Due today · Wed</span></span>
       <h3 data-i18n="staTitle">Turn your STA appliance</h3>
@@ -201,27 +169,25 @@
       <div class="burst" id="staBurst">🎉 One step closer to health!</div>
     </div>
 
-    <!-- daily tasks -->
     <div class="card">
       <div class="prog-ring">
         <svg class="ring" viewBox="0 0 36 36">
           <path d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32" fill="none" stroke="#e6ecea" stroke-width="4"/>
-          <path id="ringFill" d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32" fill="none" stroke="#0f766e"
-            stroke-width="4" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="60"/>
+          <path id="ringFill" d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32" fill="none" stroke="#0f766e" stroke-width="4" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="60"/>
           <text x="18" y="21" text-anchor="middle" font-size="9" font-weight="700" fill="#0f766e" id="ringTxt">2/5</text>
         </svg>
         <div>
           <h3 data-i18n="today">Today's tasks</h3>
           <div class="xp">
-            <span>🔥 <b id="streak">12</b> <span data-i18n="dayStreak">day streak</span></span>
-            <span>⭐ <b id="xp">340</b> XP</span>
+            <span class="strk">🔥 <b id="streak">12</b> <span data-i18n="dayStreak">day streak</span></span>
+            <span class="pts">⭐ <b id="xp">120</b> XP</span>
           </div>
         </div>
       </div>
       <div id="taskList"></div>
+      <div class="sub strk" style="margin-top:10px" data-i18n="freeze">Missed a day? You have 1 streak-freeze left — your streak stays safe.</div>
     </div>
 
-    <!-- next appointment countdown -->
     <div class="card">
       <div class="count">
         <div>
@@ -229,296 +195,332 @@
           <div><span class="big">18</span> <span class="lbl" data-i18n="days">days</span></div>
           <div class="sub" style="margin-top:4px">Aug 9 · 2:30 PM · Dr. Chen (AMD)</div>
         </div>
-        <button class="btn-ghost" onclick="go('journey')" data-i18n="viewPlan">View plan</button>
+        <button class="btn-ghost" onclick="go('appts')" data-i18n="viewAppts">Appointments</button>
       </div>
     </div>
   </section>
 
-  <!-- ===== JOURNEY ===== -->
+  <!-- APPOINTMENTS -->
+  <section class="screen" id="s-appts">
+    <div class="section-title" data-i18n="apptTitle">Appointments</div>
+    <div class="card">
+      <h3 data-i18n="nextAppt">Next appointment</h3>
+      <div class="appt" style="margin-top:8px">
+        <div class="d"><b>9</b><span>Aug</span></div>
+        <div class="info"><b>Airway review · 2:30 PM</b><div>Daan Perfect Smile · Dr. Chen (AMD)</div></div>
+      </div>
+      <div class="appt">
+        <div class="d"><b>25</b><span>Jul</span></div>
+        <div class="info"><b>Physiotherapy · 3:00 PM <span class="tagm">PT referral</span></b><div>Felicity, PT · booked by clinic</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 data-i18n="visitHist">Visit records</h3>
+      <div class="rep"><div class="ic">📝</div><div style="flex:1"><div class="r-t">Visit 7 · Jul 12 · Dr. Chen</div><div class="r-d" data-i18n="v7">Sleeping better; STA turning Sun & Wed. Work on tongue posture.</div></div></div>
+      <div class="rep"><div class="ic">📝</div><div style="flex:1"><div class="r-t">Visit 6 · Jun 14 · Nurse Lin</div><div class="r-d" data-i18n="v6">Added green smoothie to daily tasks. Good progress.</div></div></div>
+      <div class="rep"><div class="ic">🦷</div><div style="flex:1"><div class="r-t">Visit 1 · May 24 · STA delivery</div><div class="r-d" data-i18n="v1">Appliance fitted. No turning yet.</div></div></div>
+    </div>
+  </section>
+
+  <!-- JOURNEY (timeline + progress + comparison merged) -->
   <section class="screen" id="s-journey">
-    <div class="section-title" data-i18n="yourJourney">Your treatment journey</div>
+    <div class="section-title" data-i18n="yourJourney">Your journey & progress</div>
     <div class="card">
       <h3 data-i18n="progress">Overall progress</h3>
       <div class="progbar"><i style="width:62%"></i></div>
       <div class="sub"><b>Stage 6 of 9</b> · <span data-i18n="active">Active treatment</span> · 62%</div>
     </div>
-    <div class="card">
-      <div class="tl" id="timeline"></div>
-    </div>
+    <div class="card"><div class="tl" id="timeline"></div></div>
     <div class="card">
       <h3 data-i18n="planTitle">Your treatment plan</h3>
-      <p class="sub" style="line-height:1.5" data-i18n="planBody">Airway-focused appliance therapy (STA) to widen the arch and improve nasal breathing, combined with myofunctional therapy. Estimated active phase: 10–12 months, followed by a maintenance year.</p>
+      <p class="sub" style="line-height:1.5" data-i18n="planBody">Airway-focused appliance therapy (STA) to widen the arch and improve nasal breathing, with myofunctional therapy. Active phase ~10–12 months, then a maintenance year.</p>
+      <button class="btn-ghost" style="margin-top:10px;width:100%" onclick="toast(t('planPDF'))">📄 <span data-i18n="seePlan">See full treatment plan (PDF)</span></button>
     </div>
-  </section>
-
-  <!-- ===== PROGRESS (before/after) ===== -->
-  <section class="screen" id="s-progress">
-    <div class="section-title" data-i18n="seeChange">See your change</div>
     <div class="card">
-      <h3 data-i18n="faceComp">Face profile · Apr vs Jul</h3>
+      <h3 data-i18n="seeChange">See your change</h3>
+      <div class="sub" style="margin-bottom:10px" data-i18n="baseline">Always compared to your first (baseline) photo.</div>
       <div class="ba" id="ba">
         <div class="ph" id="phAfter"></div>
         <div class="after-wrap" id="afterWrap"><div class="ph" id="phBefore"></div></div>
         <div class="handle" id="handle"></div>
-        <span class="ba-lbl l" data-i18n="before">Before · Apr</span>
+        <span class="ba-lbl l" data-i18n="before">Baseline · Apr</span>
         <span class="ba-lbl r" data-i18n="after">Now · Jul</span>
       </div>
-      <p class="sub" style="margin-top:10px" data-i18n="dragHint">Drag the slider to compare. Chin posture and lip seal have improved.</p>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <span class="link-i">Face</span><span class="link-i">Intraoral</span><span class="link-i">CBCT airway</span>
+      </div>
     </div>
     <div class="card">
       <h3 data-i18n="allReports">All images & reports</h3>
       <div class="rep"><div class="ic">📷</div><div style="flex:1"><div class="r-t">Intraoral photos</div><div class="r-d">4 sets · latest Jul 12</div></div><span class="link-i" data-i18n="compare">Compare</span></div>
       <div class="rep"><div class="ic">🦷</div><div style="flex:1"><div class="r-t">CBCT airway scan</div><div class="r-d">2 scans · Apr, Jul</div></div><span class="link-i" data-i18n="compare">Compare</span></div>
-      <div class="rep"><div class="ic">🩸</div><div style="flex:1"><div class="r-t">Blood work</div><div class="r-d">Baseline · Apr 2</div></div><span class="link-i">View</span></div>
       <div class="rep"><div class="ic">😴</div><div style="flex:1"><div class="r-t">Sleep test (ESS)</div><div class="r-d">Score 14 → 8</div></div><span class="link-i">View</span></div>
     </div>
   </section>
 
-  <!-- ===== LEARN ===== -->
+  <!-- LEARN -->
   <section class="screen" id="s-learn">
-    <div class="section-title" data-i18n="learnShare">Learn & share</div>
+    <div class="section-title" data-i18n="learnShare">Learn & earn</div>
+    <div class="sub pts" style="margin:-4px 4px 12px">📖 <span data-i18n="readPts">Read an article: +10 XP</span></div>
     <div class="art">
       <div class="cover">🌬️</div>
       <div class="a-body">
         <div class="a-t" data-i18n="art1">Why nasal breathing matters</div>
         <div class="a-x" data-i18n="art1x">How airway health affects sleep, focus and mood.</div>
-        <div class="share" data-i18n="share">↗ Share with a friend</div>
+        <div class="a-actions">
+          <span class="read" onclick="readArt(this)" data-i18n="readBtn">Read · +10</span>
+          <span class="share" onclick="toast(t('shared'))" data-i18n="share">↗ Share</span>
+        </div>
       </div>
     </div>
     <div class="art">
       <div class="cover">👅</div>
       <div class="a-body">
         <div class="a-t" data-i18n="art2">Tongue posture 101</div>
-        <div class="a-x" data-i18n="art2x">A 2-minute daily exercise that trains the right resting posture.</div>
-        <div class="share" data-i18n="share">↗ Share with a friend</div>
+        <div class="a-x" data-i18n="art2x">A 2-minute daily exercise for the right resting posture.</div>
+        <div class="a-actions">
+          <span class="read" onclick="readArt(this)" data-i18n="readBtn">Read · +10</span>
+          <span class="share" onclick="toast(t('shared'))" data-i18n="share">↗ Share</span>
+        </div>
       </div>
     </div>
-    <div class="shop-cta" onclick="toast('Opening store…')">
+    <div class="shop-cta" onclick="toast(t('shopOpen'))">
       <div class="ic">🛒</div>
-      <div style="flex:1">
-        <div style="font-weight:700;font-size:14px" data-i18n="restock">Running low on supplements?</div>
-        <div class="sub" data-i18n="restockx">Reorder bone broth, greens & vitamins</div>
-      </div>
+      <div style="flex:1"><div style="font-weight:700;font-size:14px" data-i18n="restock">Running low on supplements?</div>
+        <div class="sub" data-i18n="restockx">Reorder bone broth, greens & vitamins · earn XP</div></div>
       <span class="link-i" data-i18n="shop">Shop</span>
+    </div>
+    <div class="refer" onclick="referFriend()">
+      <div class="ic" style="font-size:26px">🎁</div>
+      <div style="flex:1"><div style="font-weight:700;font-size:14px" data-i18n="refer">Refer a friend</div>
+        <div class="sub pts" data-i18n="referx">You both get rewards · +100 XP</div></div>
+      <span class="link-i" data-i18n="invite">Invite</span>
     </div>
   </section>
 
-  <!-- ===== ME ===== -->
+  <!-- ME -->
   <section class="screen" id="s-me">
     <div class="section-title" data-i18n="ach">My health achievements</div>
     <div class="ach-grid" style="margin-bottom:14px">
       <div class="ach"><div class="n">96</div><div class="l" data-i18n="daysTx">days in treatment</div></div>
       <div class="ach"><div class="n">7</div><div class="l" data-i18n="visits">visits completed</div></div>
-      <div class="ach"><div class="n">340</div><div class="l" data-i18n="points">reward points</div></div>
-      <div class="ach"><div class="n">12</div><div class="l" data-i18n="streak2">day check-in streak</div></div>
+      <div class="ach pts"><div class="n">120</div><div class="l" data-i18n="points">reward points</div></div>
+      <div class="ach strk"><div class="n">12</div><div class="l" data-i18n="streak2">day check-in streak</div></div>
     </div>
-    <div class="card" style="background:linear-gradient(120deg,#ecfeff,#ccfbf1)">
+    <div class="card pts" style="background:linear-gradient(120deg,#ecfeff,#ccfbf1)">
       <h3 data-i18n="reward">🎁 45 points to your next reward</h3>
       <div class="progbar"><i style="width:70%"></i></div>
       <div class="sub" data-i18n="rewardx">Redeem for a free green smoothie at your next visit</div>
     </div>
+
+    <div class="card" id="leaderboardCard">
+      <h3 data-i18n="leaderboard">Leaderboard <span class="phase2">Phase 2</span></h3>
+      <div class="sub" style="margin-bottom:8px" data-i18n="lbx">Friends & people like you. Opt out anytime in settings.</div>
+      <div class="lb"><div class="rk">1</div><div class="who">Amy C.</div><div class="pts2">210</div></div>
+      <div class="lb mine"><div class="rk me">2</div><div class="who" data-i18n="you">You</div><div class="pts2">120</div></div>
+      <div class="lb"><div class="rk">3</div><div class="who">Ken L.</div><div class="pts2">95</div></div>
+      <button class="btn-ghost" style="width:100%;margin-top:10px" onclick="toast(t('addFriend'))" data-i18n="addFriendBtn">+ Add a friend by link</button>
+      <button class="btn-teal" style="margin-top:8px" onclick="toast(t('socialShare'))" data-i18n="shareSocial">↗ Share my progress to social</button>
+    </div>
+
+    <div class="card">
+      <h3 data-i18n="gami">Gamification</h3>
+      <div class="sub" style="margin-bottom:6px" data-i18n="gamix">On by default. Turn off anything that feels like pressure.</div>
+      <div class="tog"><div class="m-t" data-i18n="tgLeader">Leaderboard & competition</div><div class="switch on" data-g="leader" onclick="toggleG(this)"></div></div>
+      <div class="tog"><div class="m-t" data-i18n="tgPoints">Points & XP</div><div class="switch on" data-g="points" onclick="toggleG(this)"></div></div>
+      <div class="tog"><div class="m-t" data-i18n="tgStreak">Streaks</div><div class="switch on" data-g="streak" onclick="toggleG(this)"></div></div>
+    </div>
+
     <div class="card">
       <div class="me-row" onclick="go('chat')"><div class="ic">💬</div><div class="m-t" data-i18n="contact">Message my ATC (care manager)</div><span class="arr">›</span></div>
       <div class="me-row" onclick="toggleLang()"><div class="ic">🌐</div><div class="m-t"><span data-i18n="language">Language</span> · <span id="langLbl">English</span></div><span class="arr">›</span></div>
-      <div class="me-row" onclick="toast('Profile settings')"><div class="ic">👤</div><div class="m-t" data-i18n="account">Account & password</div><span class="arr">›</span></div>
-      <div class="me-row" onclick="toast('Notification settings')"><div class="ic">🔔</div><div class="m-t" data-i18n="notif">Notifications</div><span class="arr">›</span></div>
+      <div class="me-row" onclick="toast(t('acct'))"><div class="ic">👤</div><div class="m-t" data-i18n="account">Account & password</div><span class="arr">›</span></div>
+      <div class="me-row" onclick="toast(t('notifSet'))"><div class="ic">🔔</div><div class="m-t" data-i18n="notif">Notifications</div><span class="arr">›</span></div>
+      <div class="me-row" onclick="toast(t('feedback'))"><div class="ic">⭐</div><div class="m-t" data-i18n="fb">How are you liking the app?</div><span class="arr">›</span></div>
     </div>
   </section>
 
-  <!-- ===== CHAT (sub-screen) ===== -->
+  <!-- CHAT -->
   <section class="screen" id="s-chat">
     <div class="section-title">💬 <span data-i18n="atc">Nurse Lin · your ATC</span></div>
-    <div class="chat-log">
+    <div id="chatLog">
       <div class="msg them"><div class="who">Nurse Lin</div><span data-i18n="c1">Hi Xiaoming! How is the new turning schedule feeling this week?</span></div>
       <div class="msg me"><span data-i18n="c2">A little tight the first day but okay now 🙂</span></div>
-      <div class="msg them"><div class="who">Nurse Lin</div><span data-i18n="c3">That's completely normal. Keep it up — see you Aug 9!</span></div>
+      <div class="msg them"><div class="who">Nurse Lin</div><span data-i18n="c3">Totally normal. Keep it up — see you Aug 9!</span></div>
     </div>
-    <div class="card" style="display:flex;gap:8px;align-items:center">
+    <div class="card" style="display:flex;gap:8px;align-items:center;margin-top:8px">
       <input id="chatIn" placeholder="Type a message…" style="flex:1;border:1px solid var(--line);border-radius:12px;padding:11px;font-size:14px" />
       <button class="btn-ghost" onclick="sendMsg()" style="background:var(--teal);color:#fff;border:none">Send</button>
     </div>
   </section>
 
-  <div class="install" id="installBar"><span>📲 <span data-i18n="installTip">Tap Share → Add to Home Screen to install the app</span></span></div>
+  <div class="install" id="installBar"><span>📲 <span data-i18n="installTip">Tap Share → Add to Home Screen to install</span></span></div>
 </div>
 
-<!-- ===== BOTTOM NAV ===== -->
 <nav class="nav" id="nav">
   <a class="on" data-t="home" onclick="go('home')"><span class="nic">🏠</span><span data-i18n="nHome">Home</span></a>
+  <a data-t="appts" onclick="go('appts')"><span class="nic">📅</span><span data-i18n="nAppts">Appts</span></a>
   <a data-t="journey" onclick="go('journey')"><span class="nic">🗺️</span><span data-i18n="nJourney">Journey</span></a>
-  <a data-t="progress" onclick="go('progress')"><span class="nic">📊</span><span data-i18n="nProgress">Progress</span></a>
   <a data-t="learn" onclick="go('learn')"><span class="nic">📚</span><span data-i18n="nLearn">Learn</span></a>
   <a data-t="me" onclick="go('me')"><span class="nic">👤</span><span data-i18n="nMe">Me</span></a>
 </nav>
-
 <div class="toast" id="toast"></div>
 
 <script>
-/* ---------- sample data ---------- */
-const TASKS = [
-  {id:1,name:{en:"Tongue-to-palate exercise",zh:"舌頂上顎練習"},xp:20,done:true},
-  {id:2,name:{en:"Myofunctional training (5 min)",zh:"肌功能訓練 5分鐘"},xp:20,done:true},
-  {id:3,name:{en:"Drink bone broth",zh:"喝大骨湯"},xp:15,done:false},
-  {id:4,name:{en:"Green smoothie",zh:"Green smoothie"},xp:15,done:false},
-  {id:5,name:{en:"Daily vitamins",zh:"每日維生素"},xp:10,done:false},
+const XP_EACH=10;
+const TASKS=[
+  {id:1,name:{en:"Tongue-to-palate exercise",zh:"舌頂上顎練習"},done:true},
+  {id:2,name:{en:"Myofunctional training (5 min)",zh:"肌功能訓練 5分鐘"},done:true},
+  {id:3,name:{en:"Drink bone broth",zh:"喝大骨湯"},done:false},
+  {id:4,name:{en:"Green smoothie",zh:"Green smoothie"},done:false},
+  {id:5,name:{en:"Daily vitamins",zh:"每日維生素"},done:false},
 ];
-const STEPS = [
+const STEPS=[
   {t:{en:"Consultation",zh:"諮詢"},d:{en:"Mar 20",zh:"3月20日"},st:"done"},
-  {t:{en:"Initial visit · data collection",zh:"初診・收集資料"},d:{en:"Apr 2 · blood + sleep test",zh:"4月2日・抽血+睡眠檢測"},st:"done"},
+  {t:{en:"Initial visit · data",zh:"初診・收集資料"},d:{en:"Apr 2",zh:"4月2日"},st:"done"},
   {t:{en:"Analysis & reports",zh:"資料與報告分析"},d:{en:"Apr 18",zh:"4月18日"},st:"done"},
-  {t:{en:"Diagnosis & treatment plan",zh:"診斷與治療計畫"},d:{en:"Apr 25",zh:"4月25日"},st:"done"},
-  {t:{en:"STA fabrication",zh:"製作STA"},d:{en:"May 2–20",zh:"5月2–20日"},st:"done"},
+  {t:{en:"Diagnosis & plan",zh:"診斷與治療計畫"},d:{en:"Apr 25",zh:"4月25日"},st:"done"},
+  {t:{en:"STA fabrication",zh:"製作STA"},d:{en:"May 2",zh:"5月2日"},st:"done"},
   {t:{en:"STA delivery",zh:"STA delivery"},d:{en:"May 24",zh:"5月24日"},st:"done"},
   {t:{en:"Active treatment",zh:"療程進行中"},d:{en:"You are here",zh:"目前階段"},st:"now"},
   {t:{en:"Maintenance",zh:"維持期"},d:{en:"~ next year",zh:"約明年"},st:"todo"},
   {t:{en:"Graduation 🎉",zh:"恭喜畢業 🎉"},d:{en:"Goal",zh:"目標"},st:"todo"},
 ];
-/* i18n strings */
 const I18N={
-  hi:{en:"Good morning",zh:"早安"}, goal:{en:"Goal",zh:"目標"},
-  g1:{en:"Sleep through the night",zh:"一覺到天亮"}, g2:{en:"Stop teeth grinding",zh:"停止磨牙"}, g3:{en:"Breathe through nose",zh:"用鼻子呼吸"},
-  staDue:{en:"Due today · Wed",zh:"今天要做・週三"}, staTitle:{en:"Turn your STA appliance",zh:"轉動你的STA牙套"},
+  hi:{en:"Good morning",zh:"早安"},goal:{en:"Goal",zh:"目標"},
+  g1:{en:"Sleep through the night",zh:"一覺到天亮"},g2:{en:"Stop teeth grinding",zh:"停止磨牙"},g3:{en:"Breathe through nose",zh:"用鼻子呼吸"},
+  staDue:{en:"Due today · Wed",zh:"今天要做・週三"},staTitle:{en:"Turn your STA appliance",zh:"轉動你的STA牙套"},
   staMeta:{en:"2 gears · ½ turn each · since Jul 6",zh:"2個齒輪・各轉半圈・自7月6日起"},
-  staFreq:{en:"Schedule: every Sunday & Wednesday",zh:"排程：每週日和週三"}, staBtn:{en:"Mark as done ✓",zh:"完成 ✓"},
-  today:{en:"Today's tasks",zh:"今日任務"}, dayStreak:{en:"day streak",zh:"天連續"},
-  nextIn:{en:"Next check-up in",zh:"下次回診還有"}, days:{en:"days",zh:"天"}, viewPlan:{en:"View plan",zh:"看計畫"},
-  yourJourney:{en:"Your treatment journey",zh:"你的療程旅程"}, progress:{en:"Overall progress",zh:"整體進度"},
-  active:{en:"Active treatment",zh:"療程進行中"}, planTitle:{en:"Your treatment plan",zh:"你的治療計畫"},
-  planBody:{en:"Airway-focused appliance therapy (STA) to widen the arch and improve nasal breathing, combined with myofunctional therapy. Estimated active phase: 10–12 months, followed by a maintenance year.",zh:"以氣道為核心的STA矯正，擴張牙弓、改善鼻呼吸，搭配口腔肌功能訓練。預估療程10–12個月，之後進入一年維持期。"},
-  seeChange:{en:"See your change",zh:"看見你的改變"}, faceComp:{en:"Face profile · Apr vs Jul",zh:"臉型側面・4月 vs 7月"},
-  before:{en:"Before · Apr",zh:"之前・4月"}, after:{en:"Now · Jul",zh:"現在・7月"},
-  dragHint:{en:"Drag the slider to compare. Chin posture and lip seal have improved.",zh:"拖動滑桿比較。下巴姿勢與嘴唇閉合已改善。"},
-  allReports:{en:"All images & reports",zh:"所有影像與報告"}, compare:{en:"Compare",zh:"比較"},
-  learnShare:{en:"Learn & share",zh:"衛教與分享"}, art1:{en:"Why nasal breathing matters",zh:"為什麼鼻呼吸很重要"},
-  art1x:{en:"How airway health affects sleep, focus and mood.",zh:"氣道健康如何影響睡眠、專注與情緒。"},
-  art2:{en:"Tongue posture 101",zh:"舌頭姿勢入門"}, art2x:{en:"A 2-minute daily exercise that trains the right resting posture.",zh:"每天2分鐘，訓練正確的舌頭休息姿勢。"},
-  share:{en:"↗ Share with a friend",zh:"↗ 分享給朋友"}, restock:{en:"Running low on supplements?",zh:"保健品快用完了嗎？"},
-  restockx:{en:"Reorder bone broth, greens & vitamins",zh:"補購大骨湯、蔬果與維生素"}, shop:{en:"Shop",zh:"商城"},
-  ach:{en:"My health achievements",zh:"我的健康成就"}, daysTx:{en:"days in treatment",zh:"療程天數"},
-  visits:{en:"visits completed",zh:"完成回診"}, points:{en:"reward points",zh:"獎勵積分"}, streak2:{en:"day check-in streak",zh:"連續打卡天數"},
-  reward:{en:"🎁 45 points to your next reward",zh:"🎁 再45分即可兌換獎勵"}, rewardx:{en:"Redeem for a free green smoothie at your next visit",zh:"下次回診可兌換一杯免費green smoothie"},
-  contact:{en:"Message my ATC (care manager)",zh:"聯絡我的個管師 (ATC)"}, language:{en:"Language",zh:"語言"},
-  account:{en:"Account & password",zh:"帳號與密碼"}, notif:{en:"Notifications",zh:"通知設定"},
+  staFreq:{en:"Schedule: every Sunday & Wednesday",zh:"排程：每週日和週三"},staBtn:{en:"Mark as done ✓",zh:"完成 ✓"},
+  today:{en:"Today's tasks",zh:"今日任務"},dayStreak:{en:"day streak",zh:"天連續"},
+  freeze:{en:"Missed a day? You have 1 streak-freeze left — your streak stays safe.",zh:"忘記打卡？你還有1次連續凍結——連續紀錄不會中斷。"},
+  nextIn:{en:"Next check-up in",zh:"下次回診還有"},days:{en:"days",zh:"天"},viewAppts:{en:"Appointments",zh:"約診"},
+  apptTitle:{en:"Appointments",zh:"約診紀錄"},nextAppt:{en:"Next appointment",zh:"下次回診"},visitHist:{en:"Visit records",zh:"回診紀錄"},
+  v7:{en:"Sleeping better; STA turning Sun & Wed. Work on tongue posture.",zh:"睡眠改善；STA週日週三轉。加強舌頭姿勢。"},
+  v6:{en:"Added green smoothie to daily tasks. Good progress.",zh:"每日任務新增green smoothie。進展良好。"},
+  v1:{en:"Appliance fitted. No turning yet.",zh:"配戴牙套。尚未轉動。"},
+  yourJourney:{en:"Your journey & progress",zh:"你的旅程與進度"},progress:{en:"Overall progress",zh:"整體進度"},active:{en:"Active treatment",zh:"療程進行中"},
+  planTitle:{en:"Your treatment plan",zh:"你的治療計畫"},
+  planBody:{en:"Airway-focused appliance therapy (STA) to widen the arch and improve nasal breathing, with myofunctional therapy. Active phase ~10–12 months, then a maintenance year.",zh:"以氣道為核心的STA矯正，擴張牙弓、改善鼻呼吸，搭配口腔肌功能訓練。療程約10–12個月，之後一年維持期。"},
+  seePlan:{en:"See full treatment plan (PDF)",zh:"查看完整治療計畫 (PDF)"},
+  seeChange:{en:"See your change",zh:"看見你的改變"},baseline:{en:"Always compared to your first (baseline) photo.",zh:"永遠與你的第一張（基準）照片比較。"},
+  before:{en:"Baseline · Apr",zh:"基準・4月"},after:{en:"Now · Jul",zh:"現在・7月"},
+  allReports:{en:"All images & reports",zh:"所有影像與報告"},compare:{en:"Compare",zh:"比較"},
+  learnShare:{en:"Learn & earn",zh:"衛教與獎勵"},readPts:{en:"Read an article: +10 XP",zh:"閱讀文章：+10 XP"},
+  art1:{en:"Why nasal breathing matters",zh:"為什麼鼻呼吸很重要"},art1x:{en:"How airway health affects sleep, focus and mood.",zh:"氣道健康如何影響睡眠、專注與情緒。"},
+  art2:{en:"Tongue posture 101",zh:"舌頭姿勢入門"},art2x:{en:"A 2-minute daily exercise for the right resting posture.",zh:"每天2分鐘，訓練正確的休息姿勢。"},
+  readBtn:{en:"Read · +10",zh:"閱讀 · +10"},share:{en:"↗ Share",zh:"↗ 分享"},
+  restock:{en:"Running low on supplements?",zh:"保健品快用完了嗎？"},restockx:{en:"Reorder bone broth, greens & vitamins · earn XP",zh:"補購大骨湯、蔬果與維生素・賺XP"},shop:{en:"Shop",zh:"商城"},
+  refer:{en:"Refer a friend",zh:"推薦朋友"},referx:{en:"You both get rewards · +100 XP",zh:"雙方都有獎勵・+100 XP"},invite:{en:"Invite",zh:"邀請"},
+  ach:{en:"My health achievements",zh:"我的健康成就"},daysTx:{en:"days in treatment",zh:"療程天數"},visits:{en:"visits completed",zh:"完成回診"},points:{en:"reward points",zh:"獎勵積分"},streak2:{en:"day check-in streak",zh:"連續打卡天數"},
+  reward:{en:"🎁 45 points to your next reward",zh:"🎁 再45分即可兌換獎勵"},rewardx:{en:"Redeem for a free green smoothie at your next visit",zh:"下次回診可兌換免費green smoothie"},
+  leaderboard:{en:"Leaderboard",zh:"排行榜"},lbx:{en:"Friends & people like you. Opt out anytime in settings.",zh:"朋友與相似的人。可隨時在設定中關閉。"},you:{en:"You",zh:"你"},
+  addFriendBtn:{en:"+ Add a friend by link",zh:"+ 用連結加朋友"},shareSocial:{en:"↗ Share my progress to social",zh:"↗ 分享進度到社群"},
+  gami:{en:"Gamification",zh:"遊戲化設定"},gamix:{en:"On by default. Turn off anything that feels like pressure.",zh:"預設開啟。任何造成壓力的都可以關閉。"},
+  tgLeader:{en:"Leaderboard & competition",zh:"排行榜與競賽"},tgPoints:{en:"Points & XP",zh:"積分與XP"},tgStreak:{en:"Streaks",zh:"連續紀錄"},
+  contact:{en:"Message my ATC (care manager)",zh:"聯絡我的個管師 (ATC)"},language:{en:"Language",zh:"語言"},account:{en:"Account & password",zh:"帳號與密碼"},notif:{en:"Notifications",zh:"通知設定"},fb:{en:"How are you liking the app?",zh:"你覺得這個app如何？"},
   atc:{en:"Nurse Lin · your ATC",zh:"林護理師・你的個管師"},
   c1:{en:"Hi Xiaoming! How is the new turning schedule feeling this week?",zh:"小明你好！這週新的轉牙套排程感覺如何？"},
   c2:{en:"A little tight the first day but okay now 🙂",zh:"第一天有點緊，現在還好 🙂"},
-  c3:{en:"That's completely normal. Keep it up — see you Aug 9!",zh:"很正常喔，繼續加油——8月9日見！"},
-  nHome:{en:"Home",zh:"首頁"}, nJourney:{en:"Journey",zh:"旅程"}, nProgress:{en:"Progress",zh:"進度"}, nLearn:{en:"Learn",zh:"衛教"}, nMe:{en:"Me",zh:"我的"},
-  installTip:{en:"Tap Share → Add to Home Screen to install the app",zh:"點擊 分享 → 加入主畫面 即可安裝"},
+  c3:{en:"Totally normal. Keep it up — see you Aug 9!",zh:"很正常喔，繼續加油——8月9日見！"},
+  nHome:{en:"Home",zh:"首頁"},nAppts:{en:"Appts",zh:"約診"},nJourney:{en:"Journey",zh:"旅程"},nLearn:{en:"Learn",zh:"衛教"},nMe:{en:"Me",zh:"我的"},
+  installTip:{en:"Tap Share → Add to Home Screen to install",zh:"點擊 分享 → 加入主畫面 即可安裝"},
+  howto:{en:"Opening tutorial in Learn…",zh:"在衛教中開啟教學…"},shareTask:{en:"Share with a friend or your ATC",zh:"分享給朋友或你的個管師"},
+  planPDF:{en:"Opening treatment plan PDF…",zh:"開啟治療計畫PDF…"},shared:{en:"Shared!",zh:"已分享！"},
+  shopOpen:{en:"Opening store…",zh:"開啟商城…"},acct:{en:"Account settings",zh:"帳號設定"},notifSet:{en:"Notification settings",zh:"通知設定"},
+  feedback:{en:"Thanks! A quick 3-tap rating (under 2 min)",zh:"謝謝！快速3點評分（2分鐘內）"},
+  addFriend:{en:"Create a link to send on WhatsApp / LINE",zh:"建立連結，用WhatsApp / LINE傳送"},socialShare:{en:"Made a shareable card for Instagram / TikTok",zh:"已製作可分享到IG / TikTok的圖卡"},
+  referToast:{en:"Invite link ready · +100 XP when they join",zh:"邀請連結已就緒・朋友加入後+100 XP"},xpGain:{en:"XP · nice work!",zh:"XP · 做得好！"},readGain:{en:"+10 XP · article read",zh:"+10 XP · 已閱讀"},
 };
 let lang="en";
+function t(k){return (I18N[k]||{})[lang]||k;}
+const G={leader:true,points:true,streak:true};
 
-/* ---------- render ---------- */
+function baseXP(){return TASKS.filter(x=>x.done).length*XP_EACH + 100;}
 function renderTasks(){
   const el=document.getElementById('taskList');
-  el.innerHTML=TASKS.map(t=>`
-    <div class="task ${t.done?'done':''}" data-id="${t.id}">
-      <div class="check ${t.done?'on':''}" onclick="toggleTask(${t.id})">${t.done?'✓':''}</div>
-      <div class="t-name">${t.name[lang]}</div>
-      <div class="xp-tag">+${t.xp}</div>
-    </div>`).join('');
-  const done=TASKS.filter(t=>t.done).length, total=TASKS.length;
-  document.getElementById('ringTxt').textContent=done+'/'+total;
-  document.getElementById('ringFill').setAttribute('stroke-dashoffset', 100-(done/total*100));
-}
-function toggleTask(id){
-  const t=TASKS.find(x=>x.id===id); t.done=!t.done;
-  document.getElementById('xp').textContent = 340 + TASKS.filter(x=>x.done).reduce((a,b)=>a+b.xp,0) - 40;
-  renderTasks();
-  if(t.done) toast('+'+t.xp+' XP · nice work!');
-}
-function renderTimeline(){
-  const el=document.getElementById('timeline');
-  el.innerHTML=STEPS.map((s,i)=>{
-    const isLast=i===STEPS.length-1;
-    const dotCls=s.st==='done'?'done':s.st==='now'?'now':'';
-    const barCls=(s.st==='done')?'done':'';
-    return `<div class="step ${s.st==='now'?'now':''}">
-      <div class="dotcol">
-        <div class="dot ${dotCls}">${s.st==='done'?'✓':''}</div>
-        ${isLast?'':`<div class="bar ${barCls}"></div>`}
+  el.innerHTML=TASKS.map(x=>`
+    <div class="task ${x.done?'done':''}" data-id="${x.id}">
+      <div class="check ${x.done?'on':''}" onclick="toggleTask(${x.id})">${x.done?'✓':''}</div>
+      <div class="t-main">
+        <div class="t-name">${x.name[lang]}</div>
+        <div class="t-links">
+          <a onclick="toast(t('howto'));go('learn')">${lang==='en'?'How to do this':'如何進行'}</a>
+          <a onclick="toast(t('shareTask'))">${lang==='en'?'Share':'分享'}</a>
+        </div>
       </div>
-      <div class="body">
-        <div class="s-t">${s.t[lang]}${s.st==='now'?'<span class="badge-now">NOW</span>':''}</div>
-        <div class="s-d">${s.d[lang]}</div>
-      </div></div>`;
+      <div class="xp-tag pts">+${XP_EACH}</div>
+    </div>`).join('');
+  const done=TASKS.filter(x=>x.done).length,total=TASKS.length;
+  document.getElementById('ringTxt').textContent=done+'/'+total;
+  document.getElementById('ringFill').setAttribute('stroke-dashoffset',100-(done/total*100));
+  document.getElementById('xp').textContent=baseXP();
+  applyG();
+}
+function toggleTask(id){const x=TASKS.find(a=>a.id===id);x.done=!x.done;renderTasks();
+  if(x.done)toast('+'+XP_EACH+' '+t('xpGain'));}
+function renderTimeline(){
+  document.getElementById('timeline').innerHTML=STEPS.map((s,i)=>{
+    const isLast=i===STEPS.length-1,dotCls=s.st==='done'?'done':s.st==='now'?'now':'',barCls=s.st==='done'?'done':'';
+    return `<div class="step ${s.st==='now'?'now':''}"><div class="dotcol"><div class="dot ${dotCls}">${s.st==='done'?'✓':''}</div>${isLast?'':`<div class="bar ${barCls}"></div>`}</div>
+      <div class="body"><div class="s-t">${s.t[lang]}${s.st==='now'?'<span class="badge-now">NOW</span>':''}</div><div class="s-d">${s.d[lang]}</div></div></div>`;
   }).join('');
 }
 function applyLang(){
-  document.querySelectorAll('[data-i18n]').forEach(n=>{
-    const k=n.getAttribute('data-i18n'); if(I18N[k]) n.textContent=I18N[k][lang];
-  });
-  document.getElementById('langBtn').textContent = lang==='en'?'中文':'EN';
-  document.getElementById('langLbl').textContent = lang==='en'?'English':'中文';
-  document.documentElement.lang = lang==='en'?'en':'zh-Hant';
-  renderTasks(); renderTimeline();
+  document.querySelectorAll('[data-i18n]').forEach(n=>{const k=n.getAttribute('data-i18n');if(I18N[k])n.textContent=I18N[k][lang];});
+  document.getElementById('langBtn').textContent=lang==='en'?'中文':'EN';
+  document.getElementById('langLbl').textContent=lang==='en'?'English':'中文';
+  document.documentElement.lang=lang==='en'?'en':'zh-Hant';
+  renderTasks();renderTimeline();
 }
-function toggleLang(){ lang = lang==='en'?'zh':'en'; applyLang(); }
-
-/* ---------- nav ---------- */
+function toggleLang(){lang=lang==='en'?'zh':'en';applyLang();}
+function toggleG(el){const k=el.getAttribute('data-g');G[k]=!G[k];el.classList.toggle('on',G[k]);applyG();
+  toast((G[k]?'✓ ':'✕ ')+({leader:t('tgLeader'),points:t('tgPoints'),streak:t('tgStreak')}[k]));}
+function applyG(){
+  document.querySelectorAll('.pts').forEach(e=>e.style.display=G.points?'':'none');
+  document.querySelectorAll('.strk').forEach(e=>e.style.display=G.streak?'':'none');
+  const lc=document.getElementById('leaderboardCard');if(lc)lc.style.display=G.leader?'':'none';
+}
 function go(scr){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-'+scr).classList.add('active');
-  document.querySelectorAll('.nav a').forEach(a=>a.classList.toggle('on', a.getAttribute('data-t')===scr));
-  document.getElementById('app').scrollTop=0; window.scrollTo(0,0);
+  document.querySelectorAll('.nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('data-t')===scr));
+  window.scrollTo(0,0);
+  if(scr==='journey')setTimeout(sizeBefore,30);
 }
-/* ---------- STA ---------- */
-function doSta(){
-  const btn=document.getElementById('staBtn'), burst=document.getElementById('staBurst');
-  btn.classList.add('done'); btn.textContent = lang==='en'?'Done today ✓':'今天已完成 ✓';
-  burst.classList.add('show'); toast('+50 XP · '+(lang==='en'?'Great job!':'做得好！'));
-  setTimeout(()=>burst.classList.remove('show'),1600);
-}
-/* ---------- before/after slider ---------- */
+function doSta(){const btn=document.getElementById('staBtn'),burst=document.getElementById('staBurst');
+  btn.classList.add('done');btn.textContent=lang==='en'?'Done today ✓':'今天已完成 ✓';
+  burst.classList.add('show');toast('+50 '+t('xpGain'));setTimeout(()=>burst.classList.remove('show'),1600);}
+function readArt(el){el.classList.add('done');el.textContent=lang==='en'?'Read ✓':'已閱讀 ✓';toast(t('readGain'));}
+function referFriend(){toast(t('referToast'));}
+function facePH(color,label){return `url("data:image/svg+xml,`+encodeURIComponent(
+  `<svg xmlns='http://www.w3.org/2000/svg' width='420' height='315'><rect width='420' height='315' fill='${color}'/><circle cx='210' cy='120' r='74' fill='#ffffff33'/><path d='M150 260 q60 -52 120 0' fill='#ffffff33'/><text x='210' y='300' font-family='sans-serif' font-size='20' fill='#ffffffcc' text-anchor='middle'>${label}</text></svg>`)+`")`;}
+function sizeBefore(){const ba=document.getElementById('ba');if(!ba)return;const w=(ba.clientWidth||420)+'px';
+  document.getElementById('phBefore').style.setProperty('--w',w);
+  document.getElementById('afterWrap').style.setProperty('--w',w);}
 function initBA(){
-  const ba=document.getElementById('ba'), wrap=document.getElementById('afterWrap'), h=document.getElementById('handle');
-  function set(x){
-    const r=ba.getBoundingClientRect(); let p=(x-r.left)/r.width; p=Math.max(0,Math.min(1,p));
-    wrap.style.width=(p*100)+'%'; h.style.left=(p*100)+'%';
-  }
-  let drag=false;
-  const dn=e=>{drag=true; set((e.touches?e.touches[0]:e).clientX);};
-  const mv=e=>{if(drag){set((e.touches?e.touches[0]:e).clientX); e.preventDefault();}};
-  const up=()=>drag=false;
-  ba.addEventListener('mousedown',dn); ba.addEventListener('touchstart',dn,{passive:true});
-  window.addEventListener('mousemove',mv); window.addEventListener('touchmove',mv,{passive:false});
-  window.addEventListener('mouseup',up); window.addEventListener('touchend',up);
+  const ba=document.getElementById('ba'),wrap=document.getElementById('afterWrap'),h=document.getElementById('handle');
+  document.getElementById('phBefore').style.backgroundImage=facePH('#64748b','Apr');
+  document.getElementById('phAfter').style.backgroundImage=facePH('#0f766e','Jul');
+  function set(x){const r=ba.getBoundingClientRect();let p=(x-r.left)/r.width;p=Math.max(0,Math.min(1,p));wrap.style.width=(p*100)+'%';h.style.left=(p*100)+'%';}
+  let drag=false;const dn=e=>{drag=true;set((e.touches?e.touches[0]:e).clientX);};
+  const mv=e=>{if(drag){set((e.touches?e.touches[0]:e).clientX);e.preventDefault();}};
+  ba.addEventListener('mousedown',dn);ba.addEventListener('touchstart',dn,{passive:true});
+  window.addEventListener('mousemove',mv);window.addEventListener('touchmove',mv,{passive:false});
+  window.addEventListener('mouseup',()=>drag=false);window.addEventListener('touchend',()=>drag=false);
+  window.addEventListener('resize',sizeBefore);
 }
-/* placeholder "photos" (SVG face silhouettes so no external images needed) */
-function facePH(color,label){
-  return `url("data:image/svg+xml,`+encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'>
-      <rect width='400' height='300' fill='${color}'/>
-      <circle cx='200' cy='120' r='70' fill='#ffffff33'/>
-      <path d='M140 250 q60 -50 120 0' fill='#ffffff33'/>
-      <text x='200' y='285' font-family='sans-serif' font-size='20' fill='#ffffffcc' text-anchor='middle'>${label}</text>
-    </svg>`)+`")`;
-}
-/* ---------- chat ---------- */
-function sendMsg(){
-  const inp=document.getElementById('chatIn'); if(!inp.value.trim())return;
-  const log=document.querySelector('.chat-log');
-  const d=document.createElement('div'); d.className='msg me'; d.textContent=inp.value; log.appendChild(d);
-  inp.value=''; log.scrollTop=log.scrollHeight;
-}
-/* ---------- toast ---------- */
-let tT; function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
-  clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),1800);}
+function sendMsg(){const inp=document.getElementById('chatIn');if(!inp.value.trim())return;
+  const d=document.createElement('div');d.className='msg me';d.textContent=inp.value;
+  document.getElementById('chatLog').appendChild(d);inp.value='';}
+let tT;function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>el.classList.remove('show'),1900);}
 
-/* ---------- init ---------- */
-document.getElementById('phBefore').style.backgroundImage=facePH('#64748b','Apr');
-document.getElementById('phBefore').style.backgroundSize='cover';
-document.getElementById('phAfter').style.backgroundImage=facePH('#0f766e','Jul');
-document.getElementById('phAfter').style.backgroundSize='cover';
-applyLang(); initBA();
-/* show iOS install hint */
-if(/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone){
-  document.getElementById('installBar').style.display='flex';
-}
-/* register service worker */
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js').catch(()=>{}));
-}
+applyLang();initBA();sizeBefore();
+if(/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone){document.getElementById('installBar').style.display='flex';}
+
+/* self-heal: prototype has NO service worker — remove any old one + clear caches so updates always show */
+if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister()));}
+if(window.caches&&caches.keys){caches.keys().then(ks=>ks.forEach(k=>caches.delete(k)));}
 </script>
 </body>
 </html>

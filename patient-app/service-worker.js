@@ -1,5 +1,5 @@
 /* AMD Patient App — basic offline cache */
-const CACHE = 'amd-patient-v1';
+const CACHE = 'amd-patient-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -19,13 +19,15 @@ self.addEventListener('activate', e => {
   );
 });
 
+/* Network-first: always try the live file, fall back to cache only when offline.
+   Prevents a stale cached page from shadowing updates. */
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   e.respondWith(
-    caches.match(e.request).then(hit => hit || fetch(e.request).then(res => {
+    fetch(e.request).then(res => {
       const copy = res.clone();
       caches.open(CACHE).then(c => c.put(e.request, copy)).catch(() => {});
       return res;
-    }).catch(() => caches.match('./index.html')))
+    }).catch(() => caches.match(e.request))
   );
 });
