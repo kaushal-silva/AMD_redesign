@@ -66,7 +66,45 @@
   label{font-size:12px;color:var(--muted);display:block;margin-bottom:5px;font-weight:600}
   input,select,textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;
     font-size:14px;font-family:inherit;background:#fdfdfd}
+  input[type=checkbox],input[type=radio]{width:auto;padding:0;margin:0;accent-color:var(--teal);
+    flex:0 0 auto;transform:scale(1.15)}
   textarea{min-height:70px;resize:vertical}
+  /* image mockups */
+  .imgrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .imgmock{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .imgmock svg{display:block;width:100%;height:104px}
+  .imgmock .cap{padding:8px 10px;font-size:12px;font-weight:600;border-top:1px solid var(--line)}
+  .imgmock .cap small{display:block;color:var(--muted);font-weight:400;font-size:11px;margin-top:1px}
+  .imgmock.need svg{opacity:.35}
+  .imgmock .up-tag{font-size:10px;color:#16a34a;font-weight:700}
+  .imgmock .todo-tag{font-size:10px;color:#b45309;font-weight:700}
+  /* comparison slider */
+  .ba{position:relative;border-radius:12px;overflow:hidden;user-select:none;touch-action:none;aspect-ratio:16/10;background:#0e1526}
+  .ba .lay{position:absolute;inset:0}.ba .lay svg{width:100%;height:100%;display:block}
+  .ba .after-wrap{position:absolute;inset:0;overflow:hidden;width:50%;border-right:3px solid #fff}
+  .ba .after-wrap svg{width:auto;min-width:var(--w,640px);height:100%}
+  .ba .handle{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;transform:translateX(-50%);z-index:3}
+  .ba .handle::after{content:"⇆";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:32px;height:32px;background:#fff;color:var(--teal);border-radius:50%;display:flex;
+    align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px #0006}
+  .ba .tg{position:absolute;bottom:8px;font-size:11px;background:#0009;color:#fff;padding:3px 9px;border-radius:10px;z-index:4}
+  .ba .tg.l{left:8px}.ba .tg.r{right:8px}
+  /* image/report library table */
+  .lib{width:100%;border-collapse:collapse;font-size:13px}
+  .lib th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);
+    padding:8px 10px;border-bottom:1px solid var(--line)}
+  .lib td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+  .lib .type{font-weight:600}
+  .datechip{display:inline-block;font-size:11px;background:#eef2f1;border:1px solid var(--line);
+    border-radius:8px;padding:3px 9px;margin:2px 4px 2px 0;cursor:pointer}
+  .datechip:hover{background:#ccfbf1;border-color:#5eead4}
+  .datechip.hq{background:#ede9fe;border-color:#c4b5fd;color:#6d28d9}
+  .datechip.none{color:#b45309;background:#fff7ed;border-color:#fed7aa;cursor:default}
+  .cat{font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;
+    margin:14px 0 6px;padding-top:12px;border-top:1px dashed var(--line)}
+  .cat:first-of-type{border-top:none;padding-top:0}
+  .maps{background:#f0fdfa;border:1px solid #99f6e4;border-radius:10px;padding:10px 14px;font-size:12px;
+    color:#115e59;margin-top:14px}
   .hint{font-size:11px;color:var(--muted);margin-top:4px}
   .pill{font-size:10px;background:#ccfbf1;color:var(--teal);padding:2px 8px;border-radius:20px;font-weight:700}
   .voice{font-size:11px;color:var(--blue);cursor:pointer}
@@ -183,13 +221,16 @@
         </div>
         <div class="card">
           <h3>3 · Initial images <span class="pill">guided upload</span></h3>
-          <div class="cmp">
-            <div class="ph">📷 Extraoral photos</div>
-            <div class="ph">📷 Intraoral + treatment-bite</div>
-            <div class="ph">🦷 Pano</div>
-            <div class="ph">🦷 Lateral cepha</div>
-            <div class="ph">🧠 CBCT</div>
-            <div class="ph">🦿 MSKalign</div>
+          <p class="hint" style="margin-bottom:12px">Each tile shows an example of what to capture, so juniors know exactly what goes where. Click a tile to upload. These feed the diagnostic report and the patient's before/after comparisons.</p>
+          <div class="imgrow">
+            <div class="imgmock need" data-img="extra_front"><div class="cap">Extraoral — frontal<small>Relaxed + smiling <span class="todo-tag">upload</span></small></div></div>
+            <div class="imgmock need" data-img="extra_profile"><div class="cap">Extraoral — profile<small>Left + right side <span class="todo-tag">upload</span></small></div></div>
+            <div class="imgmock need" data-img="intra_occ"><div class="cap">Intraoral — occlusal<small>Upper + lower arch <span class="todo-tag">upload</span></small></div></div>
+            <div class="imgmock need" data-img="intra_bite"><div class="cap">Treatment-bite<small>First visit only <span class="todo-tag">upload</span></small></div></div>
+            <div class="imgmock need" data-img="pano"><div class="cap">Pano<small>Panoramic X-ray <span class="todo-tag">upload</span></small></div></div>
+            <div class="imgmock need" data-img="ceph"><div class="cap">Lateral cephalogram<small>Side skull X-ray <span class="todo-tag">upload</span></small></div></div>
+            <div class="imgmock need" data-img="cbct"><div class="cap">CBCT<small>3D + airway <span class="todo-tag">upload</span></small></div></div>
+            <div class="imgmock need" data-img="msk"><div class="cap">MSKalign<small>Posture scan <span class="todo-tag">upload</span></small></div></div>
           </div>
         </div>
         <button class="btn" onclick="toast('Profile created → timeline: Initial visit, data collection');go('detail')">Create profile</button>
@@ -244,18 +285,35 @@
             </div>
             <!-- images -->
             <div class="pv" id="pv-images">
-              <div class="banner">Every category supports a before/after comparison — pick two dates. S+ and Schwarz are read-only (uploaded by HQ).</div>
-              <div class="card"><h3>Extraoral · compare</h3>
-                <div class="cmp"><div class="ph">Apr 2 (baseline)</div><div class="ph">Jul 12 (latest)</div></div>
-              </div>
-              <div class="card"><h3>Available series</h3>
-                <div class="step-tags">
-                  <span class="tag">Extraoral ×4</span><span class="tag">Intraoral ×4</span><span class="tag">Pano ×2</span>
-                  <span class="tag">Lateral cepha ×2</span><span class="tag">CBCT ×2</span><span class="tag">MSKalign ×1</span>
-                  <span class="tag" style="background:#ede9fe;color:#6d28d9">S+ (HQ) 🔒</span>
-                  <span class="tag" style="background:#ede9fe;color:#6d28d9">Schwarz (HQ) 🔒</span>
-                  <span class="tag">Sleep report</span><span class="tag">Blood work</span>
+              <div class="banner">Drag the divider to compare two dates. The baseline (first) photo stays fixed as "before"; the latest visit is "after". This same comparison is what the patient sees in their app's Progress tab.</div>
+              <div class="card"><h3>Extraoral — profile · baseline vs latest</h3>
+                <div class="ba" id="baImg">
+                  <div class="lay" id="baAfter"></div>
+                  <div class="after-wrap" id="baBeforeWrap"><div id="baBefore" style="height:100%"></div></div>
+                  <div class="handle" id="baHandle"></div>
+                  <span class="tg l">Before · Apr 2</span><span class="tg r">Now · Jul 12</span>
                 </div>
+                <div class="step-tags" style="margin-top:12px">
+                  <span class="tag">Switch series: Extraoral</span><span class="tag">Intraoral</span><span class="tag">CBCT superimposition</span><span class="tag">Airway cross-section</span>
+                </div>
+              </div>
+
+              <div class="card">
+                <h3>Image &amp; report library <span class="pill">what "available series" means</span></h3>
+                <p class="hint" style="margin-bottom:12px">Every image and report type captured for this patient, listed with the <b>dates</b> each was taken. A "series" = all the dated versions of one type (e.g. three sets of intraoral photos taken Apr, Jun, Jul). Click any date to open it; pick two dates of the same type to compare. New dates are added automatically each time a follow-up record is uploaded.</p>
+                <table class="lib">
+                  <tr><th>Type</th><th>Dates on file (a "series")</th><th>Source</th></tr>
+                  <tr><td class="type">Extraoral photos</td><td><span class="datechip">Apr 2</span><span class="datechip">Jun 14</span><span class="datechip">Jul 12</span></td><td>AMD/ATC</td></tr>
+                  <tr><td class="type">Intraoral photos</td><td><span class="datechip">Apr 2</span><span class="datechip">Jun 14</span><span class="datechip">Jul 12</span></td><td>AMD/ATC</td></tr>
+                  <tr><td class="type">Pano</td><td><span class="datechip">Apr 2</span><span class="datechip">Jul 12</span></td><td>AMD/ATC</td></tr>
+                  <tr><td class="type">Lateral cephalogram</td><td><span class="datechip">Apr 2</span><span class="datechip">Jul 12</span></td><td>AMD/ATC</td></tr>
+                  <tr><td class="type">CBCT</td><td><span class="datechip">Apr 2</span><span class="datechip">Jul 12</span></td><td>AMD/ATC</td></tr>
+                  <tr><td class="type">MSKalign</td><td><span class="datechip">Apr 2</span></td><td>AMD/ATC</td></tr>
+                  <tr><td class="type">S+ analysis</td><td><span class="datechip hq">Apr 18 🔒</span></td><td>HQ (read-only)</td></tr>
+                  <tr><td class="type">Schwarz analysis</td><td><span class="datechip hq">Apr 18 🔒</span></td><td>HQ (read-only)</td></tr>
+                  <tr><td class="type">Sleep test (ESS)</td><td><span class="datechip">Apr 2</span><span class="datechip none">next: Oct</span></td><td>AMD/ATC</td></tr>
+                  <tr><td class="type">Blood work</td><td><span class="datechip">Apr 2</span><span class="datechip none">next: Oct</span></td><td>AMD/ATC</td></tr>
+                </table>
               </div>
             </div>
             <!-- plan -->
@@ -321,17 +379,28 @@
             </div>
             <!-- tasks -->
             <div class="pv" id="pv-tasks">
-              <div class="banner">Assign daily tasks → they appear on the patient's Home card & Daily Tasks tab. All tasks are worth equal points (per feedback).</div>
-              <div class="card"><h3>Daily-task assignment</h3>
+              <div class="banner">Re-set at each visit. Tick what the patient must do daily — grouped by category (per PRD: diet, supplements, oral myofunctional, physical therapy). Every task is worth <b>equal points</b> (per Jul 23 feedback).</div>
+              <div class="card"><h3>Daily-task assignment · this visit</h3>
                 <div class="task-assign">
-                  <label class="chk"><input type="checkbox" checked> Tongue-to-palate exercise</label>
-                  <label class="chk"><input type="checkbox" checked> Myofunctional training (5 min)</label>
-                  <label class="chk"><input type="checkbox" checked> Bone broth</label>
+                  <div class="cat">🥣 Diet</div>
+                  <label class="chk"><input type="checkbox" checked> Bone broth (1 bowl)</label>
                   <label class="chk"><input type="checkbox" checked> Green smoothie</label>
-                  <label class="chk"><input type="checkbox" checked> Daily vitamins</label>
-                  <label class="chk"><input type="checkbox"> Physical therapy stretches</label>
+                  <label class="chk"><input type="checkbox"> Reduce soft/processed food</label>
+                  <div class="cat">💊 Supplements</div>
+                  <label class="chk"><input type="checkbox" checked> Daily multivitamin</label>
+                  <label class="chk"><input type="checkbox"> Vitamin D</label>
+                  <label class="chk"><input type="checkbox"> Magnesium (evening)</label>
+                  <div class="cat">👅 Oral myofunctional</div>
+                  <label class="chk"><input type="checkbox" checked> Tongue-to-palate hold</label>
+                  <label class="chk"><input type="checkbox" checked> Myofunctional training (5 min)</label>
+                  <label class="chk"><input type="checkbox"> Nasal breathing practice</label>
+                  <label class="chk"><input type="checkbox"> Lip-seal / mouth taping (night)</label>
+                  <div class="cat">🧎 Physical therapy</div>
+                  <label class="chk"><input type="checkbox"> Neck / posture stretches</label>
+                  <label class="chk"><input type="checkbox"> Jaw mobility exercise</label>
                 </div>
-                <button class="btn" style="margin-top:12px" onclick="toast('Tasks pushed to patient app')">Update tasks</button>
+                <div class="maps">→ Selected tasks appear on the patient's <b>Home "Today's tasks" card</b> and their <b>Daily Tasks tab</b>. Each task carries a "How to do this" link into the Learn module (video/text), and the full history of completed tasks is kept for the patient to look back on.</div>
+                <button class="btn" style="margin-top:14px" onclick="toast('Tasks pushed to patient app')">Update tasks</button>
               </div>
             </div>
             <!-- chat -->
@@ -406,10 +475,55 @@ function pv(v){
   document.querySelectorAll('.pv').forEach(x=>x.classList.remove('on'));
   document.getElementById('pv-'+v).classList.add('on');
   document.querySelectorAll('.pd-menu a[data-pv]').forEach(a=>a.classList.toggle('on',a.dataset.pv===v));
+  if(v==='images' && window.baResize){ setTimeout(window.baResize,30); }
 }
 let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
   clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
-renderPatients();
+
+/* ---------- example image mockups (stylized SVG, no external files) ---------- */
+const X="xmlns='http://www.w3.org/2000/svg'";
+const IMG={
+ extra_front:`<svg ${X} viewBox='0 0 200 120'><rect width='200' height='120' fill='#d7c2af'/><path d='M68 24 q32 -16 64 0 q11 30 4 56 q-7 38 -36 38 q-29 0 -36 -38 q-7 -26 4 -56z' fill='#f2ddc8' stroke='#c8a887'/><path d='M64 34 q36 -24 72 0 q-6 -24 -36 -24 q-30 0 -36 24z' fill='#4b3a2f'/><ellipse cx='85' cy='60' rx='5' ry='3' fill='#3b2f26'/><ellipse cx='115' cy='60' rx='5' ry='3' fill='#3b2f26'/><path d='M79 52 q6 -3 12 0M109 52 q6 -3 12 0' stroke='#6b5340' fill='none' stroke-width='1.5'/><path d='M100 64 l0 13 -4 3' fill='none' stroke='#c8a887' stroke-width='1.5'/><path d='M89 88 q11 6 22 0' fill='none' stroke='#b06a5a' stroke-width='2.5'/></svg>`,
+ extra_profile:`<svg ${X} viewBox='0 0 200 120'><rect width='200' height='120' fill='#d7c2af'/><path d='M132 20 q-44 2 -52 42 q-4 20 5 30 l-5 9 6 5 -2 9 q16 11 34 5' fill='#f2ddc8' stroke='#c8a887'/><path d='M80 34 q34 -22 52 4 q2 -22 -20 -22 q-24 0 -32 18z' fill='#4b3a2f'/><circle cx='98' cy='56' r='3' fill='#3b2f26'/><path d='M78 60 l-6 8 6 3' fill='none' stroke='#c8a887' stroke-width='1.5'/><path d='M78 84 q9 4 16 1' fill='none' stroke='#b06a5a' stroke-width='2.5'/></svg>`,
+ prof_before:`<svg ${X} viewBox='0 0 200 120'><rect width='200' height='120' fill='#243b4a'/><path d='M138 18 q-46 2 -54 44 q-4 20 5 30 l-5 9 6 5 -3 10 q10 8 22 6' fill='none' stroke='#7fd3c9' stroke-width='2'/><circle cx='100' cy='56' r='2.5' fill='#7fd3c9'/><path d='M78 62 l-7 7 7 3' fill='none' stroke='#7fd3c9' stroke-width='1.5'/><text x='12' y='112' fill='#9fb7c4' font-family='sans-serif' font-size='11'>baseline · receded</text></svg>`,
+ prof_after:`<svg ${X} viewBox='0 0 200 120'><rect width='200' height='120' fill='#0e2a33'/><path d='M138 18 q-46 2 -54 44 q-4 20 5 30 l-3 10 6 5 -1 11 q12 8 24 5' fill='none' stroke='#5eead4' stroke-width='2'/><circle cx='100' cy='56' r='2.5' fill='#5eead4'/><path d='M76 62 l-8 7 8 3' fill='none' stroke='#5eead4' stroke-width='1.5'/><text x='12' y='112' fill='#7fe9d8' font-family='sans-serif' font-size='11'>now · forward chin</text></svg>`,
+ intra_occ:`<svg ${X} viewBox='0 0 200 120'><rect width='200' height='120' fill='#b5545a'/><path d='M38 96 Q100 14 162 96' fill='none' stroke='#e78a90' stroke-width='34' stroke-linecap='round'/><path d='M44 92 Q100 26 156 92' fill='none' stroke='#fdfdfd' stroke-width='20' stroke-linecap='round'/><g stroke='#d9c9c0' stroke-width='1.5'><path d='M70 40 l-6 -9M100 30 l0 -11M130 40 l6 -9M55 60 l-10 -5M145 60 l10 -5M52 82 l-11 -2M148 82 l11 -2'/></g></svg>`,
+ intra_bite:`<svg ${X} viewBox='0 0 200 120'><rect width='200' height='120' fill='#c56a6a'/><rect x='48' y='36' width='104' height='24' rx='3' fill='#fff'/><rect x='48' y='62' width='104' height='24' rx='3' fill='#f2f2f2'/><g stroke='#d9c9c0' stroke-width='1.5'><path d='M61 36v24M74 36v24M87 36v24M100 36v24M113 36v24M126 36v24M139 36v24M61 62v24M74 62v24M87 62v24M100 62v24M113 62v24M126 62v24M139 62v24'/></g></svg>`,
+ pano:`<svg ${X} viewBox='0 0 200 120'><rect width='200' height='120' fill='#0c1a26'/><path d='M24 46 Q100 -6 176 46' fill='none' stroke='#8fb0c4' stroke-width='2' opacity='.6'/><path d='M34 58 Q100 8 166 58 Q150 96 100 96 Q50 96 34 58z' fill='none' stroke='#aecad9' stroke-width='2'/><g stroke='#cfe2ec' stroke-width='1.4' opacity='.85'><path d='M60 40v22M74 34v24M88 31v26M100 30v27M112 31v26M126 34v24M140 40v22M64 70v16M80 76v14M100 78v14M120 76v14M136 70v16'/></g></svg>`,
+ ceph:`<svg ${X} viewBox='0 0 200 120'><rect width='200' height='120' fill='#0c1a26'/><path d='M150 22 q-58 0 -66 46 q-4 24 8 36 l-6 12 8 4' fill='none' stroke='#bcd4e0' stroke-width='2'/><path d='M84 104 l0 -14' stroke='#bcd4e0' stroke-width='2'/><circle cx='118' cy='52' r='3' fill='#bcd4e0'/><path d='M70 60 l-10 8 10 4' fill='none' stroke='#9fbccb' stroke-width='1.5'/><rect x='72' y='84' width='26' height='8' rx='2' fill='none' stroke='#cfe2ec'/></svg>`,
+ cbct:`<svg ${X} viewBox='0 0 200 120'><rect width='200' height='120' fill='#071620'/><path d='M150 20 q-60 0 -68 48 q-4 26 9 38 l-6 12 8 4' fill='none' stroke='#3f6a7d' stroke-width='2'/><path d='M112 30 q-16 20 -12 44 q3 18 14 28' fill='none' stroke='#22d3ee' stroke-width='7' opacity='.55' stroke-linecap='round'/><text x='120' y='60' fill='#67e8f9' font-family='sans-serif' font-size='9'>airway</text></svg>`,
+ msk:`<svg ${X} viewBox='0 0 200 120'><rect width='200' height='120' fill='#eef3f6'/><line x1='100' y1='8' x2='100' y2='114' stroke='#94a3b8' stroke-dasharray='4 4'/><circle cx='100' cy='26' r='10' fill='#64748b'/><path d='M100 36 l0 40' stroke='#64748b' stroke-width='6'/><path d='M100 44 l-20 14M100 44 l20 14' stroke='#64748b' stroke-width='5'/><path d='M100 76 l-14 34M100 76 l14 34' stroke='#64748b' stroke-width='5'/><g stroke='#0f766e' stroke-width='1.5'><line x1='80' y1='58' x2='120' y2='58'/><line x1='86' y1='110' x2='114' y2='110'/></g></svg>`,
+ sta:`<svg ${X} viewBox='0 0 200 120'><rect width='200' height='120' fill='#eef7f6'/><path d='M44 92 Q100 26 156 92' fill='none' stroke='#e6d9c8' stroke-width='22' stroke-linecap='round'/><path d='M48 88 Q100 34 152 88' fill='none' stroke='#fff' stroke-width='12' stroke-linecap='round'/><rect x='90' y='52' width='20' height='12' rx='2' fill='#0f766e'/><circle cx='100' cy='58' r='3' fill='#fff'/><g stroke='#0f766e' stroke-width='1.2'><path d='M100 58 l0 -8M100 58 l0 8M100 58 l8 0M100 58 l-8 0'/></g></svg>`
+};
+function uri(svg){return "url(\"data:image/svg+xml,"+encodeURIComponent(svg)+"\")";}
+function renderImgMocks(){
+  document.querySelectorAll('.imgmock[data-img]').forEach(el=>{
+    if(el.querySelector('svg'))return;
+    const k=el.getAttribute('data-img'); if(IMG[k]) el.insertAdjacentHTML('afterbegin',IMG[k]);
+  });
+}
+/* before/after comparison slider */
+let baReady=false;
+function initBA(){
+  const box=document.getElementById('baImg');if(!box)return;
+  const after=document.getElementById('baAfter'),wrap=document.getElementById('baBeforeWrap'),
+        before=document.getElementById('baBefore'),handle=document.getElementById('baHandle');
+  after.style.cssText='position:absolute;inset:0;background:'+uri(IMG.prof_after)+' center/cover no-repeat #0e1526';
+  function sizeBefore(){const w=box.clientWidth||420;
+    before.style.cssText='position:absolute;top:0;left:0;height:100%;width:'+w+'px;background:'+uri(IMG.prof_before)+' center/cover no-repeat #0e1526';}
+  function set(x){const r=box.getBoundingClientRect();let p=(x-r.left)/r.width;p=Math.max(0,Math.min(1,p));
+    wrap.style.width=(p*100)+'%';handle.style.left=(p*100)+'%';}
+  window.baResize=()=>{sizeBefore();const r=box.getBoundingClientRect();set(r.left+r.width/2);};
+  let drag=false;
+  const dn=e=>{drag=true;set((e.touches?e.touches[0]:e).clientX);};
+  const mv=e=>{if(drag){set((e.touches?e.touches[0]:e).clientX);e.preventDefault();}};
+  box.addEventListener('mousedown',dn);box.addEventListener('touchstart',dn,{passive:true});
+  window.addEventListener('mousemove',mv);window.addEventListener('touchmove',mv,{passive:false});
+  window.addEventListener('mouseup',()=>drag=false);window.addEventListener('touchend',()=>drag=false);
+  window.addEventListener('resize',()=>window.baResize&&window.baResize());
+  baReady=true;window.baResize();
+}
+renderPatients();renderImgMocks();initBA();
 </script>
 </body>
 </html>
