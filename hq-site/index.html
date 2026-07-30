@@ -5,133 +5,317 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>AMD Taiwan · HQ Site</title>
 <style>
-  :root{--pur:#6d28d9;--pur-d:#4c1d95;--bg:#f6f5fb;--card:#fff;--ink:#1a172a;--muted:#726c85;
-    --line:#eae6f4;--shadow:0 2px 10px rgba(60,20,120,.06);--teal:#0f766e}
+  :root{--pur:#6d28d9;--pur-l:#8b5cf6;--pur-d:#4c1d95;--bg:#f6f5fb;--card:#fff;--ink:#1a172a;
+    --muted:#726c85;--line:#eae6f4;--shadow:0 2px 10px rgba(60,20,120,.06);--teal:#0f766e;
+    --green:#15803d;--amber:#b45309;--red:#dc2626;--blue:#1e40af}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC",sans-serif;background:var(--bg);color:var(--ink)}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC","Microsoft JhengHei",sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
   .app{display:flex;min-height:100vh}
-  .side{width:230px;background:#2a1758;color:#d9cff0;padding:18px 12px;position:sticky;top:0;height:100vh;flex:0 0 auto}
-  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;padding:6px 8px 16px}
+  .side{width:236px;background:#2a1758;color:#d9cff0;padding:18px 12px;position:sticky;top:0;height:100vh;flex:0 0 auto}
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;padding:6px 8px 4px}
   .brand .lg{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,#7c3aed,#a78bfa);
     display:flex;align-items:center;justify-content:center;font-weight:800}
-  .nav a{display:flex;gap:10px;padding:10px 12px;border-radius:9px;color:#d9cff0;text-decoration:none;font-size:14px;cursor:pointer;margin-bottom:2px}
+  .brand small{display:block;font-size:10px;color:#b9a9e0;font-weight:400}
+  .nav a{display:flex;gap:10px;padding:10px 12px;border-radius:9px;color:#d9cff0;text-decoration:none;
+    font-size:14px;cursor:pointer;margin-bottom:2px;align-items:center}
   .nav a:hover{background:#ffffff12}.nav a.on{background:var(--pur);color:#fff}
-  .role{font-size:10px;color:#a99bd0;text-transform:uppercase;letter-spacing:.6px;padding:0 8px;margin:10px 0 4px}
+  .nav a .b{margin-left:auto;background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px}
+  .role{font-size:10px;color:#a99bd0;text-transform:uppercase;letter-spacing:.6px;padding:0 8px;margin:12px 0 4px}
   .back a{color:#a99bd0;font-size:12px;text-decoration:none}
   .main{flex:1;min-width:0}
-  .bar{background:var(--card);border-bottom:1px solid var(--line);padding:14px 26px;display:flex;gap:14px;align-items:center;position:sticky;top:0;z-index:5}
-  .bar h2{flex:1;font-size:17px}.bar .who{font-size:13px;color:var(--muted)}
-  .content{padding:24px 26px 60px;max-width:1080px}
-  .screen{display:none}.screen.on{display:block}
-  .banner{background:#f5f3ff;border:1px solid #ddd6fe;color:#5b21b6;padding:11px 15px;border-radius:10px;font-size:13px;margin-bottom:18px;line-height:1.5}
+  .bar{background:var(--card);border-bottom:1px solid var(--line);padding:12px 26px;display:flex;gap:14px;
+    align-items:center;position:sticky;top:0;z-index:5}
+  .bar h2{flex:1;font-size:17px}.crumb{font-size:12px;color:var(--muted);cursor:pointer}
+  .bar .who{font-size:13px;color:var(--muted)}
+  .bar .bell{position:relative;font-size:18px;cursor:pointer}
+  .bar .bell b{position:absolute;top:-6px;right:-8px;background:#ef4444;color:#fff;font-size:9px;padding:1px 5px;border-radius:10px}
+  .content{padding:22px 26px 60px;max-width:1120px}
+  .screen{display:none;animation:f .2s}.screen.on{display:block}@keyframes f{from{opacity:0}to{opacity:1}}
+  .banner{background:#f5f3ff;border:1px solid #ddd6fe;color:#5b21b6;padding:11px 15px;border-radius:10px;
+    font-size:13px;margin-bottom:16px;line-height:1.55}
   .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
-  .card h3{font-size:15px;margin-bottom:12px}
-  .tree a{display:block;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:14px;text-decoration:none;color:var(--ink)}
-  .tree a:hover{background:#f5f3ff}
-  .tree .amd{font-weight:700}.tree .pt{padding-left:28px;color:var(--muted);font-size:13px}
-  .up{border:1px dashed #c4b5fd;border-radius:12px;padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;background:#faf9ff}
-  .up .ic{width:42px;height:42px;border-radius:10px;background:#ede9fe;color:var(--pur);display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto}
-  .up .t{flex:1}.up .t b{font-size:14px}.up .t div{font-size:12px;color:var(--muted)}
+  .card h3{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .pill{font-size:10px;background:#ede9fe;color:var(--pur);padding:2px 8px;border-radius:20px;font-weight:700}
+  .pill.g{background:#dcfce7;color:var(--green)}.pill.a{background:#fef3c7;color:var(--amber)}.pill.r{background:#fee2e2;color:var(--red)}
+  /* dashboard */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:16px}
+  .kpi{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .kpi .n{font-size:26px;font-weight:800;color:var(--pur)}.kpi .l{font-size:12px;color:var(--muted);margin-top:3px}
+  .kpi .d{font-size:11px;font-weight:700;margin-top:6px}.upg{color:var(--green)}.dn{color:var(--red)}
+  .queue .q{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:11px;margin-bottom:9px}
+  .queue .q .ic{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex:0 0 auto}
+  .q .t{flex:1}.q .t b{font-size:13px}.q .t div{font-size:12px;color:var(--muted)}
   .btn{background:var(--pur);color:#fff;border:none;border-radius:9px;padding:9px 15px;font-weight:600;cursor:pointer;font-size:13px}
   .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
-  select,input{border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:14px}
+  .btn.sm{padding:6px 11px;font-size:12px}
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);
+    padding:9px 10px;border-bottom:1px solid var(--line)}
+  td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+  tr.click{cursor:pointer}tr.click:hover td{background:#faf9ff}
+  .track{display:flex;gap:3px;width:120px}
+  .track i{height:6px;flex:1;background:var(--line);border-radius:3px}.track i.on{background:var(--pur)}
+  .diff{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;color:#fff}
+  .cond{font-size:11px;color:var(--muted)}
+  /* upload workspace */
+  .up{border:1px dashed #c4b5fd;border-radius:12px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:14px;background:#faf9ff}
+  .up.done{border-style:solid;border-color:#bbf7d0;background:#f0fdf4}
+  .up .ic{width:44px;height:44px;border-radius:10px;background:#ede9fe;color:var(--pur);display:flex;
+    align-items:center;justify-content:center;flex:0 0 auto;overflow:hidden}
+  .up .ic svg{width:100%;height:100%}
+  .up .t{flex:1}.up .t b{font-size:14px}.up .t div{font-size:12px;color:var(--muted);margin-top:2px}
+  .recv{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .recv .r{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:8px 10px;border:1px solid var(--line);border-radius:9px}
+  .recv .r .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+  .ok{background:var(--green)}.miss{background:var(--amber)}
   .grade{display:flex;gap:8px;margin-top:6px}
   .grade span{padding:6px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;border:2px solid transparent}
   .g1{background:#dcfce7;color:#166534}.g2{background:#ecfccb;color:#3f6212}.g3{background:#fef3c7;color:#92400e}.g4{background:#fee2e2;color:#991b1b}
   .grade span.sel{border-color:var(--pur)}
-  /* KPI */
-  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:8px}
-  .kpi{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow)}
-  .kpi .n{font-size:26px;font-weight:800;color:var(--pur)}.kpi .l{font-size:12px;color:var(--muted);margin-top:3px}
-  .kpi .d{font-size:11px;font-weight:700;margin-top:6px}.up-g{color:#16a34a}.dn{color:#dc2626}
-  .bars{display:flex;align-items:flex-end;gap:14px;height:150px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .steps{display:flex;gap:6px;margin:12px 0}
+  .steps .s{flex:1;text-align:center;font-size:10.5px;padding:8px 4px;border-radius:8px;background:#f5f3ff;color:var(--muted)}
+  .steps .s.done{background:var(--pur);color:#fff}.steps .s.now{background:var(--pur-l);color:#fff}
+  .rptbuild{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fdfdff}
+  .rptbuild .sec{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .rptbuild .sec:last-child{border:none}
+  /* charts */
+  .bars{display:flex;align-items:flex-end;gap:16px;height:150px;padding:16px 0 24px;border-bottom:1px solid var(--line)}
   .bars .b{flex:1;background:linear-gradient(180deg,#a78bfa,#7c3aed);border-radius:6px 6px 0 0;position:relative}
   .bars .b span{position:absolute;bottom:-20px;left:0;right:0;text-align:center;font-size:10px;color:var(--muted)}
-  .bars .b b{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:11px;color:var(--ink)}
-  .track{display:flex;gap:8px;margin:10px 0}
-  .track .st{flex:1;text-align:center;font-size:11px;padding:8px 4px;border-radius:8px;background:#f5f3ff;color:var(--muted)}
-  .track .st.done{background:var(--pur);color:#fff}
-  .kv{display:flex;gap:8px;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}
-  .kv b{width:140px;color:var(--muted);font-weight:600;flex:0 0 auto}
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a172a;color:#fff;padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none}
+  .bars .b b{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:11px}
+  .funnel{display:flex;flex-direction:column;gap:8px}
+  .fn{display:flex;align-items:center;gap:12px}
+  .fn .lab{width:130px;font-size:12px;flex:0 0 auto;color:var(--muted)}
+  .fn .barwrap{flex:1;background:#f1edfb;border-radius:8px;overflow:hidden}
+  .fn .fill{background:linear-gradient(90deg,var(--pur-l),var(--pur));color:#fff;font-size:12px;font-weight:700;padding:7px 10px;border-radius:8px;white-space:nowrap}
+  .donut{display:flex;align-items:center;gap:20px}
+  .legend div{display:flex;align-items:center;gap:8px;font-size:12px;margin:5px 0}
+  .legend .sw{width:12px;height:12px;border-radius:3px}
+  .kv{display:flex;gap:8px;font-size:13px;padding:7px 0;border-bottom:1px solid var(--line)}
+  .kv b{width:150px;color:var(--muted);font-weight:600;flex:0 0 auto}
+  /* message hub */
+  .msg-wrap{display:flex;gap:16px}
+  .msg-list{width:240px;flex:0 0 auto}
+  .msg-list .mi{padding:11px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;cursor:pointer;font-size:13px}
+  .msg-list .mi.on{border-color:var(--pur);background:#faf9ff}
+  .msg-list .mi b{display:block}.msg-list .mi span{font-size:11px;color:var(--muted)}
+  .msg-list .mi .u{float:right;background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px}
+  .thread{flex:1;background:#faf9ff;border-radius:12px;padding:16px;min-height:300px}
+  .m{max-width:74%;padding:9px 13px;border-radius:14px;font-size:13px;margin-bottom:8px;line-height:1.4}
+  .m.them{background:#fff;box-shadow:var(--shadow)}.m.me{background:var(--pur);color:#fff;margin-left:auto}
+  .m .who{font-size:10px;opacity:.7;margin-bottom:2px}
+  .hint{font-size:11px;color:var(--muted)}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a172a;color:#fff;
+    padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
   .toast.show{opacity:1}
 </style>
 </head>
 <body>
 <div class="app">
   <aside class="side">
-    <div class="brand"><div class="lg">A</div> AMD Taiwan HQ</div>
-    <div class="role">Control</div>
+    <div class="brand"><div class="lg">A</div> <div>AMD Taiwan<small>HQ control panel</small></div></div>
+    <div class="role">Operate</div>
     <nav class="nav">
-      <a class="on" data-s="ip" onclick="go('ip')">📤 Upload IP</a>
-      <a data-s="sta" onclick="go('sta')">🚚 STA dispatch</a>
-      <a data-s="kpi" onclick="go('kpi')">📊 Analytics</a>
+      <a class="on" data-s="dash" onclick="go('dash')">📊 Dashboard</a>
+      <a data-s="clinics" onclick="go('clinics')">🏥 AMD clinics</a>
+      <a data-s="upload" onclick="go('upload')">📤 Patient report / IP <span class="b">3</span></a>
+      <a data-s="sta" onclick="go('sta')">🚚 STA orchestration</a>
     </nav>
-    <div class="role">Partners</div>
+    <div class="role">Insight</div>
     <nav class="nav">
-      <a onclick="toast('AMD partners & their patients')">🩺 AMD clinics</a>
-      <a onclick="toast('Chat hub: AMD / MD / PT / Felix')">💬 Message hub</a>
+      <a data-s="kpi" onclick="go('kpi')">📈 Analytics</a>
+      <a data-s="msg" onclick="go('msg')">💬 Message hub <span class="b">2</span></a>
     </nav>
-    <div class="nav back" style="padding:8px"><a href="../index.html">← Portal</a></div>
+    <div class="role">Account</div>
+    <nav class="nav">
+      <a onclick="toast('Manage HQ team & roles')">⚙️ Team &amp; access</a>
+    </nav>
+    <div class="nav back" style="padding:8px;margin-top:8px"><a href="../index.html">← Portal</a></div>
   </aside>
+
   <div class="main">
-    <div class="bar"><h2 id="title">Upload IP</h2><span class="who">AMD Taiwan · admin</span></div>
+    <div class="bar">
+      <h2 id="title">Dashboard</h2>
+      <span class="who">AMD Taiwan · admin (Kaushal)</span>
+      <span class="bell" onclick="toast('2 new messages · 3 patients need HQ action')">🔔<b>5</b></span>
+    </div>
     <div class="content">
 
-      <!-- IP UPLOAD -->
-      <section class="screen on" id="s-ip">
-        <div class="banner">🔐 The strategic IP lives here. S+, Schwarz, diagnosis & treatment plan, and STA design can <b>only</b> be uploaded from HQ. AMDs read/print but never create them.</div>
-        <div style="display:flex;gap:16px;flex-wrap:wrap">
-          <div class="card" style="flex:1;min-width:240px"><h3>Navigate</h3>
-            <div class="tree">
-              <a class="amd">▸ Dr. Chen clinic (Taipei)</a>
-              <a class="pt">• Wang Xiaoming · AMD-0021 ✓ open</a>
-              <a class="pt">• Li Meihua · AMD-0018</a>
-              <a class="amd">▸ Dr. Wu clinic (Taichung)</a>
-              <a class="pt">• Huang Shufen · AMD-0007</a>
-            </div>
+      <!-- ===== DASHBOARD ===== -->
+      <section class="screen on" id="s-dash">
+        <div class="banner">🏛️ This is <b>AMD Taiwan's control panel</b>. HQ holds the strategic IP — S+, Schwarz, diagnosis & treatment plan, STA design — and orchestrates every clinic. The dashboard tells you <b>what needs HQ action today</b>.</div>
+        <div class="kpis">
+          <div class="kpi"><div class="n">4</div><div class="l">Partner AMD clinics</div><div class="d upg">▲ 1 this quarter</div></div>
+          <div class="kpi"><div class="n">142</div><div class="l">Active patients</div><div class="d upg">▲ 18 this month</div></div>
+          <div class="kpi"><div class="n">3</div><div class="l">Awaiting HQ upload</div><div class="d dn">action needed</div></div>
+          <div class="kpi"><div class="n">2</div><div class="l">Plans to dispatch</div><div class="d dn">action needed</div></div>
+          <div class="kpi"><div class="n">34</div><div class="l">Signed cases (YTD)</div><div class="d upg">▲ on target</div></div>
+        </div>
+        <div class="card queue"><h3>⚡ HQ action queue</h3>
+          <div class="q"><div class="ic" style="background:#ede9fe;color:#6d28d9">📐</div>
+            <div class="t"><b>Upload S+ / Schwarz — Wang Xiaoming (AMD-0021)</b><div>Dr. Chen clinic · initial data received Jul 15</div></div>
+            <button class="btn sm" onclick="openPatient('AMD-0021')">Open</button></div>
+          <div class="q"><div class="ic" style="background:#ede9fe;color:#6d28d9">📄</div>
+            <div class="t"><b>Issue diagnosis & plan — Li Meihua (AMD-0018)</b><div>Dr. Chen clinic · S+ done, plan pending</div></div>
+            <button class="btn sm" onclick="openPatient('AMD-0018')">Open</button></div>
+          <div class="q"><div class="ic" style="background:#fef3c7;color:#b45309">🚚</div>
+            <div class="t"><b>Dispatch STA to lab — Chen Zhiming (AMD-0015)</b><div>Plan signed Jul 20 · not yet sent</div></div>
+            <button class="btn sm" onclick="go('sta')">Open</button></div>
+          <div class="q"><div class="ic" style="background:#fee2e2;color:#dc2626">⏰</div>
+            <div class="t"><b>STA shipping overdue — Zhang Ting (AMD-0012)</b><div>Due to clinic Jul 22 · lab shows "in production"</div></div>
+            <button class="btn sm" onclick="go('sta')">Open</button></div>
+        </div>
+      </section>
+
+      <!-- ===== AMD CLINICS ===== -->
+      <section class="screen" id="s-clinics">
+        <div class="banner">Navigate <b>partner AMD → their patients → open a patient</b> to upload the key reports. (Mirrors the Invisalign doctor portal your PO referenced.)</div>
+        <div id="clinicView">
+          <div class="card"><h3>Partner AMD clinics</h3>
+            <table>
+              <tr><th>Clinic</th><th>AMD</th><th>Patients</th><th>Active</th><th>Needs HQ action</th><th>Rev. share (Jul)</th><th></th></tr>
+              <tr class="click" onclick="openClinic('Chen')"><td><b>Daan Perfect Smile</b><div class="cond">Taipei</div></td><td>Dr. Chen</td><td>21</td><td>16</td><td><span class="pill r">2</span></td><td>NT$ 210k</td><td><button class="btn sm ghost">Open</button></td></tr>
+              <tr class="click" onclick="openClinic('Wu')"><td><b>Taichung Airway Clinic</b><div class="cond">Taichung</div></td><td>Dr. Wu</td><td>14</td><td>11</td><td><span class="pill r">1</span></td><td>NT$ 140k</td><td><button class="btn sm ghost">Open</button></td></tr>
+              <tr class="click" onclick="openClinic('Lin')"><td><b>Kaohsiung Sleep &amp; Smile</b><div class="cond">Kaohsiung</div></td><td>Dr. Lin</td><td>9</td><td>7</td><td><span class="pill g">0</span></td><td>NT$ 90k</td><td><button class="btn sm ghost">Open</button></td></tr>
+              <tr class="click" onclick="openClinic('New')"><td><b>Hsinchu Family Dental</b><div class="cond">Hsinchu · onboarding</div></td><td>Dr. Kao</td><td>3</td><td>1</td><td><span class="pill a">setup</span></td><td>—</td><td><button class="btn sm ghost">Open</button></td></tr>
+            </table>
           </div>
-          <div class="card" style="flex:2;min-width:320px"><h3>Wang Xiaoming · AMD-0021 — key reports</h3>
-            <div class="up"><div class="ic">📐</div><div class="t"><b>S+ analysis</b><div>3D jaw · from our software</div></div><button class="btn ghost" onclick="toast('S+ uploaded')">Upload</button></div>
-            <div class="up"><div class="ic">📊</div><div class="t"><b>Schwarz analysis</b><div>arch analysis</div></div><button class="btn ghost" onclick="toast('Schwarz uploaded')">Upload</button></div>
-            <div class="up"><div class="ic">📄</div><div class="t"><b>Diagnosis & treatment plan</b><div>authored by Dr. Liao → shown to patient</div></div><button class="btn ghost" onclick="toast('Plan uploaded → timeline: Diagnosis & Plan')">Upload</button></div>
-            <label style="font-size:12px;color:var(--muted);font-weight:600;display:block;margin:6px 0">Case difficulty grade (shown in patient profile)</label>
-            <div class="grade">
-              <span class="g1" onclick="grade(this)">1 · Easy</span><span class="g2" onclick="grade(this)">2</span>
-              <span class="g3 sel" onclick="grade(this)">3</span><span class="g4" onclick="grade(this)">4 · Complex</span>
-            </div>
+        </div>
+        <div id="patientView" style="display:none">
+          <div class="card">
+            <h3><span class="crumb" onclick="backToClinics()">← Clinics</span> &nbsp;·&nbsp; <span id="clinicName">Daan Perfect Smile · Dr. Chen</span></h3>
+            <table>
+              <tr><th>Patient</th><th>Conditions (classification)</th><th>Stage</th><th>Difficulty</th><th>Status</th><th></th></tr>
+              <tbody id="clinicPatients"></tbody>
+            </table>
           </div>
         </div>
       </section>
 
-      <!-- STA DISPATCH -->
+      <!-- ===== UPLOAD IP ===== -->
+      <section class="screen" id="s-upload">
+        <div class="banner">🔐 The IP workspace for one patient. Only HQ can create <b>S+, Schwarz, diagnosis & treatment plan, STA design</b>. Uploading each item advances the patient's journey timeline automatically.</div>
+        <div class="card">
+          <h3>Patient · <span id="upName">Wang Xiaoming</span> <span class="pill" id="upMrn">AMD-0021</span> <span class="hint" style="font-weight:400">· Dr. Chen clinic</span></h3>
+          <div class="steps">
+            <div class="s done">Data received</div><div class="s now">Analysis (S+/Schwarz)</div><div class="s">Diagnosis & plan</div>
+            <div class="s">Signed</div><div class="s">STA design</div><div class="s">Dispatched</div>
+          </div>
+        </div>
+
+        <div class="card"><h3>1 · Data received from clinic <span class="pill">read-only for HQ</span></h3>
+          <p class="hint" style="margin-bottom:10px">What the AMD/ATC uploaded at the initial visit. HQ needs these to produce the analysis.</p>
+          <div class="recv">
+            <div class="r"><span class="dot ok"></span>Extraoral photos</div>
+            <div class="r"><span class="dot ok"></span>Intraoral photos</div>
+            <div class="r"><span class="dot ok"></span>Pano</div>
+            <div class="r"><span class="dot ok"></span>Lateral cepha</div>
+            <div class="r"><span class="dot ok"></span>CBCT (DICOM)</div>
+            <div class="r"><span class="dot ok"></span>Oral scan (STL)</div>
+            <div class="r"><span class="dot miss"></span>MSKalign <span class="hint">(pending)</span></div>
+            <div class="r"><span class="dot ok"></span>Initial questionnaire</div>
+          </div>
+        </div>
+
+        <div class="card"><h3>2 · Upload analysis &amp; plan (AMD Taiwan IP)</h3>
+          <div class="up"><div class="ic" data-svg="splus"></div>
+            <div class="t"><b>S+ analysis</b><div>3D jaw-position analysis from our software. Drives "Analysis" stage.</div></div>
+            <button class="btn ghost sm" onclick="markDone(this,'S+ uploaded → timeline: Analysis')">Upload</button></div>
+          <div class="up"><div class="ic" data-svg="schwarz"></div>
+            <div class="t"><b>Schwarz analysis</b><div>Arch-width / transverse analysis.</div></div>
+            <button class="btn ghost sm" onclick="markDone(this,'Schwarz uploaded')">Upload</button></div>
+          <div class="up"><div class="ic" data-svg="plan"></div>
+            <div class="t"><b>Diagnosis &amp; treatment plan (PDF)</b><div>Authored by Dr. Liao · released to clinic &amp; shown to patient in-app.</div></div>
+            <button class="btn ghost sm" onclick="markDone(this,'Plan uploaded → timeline: Diagnosis & Plan')">Upload</button></div>
+          <label class="hint" style="font-weight:700;display:block;margin:8px 0 4px">Case difficulty grade (1 easy → 4 complex) — shown in the patient profile</label>
+          <div class="grade">
+            <span class="g1" onclick="grade(this)">1</span><span class="g2" onclick="grade(this)">2</span>
+            <span class="g3 sel" onclick="grade(this)">3</span><span class="g4" onclick="grade(this)">4</span>
+          </div>
+        </div>
+
+        <div class="card"><h3>3 · Report generation <span class="pill a">open question for PO</span></h3>
+          <p class="hint" style="margin-bottom:10px">Nancy's open question: do we generate the diagnosis report <b>directly on this site</b>, or keep uploading Dr. Liao's PDF? This mock shows a lightweight in-site builder as an option to react to.</p>
+          <div class="rptbuild">
+            <div class="sec"><span>Cover · patient + clinic + difficulty</span><span class="pill g">auto</span></div>
+            <div class="sec"><span>Findings · S+ / Schwarz summary</span><span class="pill g">auto from upload</span></div>
+            <div class="sec"><span>Diagnosis narrative</span><span class="hint">Dr. Liao / HQ writes</span></div>
+            <div class="sec"><span>Treatment plan &amp; timeline</span><span class="hint">HQ writes</span></div>
+            <div class="sec"><span>STA prescription → lab</span><span class="hint">links to dispatch</span></div>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn ghost" onclick="toast('Preview report PDF…')">👁 Preview report</button>
+            <button class="btn" onclick="toast('Report released → visible to clinic + patient')">Release to clinic &amp; patient</button>
+          </div>
+        </div>
+
+        <div class="card"><h3>4 · After signature → dispatch STA</h3>
+          <p class="hint" style="margin-bottom:10px">When the AMD marks the plan "signed" (doctor site), HQ sends the STA design to the lab.</p>
+          <button class="btn" onclick="toast('STA design dispatched to lab → STA orchestration')">🚚 Dispatch STA design to lab</button>
+        </div>
+      </section>
+
+      <!-- ===== STA ORCHESTRATION ===== -->
       <section class="screen" id="s-sta">
-        <div class="banner">When an AMD marks a plan as signed, HQ dispatches the STA design to the lab and tracks it. Status also surfaces on the Doctor site for ATCs.</div>
-        <div class="card"><h3>STA orders</h3>
-          <div class="kv"><b>AMD-0021</b> Design → lab · <span style="color:#16a34a">In production</span></div>
-          <div class="track">
-            <div class="st done">Signed</div><div class="st done">Design sent</div><div class="st done">In production</div>
-            <div class="st">Shipped</div><div class="st">Delivered</div>
-          </div>
-          <div style="margin-top:14px"><button class="btn" onclick="toast('Design dispatched to lab (see Lab site)')">Dispatch new design to lab</button></div>
-        </div>
-        <div class="card"><h3>AMD-0018 · awaiting signature</h3>
-          <div class="track">
-            <div class="st done">Plan sent</div><div class="st">Signed</div><div class="st">Design sent</div><div class="st">In production</div><div class="st">Delivered</div>
-          </div>
+        <div class="banner">Track every STA from HQ dispatch → lab production → shipping → clinic delivery. This status also surfaces on the Doctor site so ATCs can follow it.</div>
+        <div class="card"><h3>STA pipeline</h3>
+          <table>
+            <tr><th>Patient</th><th>Clinic</th><th>Dispatched</th><th>Progress</th><th>Due</th><th>Status</th></tr>
+            <tr><td>AMD-0021 · Wang</td><td>Dr. Chen</td><td>Jul 15</td>
+              <td><div class="steps" style="margin:0;min-width:230px"><div class="s done">Sent</div><div class="s done">Prod</div><div class="s now">QC</div><div class="s">Ship</div><div class="s">Deliv</div></div></td>
+              <td>Jul 29</td><td><span class="pill">On track</span></td></tr>
+            <tr><td>AMD-0012 · Zhang</td><td>Dr. Chen</td><td>Jul 8</td>
+              <td><div class="steps" style="margin:0;min-width:230px"><div class="s done">Sent</div><div class="s now">Prod</div><div class="s">QC</div><div class="s">Ship</div><div class="s">Deliv</div></div></td>
+              <td>Jul 22</td><td><span class="pill r">Overdue</span></td></tr>
+            <tr><td>AMD-0009 · Lin D.</td><td>Dr. Chen</td><td>Jun 30</td>
+              <td><div class="steps" style="margin:0;min-width:230px"><div class="s done">Sent</div><div class="s done">Prod</div><div class="s done">QC</div><div class="s done">Ship</div><div class="s done">Deliv</div></div></td>
+              <td>Jul 14</td><td><span class="pill g">Delivered</span></td></tr>
+          </table>
+          <div style="margin-top:12px"><button class="btn ghost" onclick="toast('Open lab site')">Open Lab site →</button>
+            <button class="btn" onclick="toast('Chased lab re: AMD-0012')">Chase overdue order</button></div>
         </div>
       </section>
 
-      <!-- ANALYTICS -->
+      <!-- ===== ANALYTICS ===== -->
       <section class="screen" id="s-kpi">
-        <div class="banner">Database analytics across all AMD clinics. (AI Q&A over this data is a later phase — needs clean data first.)</div>
+        <div class="banner">Cross-clinic analytics. The AI Q&amp;A over this database is a later phase (needs clean, consistent data first).</div>
         <div class="card"><h3>Clinical KPIs</h3>
-          <div class="kpis">
-            <div class="kpi"><div class="n">142</div><div class="l">Active patients</div><div class="d up-g">▲ 18 this month</div></div>
-            <div class="kpi"><div class="n">71%</div><div class="l">Treatment completion</div><div class="d up-g">▲ 4%</div></div>
-            <div class="kpi"><div class="n">11.2mo</div><div class="l">Avg active duration</div><div class="d">—</div></div>
-            <div class="kpi"><div class="n">88%</div><div class="l">Follow-up rate</div><div class="d up-g">▲ 2%</div></div>
-            <div class="kpi"><div class="n">1.9</div><div class="l">Referrals / patient</div><div class="d up-g">▲ 0.3</div></div>
+          <div class="kpis" style="margin:0">
+            <div class="kpi"><div class="n">142</div><div class="l">Active patients</div></div>
+            <div class="kpi"><div class="n">71%</div><div class="l">Completion rate</div><div class="d upg">▲ 4%</div></div>
+            <div class="kpi"><div class="n">11.2mo</div><div class="l">Avg active duration</div></div>
+            <div class="kpi"><div class="n">88%</div><div class="l">Follow-up rate</div></div>
+            <div class="kpi"><div class="n">1.9</div><div class="l">Referrals / patient</div></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <div class="card" style="flex:1;min-width:300px"><h3>Patient funnel (YTD)</h3>
+            <div class="funnel">
+              <div class="fn"><span class="lab">Consultations</span><div class="barwrap"><div class="fill" style="width:100%">106</div></div></div>
+              <div class="fn"><span class="lab">Signed &amp; started</span><div class="barwrap"><div class="fill" style="width:64%">68</div></div></div>
+              <div class="fn"><span class="lab">Active treatment</span><div class="barwrap"><div class="fill" style="width:52%">55</div></div></div>
+              <div class="fn"><span class="lab">Maintenance</span><div class="barwrap"><div class="fill" style="width:20%">21</div></div></div>
+              <div class="fn"><span class="lab">Graduated 🎉</span><div class="barwrap"><div class="fill" style="width:11%">12</div></div></div>
+            </div>
+            <p class="hint" style="margin-top:8px">Consult → signed conversion: <b>64%</b> · CAC NT$ 3,400</p>
+          </div>
+          <div class="card" style="flex:1;min-width:260px"><h3>Case difficulty mix</h3>
+            <div class="donut">
+              <svg width="120" height="120" viewBox="0 0 42 42">
+                <circle cx="21" cy="21" r="15.9" fill="none" stroke="#dcfce7" stroke-width="6"/>
+                <circle cx="21" cy="21" r="15.9" fill="none" stroke="#84cc16" stroke-width="6" stroke-dasharray="30 70" stroke-dashoffset="25"/>
+                <circle cx="21" cy="21" r="15.9" fill="none" stroke="#f59e0b" stroke-width="6" stroke-dasharray="35 65" stroke-dashoffset="-5"/>
+                <circle cx="21" cy="21" r="15.9" fill="none" stroke="#ef4444" stroke-width="6" stroke-dasharray="15 85" stroke-dashoffset="-40"/>
+              </svg>
+              <div class="legend">
+                <div><span class="sw" style="background:#dcfce7"></span>Grade 1 · 20%</div>
+                <div><span class="sw" style="background:#84cc16"></span>Grade 2 · 30%</div>
+                <div><span class="sw" style="background:#f59e0b"></span>Grade 3 · 35%</div>
+                <div><span class="sw" style="background:#ef4444"></span>Grade 4 · 15%</div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="card"><h3>New patients by month</h3>
@@ -144,17 +328,31 @@
           </div>
         </div>
         <div style="display:flex;gap:16px;flex-wrap:wrap">
-          <div class="card" style="flex:1;min-width:260px"><h3>Marketing KPIs</h3>
+          <div class="card" style="flex:1;min-width:280px"><h3>Per-AMD performance</h3>
+            <table>
+              <tr><th>AMD</th><th>Patients</th><th>Completed</th><th>Avg ESS Δ</th></tr>
+              <tr><td>Dr. Chen</td><td>21</td><td>6</td><td>−6.1</td></tr>
+              <tr><td>Dr. Wu</td><td>14</td><td>3</td><td>−5.4</td></tr>
+              <tr><td>Dr. Lin</td><td>9</td><td>2</td><td>−5.9</td></tr>
+            </table>
+          </div>
+          <div class="card" style="flex:1;min-width:280px"><h3>Marketing KPIs</h3>
             <div class="kv"><b>Top referral source</b> Friend/family (46%)</div>
-            <div class="kv"><b>Conversion rate</b> 32% consult → signed</div>
+            <div class="kv"><b>Conversion</b> 64% consult → signed</div>
             <div class="kv"><b>CAC</b> NT$ 3,400</div>
             <div class="kv"><b>App 30-day retention</b> 64%</div>
             <div class="kv"><b>Store revenue (Jul)</b> NT$ 128,000</div>
           </div>
-          <div class="card" style="flex:1;min-width:260px"><h3>Doctor KPIs</h3>
-            <div class="kv"><b>Dr. Chen</b> 21 patients · 6 completed</div>
-            <div class="kv"><b>Dr. Wu</b> 14 patients · 3 completed</div>
-            <div class="kv"><b>Avg improvement (ESS)</b> −5.8 points</div>
+        </div>
+      </section>
+
+      <!-- ===== MESSAGE HUB ===== -->
+      <section class="screen" id="s-msg">
+        <div class="banner">One place for HQ to talk to every partner — AMDs, MD/PT specialists, Dr. Liao, and the lab.</div>
+        <div class="card">
+          <div class="msg-wrap">
+            <div class="msg-list" id="msgList"></div>
+            <div class="thread" id="thread"></div>
           </div>
         </div>
       </section>
@@ -164,12 +362,90 @@
 </div>
 <div class="toast" id="toast"></div>
 <script>
+/* small SVG marks for the IP items */
+const X="xmlns='http://www.w3.org/2000/svg'";
+const svgSplus=`<svg ${X} viewBox='0 0 44 44'><rect width='44' height='44' fill='#ede9fe'/><path d='M22 8 L34 15 L34 29 L22 36 L10 29 L10 15 Z' fill='none' stroke='#6d28d9' stroke-width='2'/><path d='M22 8 L22 36 M10 15 L34 29 M34 15 L10 29' stroke='#a78bfa' stroke-width='1'/></svg>`;
+const svgSchwarz=`<svg ${X} viewBox='0 0 44 44'><rect width='44' height='44' fill='#ede9fe'/><path d='M8 30 Q22 8 36 30' fill='none' stroke='#6d28d9' stroke-width='2'/><path d='M8 30 L36 30' stroke='#a78bfa' stroke-width='1.5'/><path d='M14 30 L14 25 M22 30 L22 15 M30 30 L30 25' stroke='#6d28d9' stroke-width='1.2'/></svg>`;
+const svgPlan=`<svg ${X} viewBox='0 0 44 44'><rect width='44' height='44' fill='#ede9fe'/><rect x='13' y='9' width='18' height='26' rx='2' fill='#fff' stroke='#6d28d9' stroke-width='2'/><path d='M17 16 H27 M17 21 H27 M17 26 H23' stroke='#a78bfa' stroke-width='1.6'/></svg>`;
+// inject SVG marks by data-svg attribute
+function injectSVG(){
+  const M={splus:svgSplus,schwarz:svgSchwarz,plan:svgPlan};
+  document.querySelectorAll('[data-svg]').forEach(el=>{el.innerHTML=M[el.dataset.svg]||'';});
+}
+
+/* clinic → patients drilldown */
+const DIFF=['','#22c55e','#84cc16','#f59e0b','#ef4444'];
+const CLINIC_PATIENTS={
+ Chen:[
+  {n:"Wang Xiaoming",mrn:"AMD-0021",cond:"Narrow arch · Mouth breathing",stage:2,diff:3,status:"Awaiting S+"},
+  {n:"Li Meihua",mrn:"AMD-0018",cond:"Crossbite · SDB",stage:2,diff:2,status:"Plan pending"},
+  {n:"Zhang Ting",mrn:"AMD-0012",cond:"Narrow arch",stage:5,diff:1,status:"STA overdue"},
+  {n:"Lin David",mrn:"AMD-0009",cond:"Mouth breathing",stage:4,diff:2,status:"Delivered"},
+ ],
+ Wu:[{n:"Huang Shufen",mrn:"AMD-0007",cond:"Crossbite · TMJ",stage:3,diff:3,status:"Active"}],
+ Lin:[{n:"Su Jiahao",mrn:"AMD-0004",cond:"SDB",stage:3,diff:2,status:"Active"}],
+ New:[{n:"Ko Test",mrn:"AMD-0002",cond:"—",stage:1,diff:1,status:"Onboarding"}],
+};
+const CLINIC_NAMES={Chen:"Daan Perfect Smile · Dr. Chen",Wu:"Taichung Airway Clinic · Dr. Wu",Lin:"Kaohsiung Sleep & Smile · Dr. Lin",New:"Hsinchu Family Dental · Dr. Kao"};
+function openClinic(k){
+  document.getElementById('clinicView').style.display='none';
+  document.getElementById('patientView').style.display='block';
+  document.getElementById('clinicName').textContent=CLINIC_NAMES[k];
+  document.getElementById('clinicPatients').innerHTML=(CLINIC_PATIENTS[k]||[]).map(p=>{
+    const tr=[1,2,3,4,5,6].map(i=>`<i class="${i<=p.stage?'on':''}"></i>`).join('');
+    return `<tr class="click" onclick="openPatient('${p.mrn}','${p.n}')">
+      <td><b>${p.n}</b><div class="cond">${p.mrn}</div></td>
+      <td class="cond">${p.cond}</td>
+      <td><div class="track">${tr}</div></td>
+      <td><span class="diff" style="background:${DIFF[p.diff]}">D${p.diff}</span></td>
+      <td>${p.status}</td>
+      <td><button class="btn sm">Open IP</button></td></tr>`;
+  }).join('');
+}
+function backToClinics(){document.getElementById('patientView').style.display='none';document.getElementById('clinicView').style.display='block';}
+function openPatient(mrn,name){
+  document.getElementById('upMrn').textContent=mrn;
+  if(name)document.getElementById('upName').textContent=name;
+  else{const map={'AMD-0021':'Wang Xiaoming','AMD-0018':'Li Meihua','AMD-0015':'Chen Zhiming'};document.getElementById('upName').textContent=map[mrn]||'Patient';}
+  go('upload');
+}
+
+/* message hub */
+const THREADS={
+ chen:{who:"Dr. Chen (AMD · Daan)",msgs:[["them","S+ for Wang uploaded yet? Patient asking about her plan."],["me","Doing it today — will release the plan by EOD."]]},
+ felix:{who:"Dr. Liao (US)",msgs:[["them","Reviewed KS-0021 airway — hold widening rate 2 weeks."],["me","Noted, updating the plan."]]},
+ pt:{who:"Felicity (PT)",msgs:[["them","Referral received for AMD-0021, booking her in."]]},
+ lab:{who:"Conova Lab",msgs:[["me","AMD-0012 is overdue — status?"],["them","QC today, shipping tomorrow."]]},
+};
+function renderMsg(){
+  const keys=Object.keys(THREADS);
+  document.getElementById('msgList').innerHTML=keys.map((k,i)=>{
+    const t=THREADS[k];const unread=(k==='chen'||k==='lab')?'<span class="u">1</span>':'';
+    return `<div class="mi ${i===0?'on':''}" data-k="${k}" onclick="openThread('${k}')">${unread}<b>${t.who}</b><span>${t.msgs[t.msgs.length-1][1].slice(0,34)}…</span></div>`;
+  }).join('');
+  openThread('chen');
+}
+function openThread(k){
+  document.querySelectorAll('.msg-list .mi').forEach(m=>m.classList.toggle('on',m.dataset.k===k));
+  const t=THREADS[k];
+  document.getElementById('thread').innerHTML=
+    `<div style="font-weight:700;margin-bottom:12px">${t.who}</div>`+
+    t.msgs.map(m=>`<div class="m ${m[0]}"><div class="who">${m[0]==='me'?'HQ':t.who}</div>${m[1]}</div>`).join('')+
+    `<div style="display:flex;gap:8px;margin-top:12px"><input style="flex:1;border:1px solid var(--line);border-radius:9px;padding:9px" placeholder="Message…"/><button class="btn">Send</button></div>`;
+}
+
+/* helpers */
+function markDone(btn,msg){const up=btn.closest('.up');up.classList.add('done');btn.textContent='✓ Uploaded';btn.disabled=true;toast(msg);}
+function grade(el){document.querySelectorAll('.grade span').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');toast('Difficulty grade set');}
+const TITLES={dash:'Dashboard',clinics:'AMD clinics',upload:'Patient report / IP',sta:'STA orchestration',kpi:'Analytics',msg:'Message hub'};
 function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
   document.getElementById('s-'+s).classList.add('on');
   document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
-  const t={ip:'Upload IP',sta:'STA dispatch',kpi:'Analytics'};document.getElementById('title').textContent=t[s];window.scrollTo(0,0);}
-function grade(el){document.querySelectorAll('.grade span').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');toast('Difficulty grade set');}
-let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+  document.getElementById('title').textContent=TITLES[s];window.scrollTo(0,0);
+  if(s==='msg')renderMsg();}
+let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
+  clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+injectSVG();
 </script>
 </body>
 </html>
