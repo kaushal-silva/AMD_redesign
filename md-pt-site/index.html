@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AMD · MD / PT Specialist Site</title>
+<style>
+  :root{--amber:#b45309;--amber-l:#f59e0b;--amber-d:#78350f;--bg:#faf7f2;--card:#fff;--ink:#1c1917;
+    --muted:#78716c;--line:#eee6dc;--shadow:0 2px 10px rgba(120,80,20,.06);--blue:#1e40af;--green:#15803d}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC","Microsoft JhengHei",sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .app{display:flex;min-height:100vh}
+  .side{width:224px;background:#3a2a12;color:#e7d9c3;padding:18px 12px;position:sticky;top:0;height:100vh;flex:0 0 auto}
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;padding:6px 8px 4px}
+  .brand .lg{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,#d97706,#f59e0b);
+    display:flex;align-items:center;justify-content:center;font-weight:800}
+  .spec{font-size:11px;color:#e6a95b;padding:2px 8px 14px}
+  .nav a{display:flex;gap:10px;padding:10px 12px;border-radius:9px;color:#e7d9c3;text-decoration:none;
+    font-size:14px;cursor:pointer;margin-bottom:2px;align-items:center}
+  .nav a:hover{background:#ffffff12}.nav a.on{background:var(--amber);color:#fff}
+  .nav a .b{margin-left:auto;background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px}
+  .role{font-size:10px;color:#c9a26b;text-transform:uppercase;letter-spacing:.6px;padding:0 8px;margin:12px 0 4px}
+  .main{flex:1;min-width:0}
+  .bar{background:var(--card);border-bottom:1px solid var(--line);padding:12px 26px;display:flex;
+    align-items:center;gap:14px;position:sticky;top:0;z-index:5}
+  .bar h2{flex:1;font-size:17px}
+  .bar .who{font-size:13px;color:var(--muted)}
+  .bar select{border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--ink)}
+  .bar .bell{position:relative;font-size:18px;cursor:pointer}
+  .bar .bell b{position:absolute;top:-6px;right:-8px;background:#ef4444;color:#fff;font-size:9px;padding:1px 5px;border-radius:10px}
+  .content{padding:22px 26px 60px;max-width:1000px}
+  .screen{display:none;animation:f .2s}.screen.on{display:block}@keyframes f{from{opacity:0}to{opacity:1}}
+  .banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;padding:11px 15px;border-radius:10px;
+    font-size:13px;margin-bottom:16px;line-height:1.55}
+  .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .card h3{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .pill{font-size:10px;background:#fef3c7;color:var(--amber);padding:2px 8px;border-radius:20px;font-weight:700}
+  .pill.blue{background:#dbeafe;color:var(--blue)}.pill.green{background:#dcfce7;color:var(--green)}
+  /* filter chips */
+  .chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 14px;font-size:13px;cursor:pointer}
+  .chip.on{background:var(--amber);color:#fff;border-color:var(--amber)}
+  /* patient rows */
+  .p-row{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:12px;
+    margin-bottom:10px;cursor:pointer;background:#fff;transition:.15s}
+  .p-row:hover{box-shadow:0 6px 18px rgba(120,80,20,.1);transform:translateY(-1px)}
+  .av{width:44px;height:44px;border-radius:50%;background:#fef3c7;color:var(--amber);display:flex;
+    align-items:center;justify-content:center;font-weight:700;flex:0 0 auto}
+  .p-row .nm{font-weight:700}.p-row .sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .p-row .meta{text-align:right;font-size:12px;color:var(--muted);flex:0 0 auto}
+  .status{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px}
+  .s-new{background:#dbeafe;color:#1e40af}.s-active{background:#dcfce7;color:#15803d}.s-done{background:#f5f5f4;color:#78716c}
+  .badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;background:#fee2e2;color:#b91c1c}
+  /* patient detail */
+  .pd-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+  .pd-head .nm{font-size:20px;font-weight:700}.pd-head .sub{font-size:13px;color:var(--muted)}
+  .subnav{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:18px;flex-wrap:wrap}
+  .subnav a{padding:9px 14px;font-size:13px;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted);font-weight:600}
+  .subnav a.on{color:var(--amber);border-color:var(--amber)}
+  .pv{display:none}.pv.on{display:block}
+  label{font-size:12px;color:var(--muted);font-weight:600;display:block;margin:12px 0 5px}
+  input,textarea,select{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px;font-family:inherit;background:#fdfdfd}
+  input[type=checkbox]{width:auto;transform:scale(1.15);accent-color:var(--amber)}
+  textarea{min-height:80px;resize:vertical}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .btn{background:var(--amber);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer;font-size:14px}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .kv{display:flex;gap:8px;font-size:13px;padding:8px 0;border-bottom:1px solid var(--line)}
+  .kv b{width:150px;color:var(--muted);font-weight:600;flex:0 0 auto}
+  .kv:last-child{border-bottom:none}
+  .flag{background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;border-radius:9px;padding:8px 12px;font-size:12.5px;margin:4px 0}
+  .rec{border:1px solid var(--line);border-radius:11px;padding:14px;margin-bottom:10px}
+  .rec .rh{display:flex;justify-content:space-between;font-size:13px;font-weight:700}
+  .rec .rx{font-size:12.5px;color:#57534e;margin-top:6px;line-height:1.5}
+  .rec .tags{margin-top:8px}
+  .tag{font-size:11px;background:#f5f0e8;border:1px solid var(--line);border-radius:8px;padding:3px 9px;margin-right:6px;display:inline-block}
+  .appt{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .appt .d{width:70px;flex:0 0 auto;text-align:center;background:#fef3c7;border-radius:9px;padding:6px}
+  .appt .d b{display:block;font-size:16px;color:var(--amber)}.appt .d span{font-size:10px;color:var(--muted)}
+  .appt .info{flex:1}.appt .info b{font-size:13px}.appt .info div{font-size:12px;color:var(--muted)}
+  .lock{background:#f5f5f4;border:1px dashed #d6d3d1;border-radius:10px;padding:12px 14px;color:var(--muted);
+    font-size:13px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .chatlog{background:#faf7f2;border-radius:10px;padding:14px;max-height:340px;overflow:auto}
+  .m{max-width:74%;padding:9px 13px;border-radius:14px;font-size:13px;margin-bottom:8px;line-height:1.4}
+  .m.them{background:#fff;box-shadow:var(--shadow)}.m.me{background:var(--amber);color:#fff;margin-left:auto}
+  .m .who{font-size:10px;opacity:.7;margin-bottom:2px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:8px}
+  .kpi{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .kpi .n{font-size:26px;font-weight:800;color:var(--amber)}.kpi .l{font-size:12px;color:var(--muted);margin-top:3px}
+  table.led{width:100%;border-collapse:collapse;font-size:13px}
+  table.led th{text-align:left;font-size:11px;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line)}
+  table.led td{padding:9px 10px;border-bottom:1px solid var(--line)}
+  .in{color:var(--green);font-weight:700}.out{color:#b91c1c;font-weight:700}
+  .back a{color:#c9a26b;font-size:12px;text-decoration:none}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c1917;color:#fff;
+    padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
+  .toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="lg" id="logo">PT</div> <span>Specialist</span></div>
+    <div class="spec" id="specLabel">Physiotherapist · Felicity</div>
+    <div class="role">Work</div>
+    <nav class="nav">
+      <a class="on" data-s="home" onclick="go('home')">👥 Referred patients <span class="b">2</span></a>
+      <a data-s="patient" onclick="go('patient')">📋 Open referral</a>
+    </nav>
+    <div class="role">Insights</div>
+    <nav class="nav">
+      <a data-s="mgmt" onclick="go('mgmt')">📊 Patient management</a>
+    </nav>
+    <div class="role">Account</div>
+    <nav class="nav">
+      <a onclick="toast('Chat with AMD Taiwan')">💬 Contact AMD Taiwan</a>
+      <a onclick="toast('Online shop (samples)')">🛒 Online shop</a>
+      <a onclick="toast('Education / courses')">🎓 Education</a>
+    </nav>
+    <div class="nav back" style="padding:8px;margin-top:8px"><a href="../index.html">← Portal</a></div>
+  </aside>
+
+  <div class="main">
+    <div class="bar">
+      <h2 id="title">Referred patients</h2>
+      <label style="font-size:11px;color:var(--muted);margin:0">Viewing as
+        <select id="specSel" onchange="setSpec()" style="width:auto;display:inline-block;margin-left:6px">
+          <option value="PT">Physiotherapist</option>
+          <option value="ENT">ENT</option>
+          <option value="MD">Functional-medicine MD</option>
+        </select>
+      </label>
+      <span class="bell" onclick="toast('2 new messages from AMDs')">🔔<b>2</b></span>
+    </div>
+    <div class="content">
+
+      <!-- HOME -->
+      <section class="screen on" id="s-home">
+        <div class="banner">🔒 <b>Least-access:</b> you only see patients an AMD has referred to you, and only what's relevant to that referral — not the full airway diagnosis, S+/Schwarz, STA design or other specialists' notes. You can add your own follow-up records (visible to the patient and the referring AMD) and message the AMD/ATC.</div>
+        <div class="chips">
+          <span class="chip on" onclick="filt(this,'all')">All (2)</span>
+          <span class="chip" onclick="filt(this,'new')">New referrals (1)</span>
+          <span class="chip" onclick="filt(this,'active')">Active (1)</span>
+          <span class="chip" onclick="filt(this,'done')">Completed (0)</span>
+        </div>
+        <div id="pList"></div>
+      </section>
+
+      <!-- PATIENT DETAIL -->
+      <section class="screen" id="s-patient">
+        <div class="pd-head">
+          <div class="av">王</div>
+          <div style="flex:1">
+            <div class="nm">Wang Xiaoming <span class="pill">AMD-0021</span></div>
+            <div class="sub">Referred by <b>Dr. Chen (AMD)</b> · Jul 18, 2026 · <span class="pill green" id="specTag">Physiotherapy</span></div>
+          </div>
+          <span class="badge">New message</span>
+        </div>
+        <div class="subnav">
+          <a class="on" data-pv="ref" onclick="pv('ref')">Referral info</a>
+          <a data-pv="add" onclick="pv('add')">➕ Add follow-up record</a>
+          <a data-pv="mine" onclick="pv('mine')">My records (2)</a>
+          <a data-pv="appt" onclick="pv('appt')">Appointments</a>
+          <a data-pv="chat" onclick="pv('chat')">Chat with AMD</a>
+          <a data-pv="locked" onclick="pv('locked')">🔒 Restricted</a>
+        </div>
+
+        <!-- referral info -->
+        <div class="pv on" id="pv-ref">
+          <div class="card"><h3>What the AMD shared for this referral</h3>
+            <div class="kv"><b>Patient</b> Wang Xiaoming · AMD-0021 · Female, age 36</div>
+            <div class="kv"><b>Referred by</b> Dr. Chen (AMD) · via ATC Nurse Lin</div>
+            <div class="kv"><b>Reason</b> Lower-back pain reported during myofunctional therapy sessions</div>
+            <div class="kv"><b>Requested</b> Postural assessment + treatment plan; report back in 3 sessions</div>
+            <div class="kv"><b>Referral date</b> Jul 18, 2026</div>
+            <div class="kv"><b>Consent scope</b> Musculoskeletal assessment only (patient consented to share this referral)</div>
+          </div>
+          <div class="card"><h3>Safety flags from the AMD</h3>
+            <div class="flag">⚠️ Wears an oral appliance (STA) day &amp; night — do not remove or adjust.</div>
+            <div class="flag">⚠️ Avoid cervical (neck) manipulation while in active airway treatment.</div>
+          </div>
+        </div>
+
+        <!-- add record -->
+        <div class="pv" id="pv-add">
+          <div class="banner">Records you add here are shared with the <b>patient</b> (in their app) and the <b>referring AMD/ATC</b> — but not with other specialists.</div>
+          <div class="card"><h3>Add follow-up record</h3>
+            <div class="row">
+              <div><label>Date</label><input type="date" /></div>
+              <div><label>Session type</label><select id="sessType"><option>Assessment</option><option>Treatment session</option><option>Review</option></select></div>
+            </div>
+            <label>Assessment / findings</label>
+            <textarea placeholder="Objective + subjective findings this session…"></textarea>
+            <label>Treatment provided this session</label>
+            <textarea placeholder="e.g. soft-tissue release lumbar, mobility drills…"></textarea>
+            <label id="homeLbl">Home program shared with patient <span class="pill">shows in patient app</span></label>
+            <div style="border:1px solid var(--line);border-radius:9px;padding:10px 12px">
+              <label style="margin:0 0 6px"><input type="checkbox" checked> Cat-camel mobility ×10</label>
+              <label style="margin:6px 0"><input type="checkbox" checked> Glute bridge ×15</label>
+              <label style="margin:6px 0 0"><input type="checkbox"> Standing posture reset hourly</label>
+            </div>
+            <div class="row" style="margin-top:12px">
+              <div><label>Progress / pain rating (0–10)</label><input type="number" value="4" min="0" max="10" /></div>
+              <div><label>Author signature</label><input placeholder="Felicity, PT" /></div>
+            </div>
+            <label>Next appointment (you manage follow-ons)</label><input type="datetime-local" />
+            <label>Attach file (report / scan) — optional</label><input type="file" />
+            <div style="margin-top:14px"><button class="btn" onclick="toast('Record saved → patient + AMD notified')">Save record</button></div>
+          </div>
+        </div>
+
+        <!-- my records -->
+        <div class="pv" id="pv-mine">
+          <div class="card"><h3>My follow-up records for this patient</h3>
+            <div class="rec"><div class="rh"><span>Session 2 · Treatment · Jul 25</span><span style="color:var(--muted)">Felicity, PT</span></div>
+              <div class="rx">Lumbar mobility improving. Reduced guarding. Pain 4/10 (was 6). Progressed glute bridges. Reminded not to remove appliance.</div>
+              <div class="tags"><span class="tag">Home: cat-camel</span><span class="tag">Home: glute bridge</span><span class="tag">Pain 4/10</span></div></div>
+            <div class="rec"><div class="rh"><span>Session 1 · Assessment · Jul 22</span><span style="color:var(--muted)">Felicity, PT</span></div>
+              <div class="rx">Postural assessment: anterior pelvic tilt, tight hip flexors. Likely posture-related, not appliance. Started gentle program.</div>
+              <div class="tags"><span class="tag">Assessment</span><span class="tag">Pain 6/10</span></div></div>
+          </div>
+        </div>
+
+        <!-- appointments -->
+        <div class="pv" id="pv-appt">
+          <div class="banner">The <b>first</b> appointment was booked by the AMD's reception (that's the referral hand-off). You manage any follow-on appointments from here — they appear in the patient's app too.</div>
+          <div class="card"><h3>Appointments</h3>
+            <div class="appt"><div class="d"><b>25</b><span>Jul</span></div><div class="info"><b>Session 2 · Treatment</b><div>Booked by you · 3:00 PM</div></div><span class="pill">You</span></div>
+            <div class="appt"><div class="d"><b>22</b><span>Jul</span></div><div class="info"><b>Session 1 · Assessment</b><div>Booked by AMD reception (referral hand-off) · 2:00 PM</div></div><span class="pill blue">Reception</span></div>
+            <div style="margin-top:12px"><button class="btn" onclick="toast('Appointment added → patient app + AMD')">➕ Add appointment</button></div>
+          </div>
+        </div>
+
+        <!-- chat -->
+        <div class="pv" id="pv-chat">
+          <div class="card"><h3>Chat with referring AMD / ATC</h3>
+            <div class="chatlog">
+              <div class="m them"><div class="who">Dr. Chen (AMD)</div>Thanks for taking this — she's mid airway treatment, please avoid neck manipulation and don't touch the appliance.</div>
+              <div class="m me"><div class="who">You (PT)</div>Understood. Focusing on lumbar + hips. Assessment suggests posture-related, not the appliance.</div>
+              <div class="m them"><div class="who">Dr. Chen (AMD)</div>Great, thank you. I'll see her Aug 9 — your notes will show in her record.</div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px"><input placeholder="Message the AMD/ATC…" /><button class="btn">Send</button></div>
+          </div>
+        </div>
+
+        <!-- locked -->
+        <div class="pv" id="pv-locked">
+          <div class="card"><h3>Restricted — not shared with you</h3>
+            <p class="hint" style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Under the principle of least access, only referral-relevant data reaches you. These are intentionally hidden:</p>
+            <div class="lock">🔒 Full airway diagnosis &amp; treatment plan</div>
+            <div class="lock">🔒 S+ / Schwarz analysis &amp; STA design (AMD Taiwan IP)</div>
+            <div class="lock">🔒 CBCT, pano, cephalogram &amp; intraoral imaging</div>
+            <div class="lock">🔒 Other specialists' notes and the AMD's internal notes</div>
+            <div class="lock">🔒 Billing &amp; personal identity beyond what's in the referral</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PATIENT MANAGEMENT -->
+      <section class="screen" id="s-mgmt">
+        <div class="banner">Your view of the AMD referral relationship — volume and the two-way referral fees. (Expands later.)</div>
+        <div class="card"><h3>This month</h3>
+          <div class="kpis">
+            <div class="kpi"><div class="n">2</div><div class="l">Referred to you</div></div>
+            <div class="kpi"><div class="n">1</div><div class="l">Active</div></div>
+            <div class="kpi"><div class="n">0</div><div class="l">Completed</div></div>
+            <div class="kpi"><div class="n">3.5</div><div class="l">Avg sessions / patient</div></div>
+          </div>
+        </div>
+        <div class="card"><h3>Referral fee ledger <span class="pill">two-way</span></h3>
+          <table class="led">
+            <tr><th>Date</th><th>Patient</th><th>Direction</th><th>Amount</th></tr>
+            <tr><td>Jul 18</td><td>AMD-0021 (from AMD)</td><td>Received referral</td><td class="in">+ NT$ 1,500</td></tr>
+            <tr><td>Jul 10</td><td>AMD-0015 (from AMD)</td><td>Received referral</td><td class="in">+ NT$ 1,500</td></tr>
+            <tr><td>Jul 5</td><td>Sent back to AMD (ENT case)</td><td>Referred out</td><td class="out">− NT$ 1,500</td></tr>
+          </table>
+          <p class="hint" style="font-size:11px;color:var(--muted);margin-top:8px">Fees are illustrative — set per your MOU with AMD Taiwan.</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const PATIENTS=[
+  {init:"王",n:"Wang Xiaoming",mrn:"AMD-0021",by:"Dr. Chen",reason:"Lower-back pain during myofunctional therapy",date:"Jul 18",status:"new",next:"Jul 25",msg:true},
+  {init:"陳",n:"Chen Zhiming",mrn:"AMD-0015",by:"Nurse Lin (ATC)",reason:"Neck tension / posture support",date:"Jul 10",status:"active",next:"Jul 24",msg:false},
+];
+const SL={new:['s-new','New'],active:['s-active','Active'],done:['s-done','Completed']};
+let curFilt='all';
+function renderList(){
+  const el=document.getElementById('pList');
+  const rows=PATIENTS.filter(p=>curFilt==='all'||p.status===curFilt).map(p=>`
+    <div class="p-row" onclick="go('patient')">
+      <div class="av">${p.init}</div>
+      <div style="flex:1"><div class="nm">${p.n} <span class="pill">${p.mrn}</span></div>
+        <div class="sub">Referred by ${p.by} · ${p.reason}</div></div>
+      <div class="meta">
+        <div class="status ${SL[p.status][0]}">${SL[p.status][1]}</div>
+        <div style="margin-top:6px">Next: ${p.next}</div>
+        <div style="margin-top:4px;color:#b91c1c">${p.msg?'● new message':''}</div>
+      </div>
+    </div>`).join('');
+  el.innerHTML=rows||'<p class="hint" style="color:var(--muted)">No patients in this filter.</p>';
+}
+function filt(el,f){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');curFilt=f;renderList();}
+const TITLES={home:'Referred patients',patient:'Referral · Wang Xiaoming',mgmt:'Patient management'};
+function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
+  document.getElementById('s-'+s).classList.add('on');
+  document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
+  document.getElementById('title').textContent=TITLES[s];window.scrollTo(0,0);}
+function pv(v){document.querySelectorAll('.pv').forEach(x=>x.classList.remove('on'));
+  document.getElementById('pv-'+v).classList.add('on');
+  document.querySelectorAll('.subnav a').forEach(a=>a.classList.toggle('on',a.dataset.pv===v));}
+function setSpec(){
+  const v=document.getElementById('specSel').value;
+  const map={PT:['PT','Physiotherapist · Felicity','Physiotherapy',['Assessment','Treatment session','Review'],'Home program shared with patient'],
+    ENT:['ENT','ENT · Dr. Su','ENT',['Consultation','Procedure','Review'],'Aftercare instructions for patient'],
+    MD:['MD','Functional-medicine MD · Dr. Ryan','Functional medicine',['Consultation','Lab review','Review'],'Recommendations shared with patient']};
+  const m=map[v];
+  document.getElementById('logo').textContent=m[0];
+  document.getElementById('specLabel').textContent=m[1];
+  document.getElementById('specTag').textContent=m[2];
+  const st=document.getElementById('sessType');if(st)st.innerHTML=m[3].map(o=>`<option>${o}</option>`).join('');
+  const hl=document.getElementById('homeLbl');if(hl)hl.innerHTML=m[4]+' <span class="pill">shows in patient app</span>';
+  toast('Now viewing as '+m[1].split(' · ')[0]);
+}
+let tT;function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+renderList();
+</script>
+</body>
+</html>
