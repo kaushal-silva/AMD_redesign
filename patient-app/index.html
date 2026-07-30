@@ -138,6 +138,21 @@
     .toast.show{opacity:1}
     .phase2{font-size:10px;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:20px;font-weight:700}
     .install{margin:0 16px 14px;background:#fff;border:1px dashed var(--teal);border-radius:14px;padding:12px 14px;font-size:12px;color:var(--teal);display:none;align-items:center;gap:10px}
+    /* satisfaction rating */
+    .nudge{display:flex;align-items:center;gap:12px;background:linear-gradient(120deg,#fff7ed,#ffedd5);border-radius:18px;padding:14px;box-shadow:var(--shadow);margin-bottom:14px;cursor:pointer}
+    .nudge .ic{font-size:24px}
+    .rate-role{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+    .rr-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .av2{width:40px;height:40px;border-radius:50%;background:var(--mint);color:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;flex:0 0 auto}
+    .stars{display:flex;gap:4px}
+    .star{font-size:30px;color:#e2e6e5;cursor:pointer;line-height:1;transition:.1s}
+    .star.on{color:var(--amber)}
+    .cmt{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;margin-top:10px;font-family:inherit}
+    .hist{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:13px}
+    .hist:first-of-type{border-top:none}
+    .hist .hd{width:56px;flex:0 0 auto;color:var(--muted);font-size:12px}
+    .hist .hs{flex:1}.hist .hs .rr{font-size:12px}.hist .hs .st{color:var(--amber);letter-spacing:1px}
+    .trend-up{color:var(--good);font-weight:700}.trend-dn{color:var(--coral);font-weight:700}
   </style>
 </head>
 <body>
@@ -186,6 +201,13 @@
       </div>
       <div id="taskList"></div>
       <div class="sub strk" style="margin-top:10px" data-i18n="freeze">Missed a day? You have 1 streak-freeze left — your streak stays safe.</div>
+    </div>
+
+    <div class="nudge" id="rateNudge" onclick="go('rate')">
+      <div class="ic">⭐</div>
+      <div style="flex:1"><div style="font-weight:700;font-size:14px" data-i18n="rateNudgeT">How was your last visit?</div>
+        <div class="sub" data-i18n="rateNudgeX">Rate your ATC & dentist · takes 20 seconds</div></div>
+      <span class="link-i" data-i18n="rateNow">Rate</span>
     </div>
 
     <div class="card">
@@ -332,6 +354,7 @@
     </div>
 
     <div class="card">
+      <div class="me-row" onclick="go('rate')"><div class="ic">⭐</div><div class="m-t" data-i18n="rateCare">Rate my ATC & dentist</div><span class="arr">›</span></div>
       <div class="me-row" onclick="go('chat')"><div class="ic">💬</div><div class="m-t" data-i18n="contact">Message my ATC (care manager)</div><span class="arr">›</span></div>
       <div class="me-row" onclick="toggleLang()"><div class="ic">🌐</div><div class="m-t"><span data-i18n="language">Language</span> · <span id="langLbl">English</span></div><span class="arr">›</span></div>
       <div class="me-row" onclick="toast(t('acct'))"><div class="ic">👤</div><div class="m-t" data-i18n="account">Account & password</div><span class="arr">›</span></div>
@@ -351,6 +374,30 @@
     <div class="card" style="display:flex;gap:8px;align-items:center;margin-top:8px">
       <input id="chatIn" placeholder="Type a message…" style="flex:1;border:1px solid var(--line);border-radius:12px;padding:11px;font-size:14px" />
       <button class="btn-ghost" onclick="sendMsg()" style="background:var(--teal);color:#fff;border:none">Send</button>
+    </div>
+  </section>
+
+  <!-- RATE CARE TEAM -->
+  <section class="screen" id="s-rate">
+    <div class="section-title" data-i18n="rateTitle">⭐ Rate my care team</div>
+    <div class="card">
+      <div class="sub" data-i18n="rateIntro">Your honest rating helps us look after you better. Tap the stars — comments are optional. You can rate anytime.</div>
+      <div class="rate-role" style="margin-top:14px">
+        <div class="rr-head"><div class="av2">林</div><div><b>Nurse Lin</b><div class="sub" data-i18n="yourAtc">Your ATC (care manager)</div></div></div>
+        <div class="stars" id="starsatc"></div>
+        <input class="cmt" id="cmtatc" data-i18n-ph="cmtPh" placeholder="Optional comment…" />
+      </div>
+      <div class="rate-role">
+        <div class="rr-head"><div class="av2">陳</div><div><b>Dr. Chen</b><div class="sub" data-i18n="yourDentist">Your dentist (AMD)</div></div></div>
+        <div class="stars" id="starsdentist"></div>
+        <input class="cmt" id="cmtdentist" data-i18n-ph="cmtPh" placeholder="Optional comment…" />
+      </div>
+      <button class="btn-teal" onclick="submitRate()" data-i18n="submitRate">Submit rating</button>
+    </div>
+    <div class="card">
+      <h3 data-i18n="myRatings">My past ratings</h3>
+      <div class="sub" id="trendLine" style="margin:4px 0 8px"></div>
+      <div id="rateHist"></div>
     </div>
   </section>
 
@@ -425,6 +472,15 @@ const I18N={
   c3:{en:"Totally normal. Keep it up — see you Aug 9!",zh:"很正常喔，繼續加油——8月9日見！"},
   nHome:{en:"Home",zh:"首頁"},nAppts:{en:"Appts",zh:"約診"},nJourney:{en:"Journey",zh:"旅程"},nLearn:{en:"Learn",zh:"衛教"},nMe:{en:"Me",zh:"我的"},
   installTip:{en:"Tap Share → Add to Home Screen to install",zh:"點擊 分享 → 加入主畫面 即可安裝"},
+  rateNudgeT:{en:"How was your last visit?",zh:"上次回診感覺如何？"},rateNudgeX:{en:"Rate your ATC & dentist · takes 20 seconds",zh:"為個管師與醫師評分・只要20秒"},rateNow:{en:"Rate",zh:"評分"},
+  rateCare:{en:"Rate my ATC & dentist",zh:"為個管師與醫師評分"},
+  rateTitle:{en:"⭐ Rate my care team",zh:"⭐ 為我的照護團隊評分"},
+  rateIntro:{en:"Your honest rating helps us look after you better. Tap the stars — comments are optional. You can rate anytime.",zh:"你的真實評分能幫助我們更好地照顧你。點擊星星——留言可選填。你可以隨時評分。"},
+  yourAtc:{en:"Your ATC (care manager)",zh:"你的個管師"},yourDentist:{en:"Your dentist (AMD)",zh:"你的醫師 (AMD)"},
+  cmtPh:{en:"Optional comment…",zh:"留言（可選）…"},submitRate:{en:"Submit rating",zh:"送出評分"},
+  myRatings:{en:"My past ratings",zh:"我的評分紀錄"},
+  rateThanks:{en:"Thank you! Your rating was submitted.",zh:"謝謝！你的評分已送出。"},needStar:{en:"Tap at least one star first 🙂",zh:"請先點一顆星 🙂"},
+  trendTxt:{en:"ATC latest",zh:"個管師最新"},dTrend:{en:"Dentist",zh:"醫師"},
   howto:{en:"Opening tutorial in Learn…",zh:"在衛教中開啟教學…"},shareTask:{en:"Share with a friend or your ATC",zh:"分享給朋友或你的個管師"},
   planPDF:{en:"Opening treatment plan PDF…",zh:"開啟治療計畫PDF…"},shared:{en:"Shared!",zh:"已分享！"},
   shopOpen:{en:"Opening store…",zh:"開啟商城…"},acct:{en:"Account settings",zh:"帳號設定"},notifSet:{en:"Notification settings",zh:"通知設定"},
@@ -468,10 +524,11 @@ function renderTimeline(){
 }
 function applyLang(){
   document.querySelectorAll('[data-i18n]').forEach(n=>{const k=n.getAttribute('data-i18n');if(I18N[k])n.textContent=I18N[k][lang];});
+  document.querySelectorAll('[data-i18n-ph]').forEach(n=>{const k=n.getAttribute('data-i18n-ph');if(I18N[k])n.placeholder=I18N[k][lang];});
   document.getElementById('langBtn').textContent=lang==='en'?'中文':'EN';
   document.getElementById('langLbl').textContent=lang==='en'?'English':'中文';
   document.documentElement.lang=lang==='en'?'en':'zh-Hant';
-  renderTasks();renderTimeline();
+  renderTasks();renderTimeline();if(typeof renderHist==='function')renderHist();
 }
 function toggleLang(){lang=lang==='en'?'zh':'en';applyLang();}
 function toggleG(el){const k=el.getAttribute('data-g');G[k]=!G[k];el.classList.toggle('on',G[k]);applyG();
@@ -514,6 +571,41 @@ function sendMsg(){const inp=document.getElementById('chatIn');if(!inp.value.tri
   const d=document.createElement('div');d.className='msg me';d.textContent=inp.value;
   document.getElementById('chatLog').appendChild(d);inp.value='';}
 let tT;function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>el.classList.remove('show'),1900);}
+
+/* ---------- satisfaction rating ---------- */
+const rating={atc:0,dentist:0};
+let FEEDBACK=[
+  {date:{en:"Jun 14",zh:"6月14日"},atc:5,dentist:4},
+  {date:{en:"May 24",zh:"5月24日"},atc:4,dentist:4},
+  {date:{en:"Apr 25",zh:"4月25日"},atc:5,dentist:5},
+];
+function renderStars(role){
+  const el=document.getElementById('stars'+role);if(!el)return;
+  el.innerHTML=[1,2,3,4,5].map(n=>`<span class="star ${n<=rating[role]?'on':''}" onclick="setStar('${role}',${n})">★</span>`).join('');
+}
+function setStar(role,n){rating[role]=n;renderStars(role);}
+function submitRate(){
+  if(!rating.atc && !rating.dentist){toast(t('needStar'));return;}
+  FEEDBACK.unshift({date:{en:"Today",zh:"今天"},atc:rating.atc||'-',dentist:rating.dentist||'-'});
+  rating.atc=0;rating.dentist=0;renderStars('atc');renderStars('dentist');
+  document.getElementById('cmtatc').value='';document.getElementById('cmtdentist').value='';
+  document.getElementById('rateNudge').style.display='none';
+  renderHist();toast(t('rateThanks'));
+}
+function starStr(n){return typeof n==='number'?'★'.repeat(n)+'☆'.repeat(5-n):'—';}
+function renderHist(){
+  const el=document.getElementById('rateHist');if(!el)return;
+  el.innerHTML=FEEDBACK.map(f=>`<div class="hist"><div class="hd">${f.date[lang]}</div>
+    <div class="hs"><div class="rr">ATC <span class="st">${starStr(f.atc)}</span></div>
+      <div class="rr">${lang==='en'?'Dentist':'醫師'} <span class="st">${starStr(f.dentist)}</span></div></div></div>`).join('');
+  // trend: compare two most recent numeric ATC scores
+  const nums=FEEDBACK.filter(f=>typeof f.atc==='number');
+  const tl=document.getElementById('trendLine');
+  if(nums.length>=2){const d=nums[0].atc-nums[1].atc;const arr=d>0?'<span class="trend-up">▲</span>':d<0?'<span class="trend-dn">▼</span>':'→';
+    tl.innerHTML=`${t('trendTxt')}: <b>${nums[0].atc}/5</b> ${arr}`;}
+  else tl.textContent='';
+}
+renderStars('atc');renderStars('dentist');renderHist();
 
 applyLang();initBA();sizeBefore();
 if(/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone){document.getElementById('installBar').style.display='flex';}

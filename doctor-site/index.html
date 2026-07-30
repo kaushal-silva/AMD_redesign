@@ -140,6 +140,18 @@
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#12211f;color:#fff;
     padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
   .toast.show{opacity:1}
+  /* satisfaction */
+  .sat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .sat{border:1px solid var(--line);border-radius:12px;padding:14px}
+  .sat.flag{border-color:#fecaca;background:#fef2f2}
+  .sat .role{font-size:12px;color:var(--muted);font-weight:600}
+  .sat .val{font-size:26px;font-weight:800;color:var(--teal);margin-top:4px}
+  .sat.flag .val{color:#dc2626}
+  .sat .meta2{font-size:12px;color:var(--muted);margin-top:2px}
+  .tup{color:#16a34a;font-weight:700}.tdn{color:#dc2626;font-weight:700}
+  .flagpill{font-size:10px;font-weight:700;background:#fee2e2;color:#b91c1c;padding:2px 8px;border-radius:20px}
+  .satchip{font-size:11px;font-weight:700;color:#b45309;background:#fffbeb;border:1px solid #fde68a;padding:2px 7px;border-radius:20px}
+  .satchip.ok{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
 </style>
 </head>
 <body>
@@ -258,6 +270,16 @@
           <div class="pd-body">
             <!-- basic -->
             <div class="pv on" id="pv-basic">
+              <div class="card"><h3>⭐ Patient satisfaction <span class="pill">quality hold-back signal</span></h3>
+                <p class="hint" style="margin-bottom:12px">The patient's own repeated ratings. Give low-scoring patients extra care — it protects their experience and your bonus hold-back. (ATC sees the ATC score; dentist sees the dentist score.)</p>
+                <div class="sat-grid">
+                  <div class="sat"><div class="role">ATC · Nurse Lin</div><div class="val">4.8</div>
+                    <div class="meta2">latest 5 · <span class="tup">▲ up</span> · 6 ratings</div></div>
+                  <div class="sat flag"><div class="role">Dentist · Dr. Chen <span class="flagpill">needs care</span></div><div class="val">3.0</div>
+                    <div class="meta2">latest 3 · <span class="tdn">▼ down</span> · 5 ratings</div></div>
+                </div>
+                <p class="hint" style="margin-top:10px">🔴 Flag rule: latest ≤ 3/5 or a downward trend. This patient's dentist score dipped — worth a check-in before the completion hold-back.</p>
+              </div>
               <div class="card"><h3>Basic information</h3>
                 <div class="kv"><b>Name</b> 王小明 (Wang Xiaoming)</div>
                 <div class="kv"><b>MRN</b> AMD-0021</div>
@@ -443,12 +465,12 @@
 <div class="toast" id="toast"></div>
 <script>
 const PATIENTS=[
-  {n:"王小明 Wang Xiaoming",mrn:"AMD-0021",init:"王",diff:3,prog:62,stage:"Active · 6/9",next:"Aug 9",tags:["Narrow arch","Mouth breathing"],msg:true},
-  {n:"李美華 Li Meihua",mrn:"AMD-0018",init:"李",diff:2,prog:35,stage:"STA delivery",next:"Aug 2",tags:["Crossbite","SDB"],msg:false},
-  {n:"陳志明 Chen Zhiming",mrn:"AMD-0015",init:"陳",diff:4,prog:78,stage:"Active · 7/9",next:"Aug 14",tags:["TMJ pain","SDB"],msg:true},
-  {n:"張婷 Zhang Ting",mrn:"AMD-0012",init:"張",diff:1,prog:95,stage:"Maintenance",next:"Sep 1",tags:["Narrow arch"],msg:false},
-  {n:"林大衛 Lin David",mrn:"AMD-0009",init:"林",diff:2,prog:20,stage:"Signed",next:"Jul 31",tags:["Mouth breathing"],msg:false},
-  {n:"黃淑芬 Huang Shufen",mrn:"AMD-0007",init:"黃",diff:3,prog:50,stage:"Active · 5/9",next:"Aug 6",tags:["Crossbite","TMJ pain"],msg:false},
+  {n:"王小明 Wang Xiaoming",mrn:"AMD-0021",init:"王",diff:3,prog:62,stage:"Active · 6/9",next:"Aug 9",tags:["Narrow arch","Mouth breathing"],msg:true,sat:3.0,low:true},
+  {n:"李美華 Li Meihua",mrn:"AMD-0018",init:"李",diff:2,prog:35,stage:"STA delivery",next:"Aug 2",tags:["Crossbite","SDB"],msg:false,sat:4.5,low:false},
+  {n:"陳志明 Chen Zhiming",mrn:"AMD-0015",init:"陳",diff:4,prog:78,stage:"Active · 7/9",next:"Aug 14",tags:["TMJ pain","SDB"],msg:true,sat:2.5,low:true},
+  {n:"張婷 Zhang Ting",mrn:"AMD-0012",init:"張",diff:1,prog:95,stage:"Maintenance",next:"Sep 1",tags:["Narrow arch"],msg:false,sat:5.0,low:false},
+  {n:"林大衛 Lin David",mrn:"AMD-0009",init:"林",diff:2,prog:20,stage:"Signed",next:"Jul 31",tags:["Mouth breathing"],msg:false,sat:4.8,low:false},
+  {n:"黃淑芬 Huang Shufen",mrn:"AMD-0007",init:"黃",diff:3,prog:50,stage:"Active · 5/9",next:"Aug 6",tags:["Crossbite","TMJ pain"],msg:false,sat:4.0,low:false},
 ];
 const DIFF=['','#22c55e','#84cc16','#f59e0b','#ef4444'];
 function renderPatients(){
@@ -460,7 +482,8 @@ function renderPatients(){
         <span class="diff" style="background:${DIFF[p.diff]}">D${p.diff}</span></div>
       <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
       <div class="progline"><i style="width:${p.prog}%"></i></div>
-      <div class="p-meta"><span>${p.stage}</span><span>Next: ${p.next}</span></div>
+      <div class="p-meta"><span>${p.stage} · Next ${p.next}</span>
+        <span class="satchip ${p.low?'':'ok'}">⭐ ${p.sat.toFixed(1)}${p.low?' 🔴':''}</span></div>
     </div>`).join('');
 }
 const TITLES={home:"Patients",add:"Add patient",detail:"Patient record · 王小明"};

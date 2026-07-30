@@ -110,6 +110,13 @@
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a172a;color:#fff;
     padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
   .toast.show{opacity:1}
+  .tup{color:#16a34a;font-weight:700}.tdn{color:#dc2626;font-weight:700}
+  .chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 14px;font-size:13px;cursor:pointer}
+  .chip.on{background:var(--pur);color:#fff;border-color:var(--pur)}
+  .flagpill{font-size:10px;font-weight:700;background:#fee2e2;color:#b91c1c;padding:2px 8px;border-radius:20px}
+  .okpill{font-size:10px;font-weight:700;background:#dcfce7;color:#166534;padding:2px 8px;border-radius:20px}
+  .hold-rel{color:#166534;font-weight:700}.hold-wait{color:#b45309;font-weight:700}
 </style>
 </head>
 <body>
@@ -126,6 +133,7 @@
     <div class="role">Insight</div>
     <nav class="nav">
       <a data-s="kpi" onclick="go('kpi')">📈 Analytics</a>
+      <a data-s="sat" onclick="go('sat')">⭐ Satisfaction &amp; bonuses <span class="b">2</span></a>
       <a data-s="msg" onclick="go('msg')">💬 Message hub <span class="b">2</span></a>
     </nav>
     <div class="role">Account</div>
@@ -346,6 +354,54 @@
         </div>
       </section>
 
+      <!-- ===== SATISFACTION & BONUSES ===== -->
+      <section class="screen" id="s-sat">
+        <div class="banner">⭐ Part of each ATC's and dentist's reward is a <b>quality hold-back</b> — released only if the patient stays satisfied. This is where HQ reads the scores to <b>release hold-backs</b> and award <b>special bonuses</b>. Data comes from patients rating their ATC &amp; dentist repeatedly.</div>
+        <div class="kpis">
+          <div class="kpi"><div class="n">4.4</div><div class="l">Avg satisfaction (all)</div><div class="d upg">▲ 0.2</div></div>
+          <div class="kpi"><div class="n">2</div><div class="l">Flagged patients</div><div class="d dn">need care</div></div>
+          <div class="kpi"><div class="n">318</div><div class="l">Ratings submitted (YTD)</div></div>
+          <div class="kpi"><div class="n">NT$ 96k</div><div class="l">Hold-back pending release</div></div>
+        </div>
+
+        <div class="card"><h3>All patients · satisfaction</h3>
+          <div class="chips">
+            <span class="chip on" onclick="filtSat(this,'all')">All</span>
+            <span class="chip" onclick="filtSat(this,'flag')">🔴 Flagged only</span>
+            <span class="chip" onclick="filtSat(this,'top')">Top rated</span>
+          </div>
+          <table>
+            <tr><th>Patient</th><th>ATC</th><th>ATC score</th><th>Dentist</th><th>Dentist score</th><th>Trend</th><th>Flag</th></tr>
+            <tbody id="satRows"></tbody>
+          </table>
+          <p class="hint" style="margin-top:8px">Sortable/filterable in the real build. 🔴 = latest ≤3/5 or downward trend.</p>
+        </div>
+
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <div class="card" style="flex:1;min-width:320px"><h3>Per-ATC rollup <span class="pill">6-month hold-back: 40%</span></h3>
+            <table>
+              <tr><th>ATC</th><th>Avg</th><th>Low-score pts</th><th>Ratings</th><th>Hold-back</th></tr>
+              <tr><td>Nurse Lin</td><td>4.7</td><td>0</td><td>96</td><td><span class="hold-rel">Release ✓</span></td></tr>
+              <tr><td>Amy Wu</td><td>4.5</td><td>1</td><td>72</td><td><span class="hold-rel">Release ✓</span></td></tr>
+              <tr><td>Joy Kao</td><td>3.4</td><td>2</td><td>40</td><td><span class="hold-wait">Hold — review</span></td></tr>
+            </table>
+          </div>
+          <div class="card" style="flex:1;min-width:320px"><h3>Per-dentist rollup <span class="pill">completion hold-back: 10%</span></h3>
+            <table>
+              <tr><th>Dentist</th><th>Avg</th><th>Low-score pts</th><th>Ratings</th><th>Hold-back</th></tr>
+              <tr><td>Dr. Chen</td><td>4.1</td><td>1</td><td>88</td><td><span class="hold-wait">1 at completion — review</span></td></tr>
+              <tr><td>Dr. Wu</td><td>4.6</td><td>0</td><td>61</td><td><span class="hold-rel">Release ✓</span></td></tr>
+              <tr><td>Dr. Lin</td><td>4.8</td><td>0</td><td>39</td><td><span class="okpill">Bonus candidate ⭐</span></td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="card"><h3>Special bonuses</h3>
+          <p class="hint" style="margin-bottom:10px">Discretionary, funded from retained hold-backs. HQ awards standout performers.</p>
+          <button class="btn" onclick="toast('Awarded bonus to Dr. Lin (4.8 avg)')">Award bonus → Dr. Lin</button>
+          <button class="btn ghost" onclick="toast('Released 40% hold-back to Nurse Lin')" style="margin-left:8px">Release Nurse Lin hold-back</button>
+        </div>
+      </section>
+
       <!-- ===== MESSAGE HUB ===== -->
       <section class="screen" id="s-msg">
         <div class="banner">One place for HQ to talk to every partner — AMDs, MD/PT specialists, Dr. Liao, and the lab.</div>
@@ -437,12 +493,35 @@ function openThread(k){
 /* helpers */
 function markDone(btn,msg){const up=btn.closest('.up');up.classList.add('done');btn.textContent='✓ Uploaded';btn.disabled=true;toast(msg);}
 function grade(el){document.querySelectorAll('.grade span').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');toast('Difficulty grade set');}
-const TITLES={dash:'Dashboard',clinics:'AMD clinics',upload:'Patient report / IP',sta:'STA orchestration',kpi:'Analytics',msg:'Message hub'};
+const TITLES={dash:'Dashboard',clinics:'AMD clinics',upload:'Patient report / IP',sta:'STA orchestration',kpi:'Analytics',sat:'Satisfaction & bonuses',msg:'Message hub'};
 function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
   document.getElementById('s-'+s).classList.add('on');
   document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
   document.getElementById('title').textContent=TITLES[s];window.scrollTo(0,0);
-  if(s==='msg')renderMsg();}
+  if(s==='msg')renderMsg();if(s==='sat')renderSat();}
+
+/* satisfaction dashboard */
+const SAT=[
+  {n:"Wang Xiaoming",mrn:"AMD-0021",atc:"Nurse Lin",atcS:4.8,dent:"Dr. Chen",dentS:3.0,trend:"dn",flag:true},
+  {n:"Chen Zhiming",mrn:"AMD-0015",atc:"Joy Kao",atcS:2.9,dent:"Dr. Chen",dentS:4.1,trend:"dn",flag:true},
+  {n:"Li Meihua",mrn:"AMD-0018",atc:"Nurse Lin",atcS:4.6,dent:"Dr. Chen",dentS:4.4,trend:"up",flag:false},
+  {n:"Zhang Ting",mrn:"AMD-0012",atc:"Amy Wu",atcS:5.0,dent:"Dr. Wu",dentS:4.8,trend:"up",flag:false},
+  {n:"Su Jiahao",mrn:"AMD-0004",atc:"Amy Wu",atcS:4.5,dent:"Dr. Lin",dentS:4.9,trend:"up",flag:false},
+];
+let satFilt='all';
+function renderSat(){
+  let rows=SAT.slice();
+  if(satFilt==='flag')rows=rows.filter(r=>r.flag);
+  if(satFilt==='top')rows=rows.slice().sort((a,b)=>(b.atcS+b.dentS)-(a.atcS+a.dentS));
+  document.getElementById('satRows').innerHTML=rows.map(r=>{
+    const arr=r.trend==='up'?'<span class="tup">▲</span>':'<span class="tdn">▼</span>';
+    return `<tr><td><b>${r.n}</b><div class="cond">${r.mrn}</div></td>
+      <td>${r.atc}</td><td>${r.atcS.toFixed(1)}</td>
+      <td>${r.dent}</td><td>${r.dentS.toFixed(1)}</td>
+      <td>${arr}</td><td>${r.flag?'<span class="flagpill">🔴 care</span>':'<span class="okpill">ok</span>'}</td></tr>`;
+  }).join('');
+}
+function filtSat(el,f){document.querySelectorAll('#s-sat .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');satFilt=f;renderSat();}
 let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
   clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
 injectSVG();
