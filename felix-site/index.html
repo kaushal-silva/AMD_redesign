@@ -5,128 +5,288 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>AMD · Dr. Liao (Felix) Site — De-identified</title>
 <style>
-  :root{--rose:#be123c;--rose-d:#881337;--bg:#faf7f8;--card:#fff;--ink:#1c1420;--muted:#7c6b74;
-    --line:#efe4e8;--shadow:0 2px 10px rgba(120,20,60,.06)}
+  :root{--rose:#be123c;--rose-l:#fb7185;--rose-d:#881337;--bg:#faf7f8;--card:#fff;--ink:#1c1420;
+    --muted:#7c6b74;--line:#efe4e8;--shadow:0 2px 10px rgba(120,20,60,.06);--blue:#1e40af;--green:#15803d}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
   .app{display:flex;min-height:100vh}
-  .side{width:220px;background:#3a1220;color:#f0d5de;padding:18px 12px;position:sticky;top:0;height:100vh;flex:0 0 auto}
-  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;padding:6px 8px 8px}
-  .brand .lg{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,#e11d48,#fb7185);
-    display:flex;align-items:center;justify-content:center;font-weight:800}
-  .lock{font-size:10px;color:#e6a3b4;padding:6px 8px 14px}
-  .nav a{display:flex;gap:10px;padding:10px 12px;border-radius:9px;color:#f0d5de;text-decoration:none;
-    font-size:14px;cursor:pointer;margin-bottom:2px}
+  .side{width:224px;background:#3a1220;color:#f0d5de;padding:18px 12px;position:sticky;top:0;height:100vh;flex:0 0 auto}
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;padding:6px 8px 2px}
+  .brand .lg{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,#e11d48,#fb7185);display:flex;align-items:center;justify-content:center;font-weight:800}
+  .brand small{display:block;font-size:10px;color:#e6a3b4;font-weight:400}
+  .lock{font-size:10px;color:#e6a3b4;padding:6px 8px 14px;line-height:1.4}
+  .nav a{display:flex;gap:10px;padding:10px 12px;border-radius:9px;color:#f0d5de;text-decoration:none;font-size:14px;cursor:pointer;margin-bottom:2px;align-items:center}
   .nav a:hover{background:#ffffff12}.nav a.on{background:var(--rose);color:#fff}
-  .role{font-size:10px;color:#c98ea0;text-transform:uppercase;letter-spacing:.6px;padding:0 8px;margin:10px 0 4px}
+  .nav a .b{margin-left:auto;background:#3b82f6;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px}
+  .role{font-size:10px;color:#c98ea0;text-transform:uppercase;letter-spacing:.6px;padding:0 8px;margin:12px 0 4px}
   .back a{color:#c98ea0;font-size:12px;text-decoration:none}
   .main{flex:1;min-width:0}
-  .bar{background:var(--card);border-bottom:1px solid var(--line);padding:14px 26px;display:flex;gap:14px;
-    align-items:center;position:sticky;top:0;z-index:5}
+  .bar{background:var(--card);border-bottom:1px solid var(--line);padding:12px 26px;display:flex;gap:14px;align-items:center;position:sticky;top:0;z-index:5}
   .bar h2{flex:1;font-size:17px}.bar .who{font-size:13px;color:var(--muted)}
-  .content{padding:24px 26px 60px;max-width:900px}
-  .banner{background:#fff1f2;border:1px solid #fecdd3;color:#9f1239;padding:12px 15px;border-radius:10px;
-    font-size:13px;margin-bottom:18px;line-height:1.55}
-  .screen{display:none}.screen.on{display:block}
+  .region{font-size:11px;background:#fee2e2;color:#9f1239;padding:4px 10px;border-radius:20px;font-weight:700}
+  .content{padding:22px 26px 60px;max-width:940px}
+  .screen{display:none;animation:f .2s}.screen.on{display:block}@keyframes f{from{opacity:0}to{opacity:1}}
+  .banner{background:#fff1f2;border:1px solid #fecdd3;color:#9f1239;padding:12px 15px;border-radius:10px;font-size:13px;margin-bottom:16px;line-height:1.55}
   .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
-  .card h3{font-size:15px;margin-bottom:12px}
-  .p-row{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:12px;
-    margin-bottom:10px;cursor:pointer;background:#fff}
-  .p-row:hover{box-shadow:0 6px 18px rgba(120,20,60,.1)}
-  .av{width:42px;height:42px;border-radius:10px;background:#ffe4e6;color:var(--rose);display:flex;
-    align-items:center;justify-content:center;font-weight:700;flex:0 0 auto;font-size:12px}
-  .nm{font-weight:700}.sub{font-size:12px;color:var(--muted)}
+  .card h3{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .pill{font-size:10px;background:#ffe4e6;color:var(--rose);padding:2px 8px;border-radius:20px;font-weight:700}
+  .chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 14px;font-size:13px;cursor:pointer}
+  .chip.on{background:var(--rose);color:#fff;border-color:var(--rose)}
+  .p-row{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px;cursor:pointer;background:#fff;transition:.15s}
+  .p-row:hover{box-shadow:0 6px 18px rgba(120,20,60,.1);transform:translateY(-1px)}
+  .av{width:46px;height:46px;border-radius:10px;background:#ffe4e6;color:var(--rose);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;flex:0 0 auto;font-size:11px;line-height:1.1}
+  .p-row .nm{font-weight:700}.p-row .sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .p-row .meta{text-align:right;font-size:12px;color:var(--muted);flex:0 0 auto}
   .badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;background:#dbeafe;color:#1e40af}
-  .kv{display:flex;gap:8px;font-size:13px;padding:7px 0;border-bottom:1px solid var(--line)}
-  .kv b{width:130px;color:var(--muted);font-weight:600;flex:0 0 auto}
-  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .ph{aspect-ratio:4/3;border-radius:10px;background:#1c1420;color:#fff;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;font-size:12px;text-align:center;padding:10px;position:relative;overflow:hidden}
-  .ph .blur{filter:blur(6px);font-size:34px;opacity:.5}
-  .ph small{opacity:.7;margin-top:6px}
   .viewonly{font-size:10px;background:#e5e7eb;color:#6b7280;padding:2px 8px;border-radius:20px;font-weight:700}
-  .chatlog{background:#faf7f8;border-radius:10px;padding:14px}
-  .m{max-width:72%;padding:9px 13px;border-radius:14px;font-size:13px;margin-bottom:8px}
+  /* case detail */
+  .pd-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+  .pd-head .nm{font-size:20px;font-weight:700}.pd-head .sub{font-size:13px;color:var(--muted)}
+  .subnav{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:18px;flex-wrap:wrap}
+  .subnav a{padding:9px 14px;font-size:13px;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted);font-weight:600}
+  .subnav a.on{color:var(--rose);border-color:var(--rose)}
+  .pv{display:none}.pv.on{display:block}
+  .kv{display:flex;gap:8px;font-size:13px;padding:8px 0;border-bottom:1px solid var(--line)}
+  .kv b{width:150px;color:var(--muted);font-weight:600;flex:0 0 auto}.kv:last-child{border-bottom:none}
+  /* de-identified comparison slider */
+  .ba{position:relative;border-radius:12px;overflow:hidden;user-select:none;touch-action:none;aspect-ratio:16/10;background:#0e0a12}
+  .ba .lay{position:absolute;inset:0}
+  .ba .after-wrap{position:absolute;inset:0;overflow:hidden;width:50%;border-right:3px solid #fff}
+  .ba .handle{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;transform:translateX(-50%);z-index:3}
+  .ba .handle::after{content:"⇆";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:32px;height:32px;background:#fff;color:var(--rose);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px #0006}
+  .ba .tg{position:absolute;bottom:8px;font-size:11px;background:#0009;color:#fff;padding:3px 9px;border-radius:10px;z-index:4}
+  .ba .tg.l{left:8px}.ba .tg.r{right:8px}
+  .imgrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .imgmock{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0e0a12}
+  .imgmock svg{display:block;width:100%;height:104px}
+  .imgmock .cap{padding:8px 10px;font-size:12px;font-weight:600;border-top:1px solid var(--line);background:#fff}
+  .imgmock .cap small{display:block;color:var(--muted);font-weight:400;font-size:11px}
+  .rec{border:1px solid var(--line);border-radius:11px;padding:14px;margin-bottom:10px}
+  .rec .rh{display:flex;justify-content:space-between;font-size:13px;font-weight:700}
+  .rec .rx{font-size:12.5px;color:#57534e;margin-top:6px;line-height:1.5}
+  .lock-item{background:#f5f5f4;border:1px dashed #d6d3d1;border-radius:10px;padding:12px 14px;color:var(--muted);font-size:13px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .chatlog{background:#faf7f8;border-radius:10px;padding:14px;max-height:340px;overflow:auto}
+  .m{max-width:74%;padding:9px 13px;border-radius:14px;font-size:13px;margin-bottom:8px;line-height:1.4}
   .m.them{background:#fff;box-shadow:var(--shadow)}.m.me{background:var(--rose);color:#fff;margin-left:auto}
+  .m .who{font-size:10px;opacity:.7;margin-bottom:2px}
   input{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px}
   .btn{background:var(--rose);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer;font-size:14px}
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c1420;color:#fff;
-    padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .flow .n{background:#fff1f2;border:1px solid #fecdd3;border-radius:9px;padding:8px 12px;font-size:12px;flex:1;min-width:120px;text-align:center}
+  .flow .ar{color:var(--rose);font-weight:700}
+  .hint{font-size:11px;color:var(--muted)}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c1420;color:#fff;padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
   .toast.show{opacity:1}
 </style>
 </head>
 <body>
 <div class="app">
   <aside class="side">
-    <div class="brand"><div class="lg">Dr</div> Dr. Liao</div>
-    <div class="lock">🌏 Cross-border · de-identified access only</div>
-    <div class="role">Referred to me</div>
+    <div class="brand"><div class="lg">Dr</div> <div>Dr. Liao<small>Consulting · USA</small></div></div>
+    <div class="lock">🌏 Cross-border access · de-identified data only · view + comment</div>
+    <div class="role">Work</div>
     <nav class="nav">
-      <a class="on" data-s="home" onclick="go('home')">👥 Referred cases</a>
-      <a data-s="case" onclick="go('case')">📋 Case (de-identified)</a>
+      <a class="on" data-s="home" onclick="go('home')">👥 Referred cases <span class="b">1</span></a>
+      <a data-s="case" onclick="go('case')">📋 Open case</a>
     </nav>
-    <div class="role">Account</div>
-    <nav class="nav"><a onclick="toast('Contact AMD Taiwan')">💬 Contact AMD Taiwan</a></nav>
-    <div class="nav back" style="padding:8px"><a href="../index.html">← Portal</a></div>
+    <div class="role">Info</div>
+    <nav class="nav">
+      <a data-s="privacy" onclick="go('privacy')">🔒 How de-identification works</a>
+      <a onclick="toast('Chat with AMD Taiwan')">💬 Contact AMD Taiwan</a>
+    </nav>
+    <div class="nav back" style="padding:8px;margin-top:8px"><a href="../index.html">← Portal</a></div>
   </aside>
+
   <div class="main">
-    <div class="bar"><h2 id="title">Referred cases</h2><span class="who">Dr. Liao · USA</span></div>
+    <div class="bar">
+      <h2 id="title">Referred cases</h2>
+      <span class="region">🔒 De-identified · US access</span>
+      <span class="who">Dr. Liao</span>
+    </div>
     <div class="content">
+
+      <!-- HOME -->
       <section class="screen on" id="s-home">
-        <div class="banner">🔒 <b>Cross-border privacy (Taiwan PDPA + AI-era rules).</b> You see <b>de-identified</b> cases only: patient code + age range, no name, address or DOB. Faces are masked and voice is shared as text transcripts. You have <b>view-only</b> access and communicate via the referral chat.</div>
-        <div class="card"><h3>Cases shared for your guidance</h3>
-          <div class="p-row" onclick="go('case')">
-            <div class="av">KS<br>0021</div>
-            <div style="flex:1"><div class="nm">Patient KS-0021</div>
-              <div class="sub">Female · age 35–37 · airway case · shared by Dr. Chen</div></div>
-            <span class="badge">New message</span>
+        <div class="banner">🔒 <b>Cross-border privacy (Taiwan PDPA + AI-era rules).</b> You see <b>de-identified</b> cases only — patient code + age range, no name/address/DOB. Faces are masked, CBCT/scan data is de-identified by a certified vendor before it reaches you, and voice is shared as text transcripts. Access is <b>view + comment</b> via the guidance chat; you cannot edit records.</div>
+        <div class="chips">
+          <span class="chip on" onclick="filt(this,'all')">All (2)</span>
+          <span class="chip" onclick="filt(this,'new')">Needs review (1)</span>
+          <span class="chip" onclick="filt(this,'watch')">Following (1)</span>
+        </div>
+        <div id="caseList"></div>
+      </section>
+
+      <!-- CASE DETAIL -->
+      <section class="screen" id="s-case">
+        <div class="pd-head">
+          <div class="av">KS<br>0021</div>
+          <div style="flex:1">
+            <div class="nm">Case KS-0021</div>
+            <div class="sub">Shared by <b>Dr. Chen (AMD)</b> · Female · age 35–37 · airway case</div>
           </div>
-          <div class="p-row" onclick="go('case')">
-            <div class="av">KS<br>0015</div>
-            <div style="flex:1"><div class="nm">Patient KS-0015</div>
-              <div class="sub">Male · age 45–47 · TMJ + SDB · shared by Dr. Chen</div></div>
-            <span class="viewonly">View only</span>
+          <span class="badge">New message</span>
+        </div>
+        <div class="subnav">
+          <a class="on" data-pv="summary" onclick="pv('summary')">Case summary</a>
+          <a data-pv="imaging" onclick="pv('imaging')">Imaging (de-identified)</a>
+          <a data-pv="records" onclick="pv('records')">Follow-up records</a>
+          <a data-pv="chat" onclick="pv('chat')">Guidance chat</a>
+          <a data-pv="locked" onclick="pv('locked')">🔒 Not shared</a>
+        </div>
+
+        <!-- summary -->
+        <div class="pv on" id="pv-summary">
+          <div class="banner">All identifying fields are removed at source. What you see below is the maximum shareable under the cross-border rules.</div>
+          <div class="card"><h3>Case summary</h3>
+            <div class="kv"><b>Case code</b> KS-0021</div>
+            <div class="kv"><b>Name / address / DOB</b> <span class="viewonly">Not shared</span></div>
+            <div class="kv"><b>Demographics</b> Female · age 35–37 (range only)</div>
+            <div class="kv"><b>Presentation</b> Narrow arch, mouth breathing, sleep-disordered breathing</div>
+            <div class="kv"><b>Baseline scales</b> ESS 14 · STOP-Bang 4</div>
+            <div class="kv"><b>Question for you</b> Widening rate given CBCT airway — accelerate or hold?</div>
+          </div>
+        </div>
+
+        <!-- imaging -->
+        <div class="pv" id="pv-imaging">
+          <div class="banner">Images arrive already de-identified: facial features preserved for clinical read, identity altered. CBCT is de-identified DICOM. View only — no download of raw identifiable data.</div>
+          <div class="card"><h3>Airway · baseline vs latest <span class="viewonly">view only</span></h3>
+            <div class="ba" id="baImg">
+              <div class="lay" id="baAfter"></div>
+              <div class="after-wrap" id="baBeforeWrap"><div id="baBefore" style="height:100%"></div></div>
+              <div class="handle" id="baHandle"></div>
+              <span class="tg l">Baseline · Apr</span><span class="tg r">Now · Jul</span>
+            </div>
+            <p class="hint" style="margin-top:8px">Drag to compare CBCT airway cross-section.</p>
+          </div>
+          <div class="card"><h3>De-identified image set</h3>
+            <div class="imgrow">
+              <div class="imgmock" data-img="face"><div class="cap">Facial profile<small>features preserved, identity altered</small></div></div>
+              <div class="imgmock" data-img="cbct"><div class="cap">CBCT airway<small>de-identified DICOM</small></div></div>
+              <div class="imgmock" data-img="intra"><div class="cap">Intraoral<small>occlusal view</small></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- records -->
+        <div class="pv" id="pv-records">
+          <div class="card"><h3>Follow-up records <span class="viewonly">view only</span></h3>
+            <div class="rec"><div class="rh"><span>Jul 12</span><span style="color:var(--muted)">via Dr. Chen</span></div>
+              <div class="rx">Sleeping better; ESS 14→8. STA turning 2 gears ½ each, Sun &amp; Wed. Feedback (text transcript): "less grinding, waking rested."</div></div>
+            <div class="rec"><div class="rh"><span>May 24 · STA delivery</span><span style="color:var(--muted)">via Dr. Chen</span></div>
+              <div class="rx">Appliance delivered. Baseline airway cross-section 82 mm². No turning this visit.</div></div>
+          </div>
+        </div>
+
+        <!-- chat -->
+        <div class="pv" id="pv-chat">
+          <div class="banner">Your only write access: comment back to the AMD through this guidance channel. Messages are logged to the case.</div>
+          <div class="card"><h3>Guidance chat with AMD</h3>
+            <div class="chatlog">
+              <div class="m them"><div class="who">Dr. Chen (AMD)</div>Felix, would you widen faster given the CBCT airway? Her feedback transcript is attached (text only).</div>
+              <div class="m me"><div class="who">Dr. Liao</div>Hold current rate 2 more weeks, then reassess airway cross-section. Good trajectory — don't rush the transverse.</div>
+              <div class="m them"><div class="who">Dr. Chen (AMD)</div>Understood, thank you.</div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px"><input placeholder="Comment to the AMD…" /><button class="btn">Send</button></div>
+          </div>
+        </div>
+
+        <!-- locked -->
+        <div class="pv" id="pv-locked">
+          <div class="card"><h3>Not shared with you</h3>
+            <p class="hint" style="margin-bottom:12px">Removed to comply with cross-border data rules and least-access:</p>
+            <div class="lock-item">🔒 Patient name, address, DOB, contact, medical-record number</div>
+            <div class="lock-item">🔒 Raw (non-de-identified) photos &amp; original DICOM/STL files</div>
+            <div class="lock-item">🔒 Voice recordings (shared only as text transcripts)</div>
+            <div class="lock-item">🔒 Billing &amp; the AMD's internal notes</div>
+            <div class="lock-item">🔒 Edit rights — you comment via chat, you don't edit records</div>
           </div>
         </div>
       </section>
 
-      <section class="screen" id="s-case">
-        <div class="banner">🔒 All identifying data removed. Images are de-identified (features preserved, identity altered) via a Taiwan-certified vendor before reaching you.</div>
-        <div class="card"><h3>Case KS-0021</h3>
-          <div class="kv"><b>Code</b> KS-0021</div>
-          <div class="kv"><b>Demographics</b> Female · age 35–37 (range, no DOB)</div>
-          <div class="kv"><b>Name / address</b> <span class="viewonly">Not shared</span></div>
-          <div class="kv"><b>Case</b> Narrow arch, mouth breathing, sleep-disordered breathing</div>
+      <!-- PRIVACY EXPLAINER -->
+      <section class="screen" id="s-privacy">
+        <div class="banner">For your product owner: this page explains the de-identification pipeline so the compliance story is clear before build.</div>
+        <div class="card"><h3>Why this site is different</h3>
+          <p class="hint" style="line-height:1.6;color:var(--ink);font-size:13px">Dr. Liao is in the US, so sharing Taiwanese patient data with him crosses a border. Under Taiwan PDPA and newer AI-era rules, <b>faces and voices are themselves identifiable</b>. So nothing identifiable leaves Taiwan — data is transformed first.</p>
         </div>
-        <div class="card"><h3>Imaging (de-identified) <span class="viewonly">view only</span></h3>
-          <div class="cmp">
-            <div class="ph"><span class="blur">🙂</span><small>Face — de-identified</small></div>
-            <div class="ph"><span class="blur">🦷</span><small>CBCT — de-identified DICOM</small></div>
+        <div class="card"><h3>The pipeline</h3>
+          <div class="flow">
+            <div class="n">Taiwan patient record</div><span class="ar">→</span>
+            <div class="n">Certified de-identification vendor (photos, CBCT/DICOM, STL)</div><span class="ar">→</span>
+            <div class="n">Code + age range, masked face, transcript</div><span class="ar">→</span>
+            <div class="n">Felix sees view-only</div>
           </div>
+          <p class="hint" style="margin-top:12px">Nancy identified 3 Taiwan-certified vendors that preserve facial features for clinical read while altering identity. <b>Open action:</b> confirm vendor fit and API before build.</p>
         </div>
-        <div class="card"><h3>Follow-up records <span class="viewonly">view only</span></h3>
-          <div class="kv"><b>Jul 12</b> Sleeping better; STA turning 2 gears ½ each, Sun & Wed.</div>
-          <div class="kv"><b>May 24</b> STA delivery. Baseline ESS 14.</div>
-        </div>
-        <div class="card"><h3>Guidance chat with AMD</h3>
-          <div class="chatlog">
-            <div class="m them">Felix, would you widen faster given the CBCT airway? Transcript of her feedback attached (text only).</div>
-            <div class="m me">Hold current rate 2 more weeks, then reassess airway cross-section. Good progress.</div>
-          </div>
-          <div style="display:flex;gap:8px;margin-top:12px"><input placeholder="Reply to AMD…" /><button class="btn">Send</button></div>
+        <div class="card"><h3>Build rule</h3>
+          <p class="hint" style="line-height:1.6;color:var(--ink);font-size:13px">Enforce the masking at the <b>API layer</b>, not the UI — Felix's app should never receive identifiable fields in the first place. Hiding them only in the front-end is a real compliance risk.</p>
         </div>
       </section>
+
     </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
+const X="xmlns='http://www.w3.org/2000/svg'";
+const IMG={
+ face:`<svg ${X} viewBox='0 0 200 104'><rect width='200' height='104' fill='#241a22'/><path d='M120 16 q-42 2 -50 40 q-3 18 5 27 l-4 8 6 4' fill='none' stroke='#fb7185' stroke-width='2'/><circle cx='96' cy='50' r='2.5' fill='#fb7185'/><rect x='70' y='40' width='34' height='16' fill='#fb718533'/><text x='100' y='96' fill='#e6a3b4' font-family='sans-serif' font-size='10' text-anchor='middle'>masked · features kept</text></svg>`,
+ cbct:`<svg ${X} viewBox='0 0 200 104'><rect width='200' height='104' fill='#160b12'/><path d='M140 14 q-56 0 -64 44 q-4 22 8 32' fill='none' stroke='#7d3f52' stroke-width='2'/><path d='M108 24 q-14 18 -10 40 q3 14 12 22' fill='none' stroke='#fb7185' stroke-width='6' opacity='.55' stroke-linecap='round'/><text x='120' y='54' fill='#fda4af' font-family='sans-serif' font-size='9'>airway</text></svg>`,
+ intra:`<svg ${X} viewBox='0 0 200 104'><rect width='200' height='104' fill='#8f3a44'/><path d='M40 84 Q100 18 160 84' fill='none' stroke='#e78a90' stroke-width='26' stroke-linecap='round'/><path d='M46 80 Q100 28 154 80' fill='none' stroke='#fff' stroke-width='15' stroke-linecap='round'/></svg>`,
+ baseA:`<svg ${X} viewBox='0 0 320 200' preserveAspectRatio='xMidYMid slice'><rect width='320' height='200' fill='#0e2a33'/><path d='M210 24 q-70 0 -80 56 q-5 30 10 46' fill='none' stroke='#5eead4' stroke-width='3'/><path d='M170 60 q-20 26 -14 58 q4 20 18 30' fill='none' stroke='#5eead4' stroke-width='9' opacity='.6' stroke-linecap='round'/><text x='20' y='185' fill='#7fe9d8' font-family='sans-serif' font-size='14'>now · 96 mm²</text></svg>`,
+ baseB:`<svg ${X} viewBox='0 0 320 200' preserveAspectRatio='xMidYMid slice'><rect width='320' height='200' fill='#243b4a'/><path d='M210 24 q-70 0 -80 56 q-5 30 10 46' fill='none' stroke='#7fd3c9' stroke-width='3'/><path d='M172 60 q-16 26 -12 58 q3 20 14 30' fill='none' stroke='#7fd3c9' stroke-width='6' opacity='.6' stroke-linecap='round'/><text x='20' y='185' fill='#9fb7c4' font-family='sans-serif' font-size='14'>baseline · 82 mm²</text></svg>`,
+};
+function uri(s){return "url(\"data:image/svg+xml,"+encodeURIComponent(s)+"\")";}
+function renderImgMocks(){document.querySelectorAll('.imgmock[data-img]').forEach(el=>{
+  if(el.querySelector('svg'))return;const k=el.getAttribute('data-img');if(IMG[k])el.insertAdjacentHTML('afterbegin',IMG[k]);});}
+
+const CASES=[
+ {code:"KS-0021",by:"Dr. Chen",demo:"Female · age 35–37",note:"Airway case · widening-rate question",status:"new",msg:true},
+ {code:"KS-0015",by:"Dr. Chen",demo:"Male · age 45–47",note:"TMJ + SDB · following progress",status:"watch",msg:false},
+];
+let curFilt='all';
+function renderCases(){
+  const el=document.getElementById('caseList');
+  el.innerHTML=CASES.filter(c=>curFilt==='all'||c.status===curFilt).map(c=>`
+    <div class="p-row" onclick="go('case')">
+      <div class="av">${c.code.replace('-','<br>')}</div>
+      <div style="flex:1"><div class="nm">Case ${c.code}</div><div class="sub">${c.demo} · shared by ${c.by} · ${c.note}</div></div>
+      <div class="meta">${c.msg?'<span class="badge">New message</span>':'<span class="viewonly">View only</span>'}</div>
+    </div>`).join('')||'<p class="hint">No cases in this filter.</p>';
+}
+function filt(el,f){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');curFilt=f;renderCases();}
+
+let baInit=false;
+function initBA(){
+  const box=document.getElementById('baImg');if(!box)return;
+  const after=document.getElementById('baAfter'),wrap=document.getElementById('baBeforeWrap'),before=document.getElementById('baBefore'),handle=document.getElementById('baHandle');
+  after.style.cssText='position:absolute;inset:0;background:'+uri(IMG.baseA)+' center/cover no-repeat #0e2a33';
+  function sizeBefore(){const w=box.clientWidth||420;before.style.cssText='position:absolute;top:0;left:0;height:100%;width:'+w+'px;background:'+uri(IMG.baseB)+' center/cover no-repeat #243b4a';}
+  function set(x){const r=box.getBoundingClientRect();let p=(x-r.left)/r.width;p=Math.max(0,Math.min(1,p));wrap.style.width=(p*100)+'%';handle.style.left=(p*100)+'%';}
+  window.baResize=()=>{sizeBefore();const r=box.getBoundingClientRect();set(r.left+r.width/2);};
+  let drag=false;const dn=e=>{drag=true;set((e.touches?e.touches[0]:e).clientX);};
+  const mv=e=>{if(drag){set((e.touches?e.touches[0]:e).clientX);e.preventDefault();}};
+  box.addEventListener('mousedown',dn);box.addEventListener('touchstart',dn,{passive:true});
+  window.addEventListener('mousemove',mv);window.addEventListener('touchmove',mv,{passive:false});
+  window.addEventListener('mouseup',()=>drag=false);window.addEventListener('touchend',()=>drag=false);
+  window.addEventListener('resize',()=>window.baResize&&window.baResize());
+  baInit=true;window.baResize();
+}
+
+const TITLES={home:'Referred cases',case:'Case · de-identified',privacy:'De-identification'};
 function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
   document.getElementById('s-'+s).classList.add('on');
   document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
-  document.getElementById('title').textContent = s==='home'?'Referred cases':'Case · de-identified';window.scrollTo(0,0);}
-let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
-  clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+  document.getElementById('title').textContent=TITLES[s];window.scrollTo(0,0);}
+function pv(v){document.querySelectorAll('.pv').forEach(x=>x.classList.remove('on'));
+  document.getElementById('pv-'+v).classList.add('on');
+  document.querySelectorAll('.subnav a').forEach(a=>a.classList.toggle('on',a.dataset.pv===v));
+  if(v==='imaging'){renderImgMocks();if(!baInit)initBA();setTimeout(()=>window.baResize&&window.baResize(),30);}}
+let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+renderCases();
 </script>
 </body>
 </html>

@@ -108,5 +108,15 @@
     Deploy the whole <code>amd-portal</code> folder to Netlify · v1 draft · Jul 2026
   </footer>
 </div>
+<script>
+/* Self-heal: remove any stale service worker + caches left by an earlier
+   version of the patient app, so this portal is never shadowed by old cache. */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister()));
+}
+if (window.caches && caches.keys) {
+  caches.keys().then(ks => ks.forEach(k => caches.delete(k)));
+}
+</script>
 </body>
 </html>
