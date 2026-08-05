@@ -48,6 +48,7 @@
     <nav class="nav">
       <a class="on" data-s="queue" onclick="go('queue')">📥 Order queue</a>
       <a data-s="order" onclick="go('order')">📦 Order detail</a>
+      <a data-s="retainer" onclick="go('retainer')">🦷 Retainer orders</a>
     </nav>
     <div class="nav back" style="padding:8px"><a href="../index.html">← Portal</a></div>
   </aside>
@@ -80,6 +81,23 @@
             <button class="btn" onclick="toast('Marked shipped → HQ + Doctor site notified')">Mark shipped + add tracking</button>
             <button class="btn" onclick="toast('Marked delivered')">Mark delivered</button>
           </div>
+          <div style="margin-top:14px;background:#fef2f2;border:1px solid #fecaca;color:#7f1d1d;border-radius:10px;padding:11px 14px;font-size:12.5px">
+            ⚠️ <b>Clinic fit-check gate:</b> the AMD/ATC inspects the STA at the clinic. Payment is <b>held</b> until they confirm it fits spec. If it doesn't fit, the order is <b>returned to redo</b> — no payment released.
+            <div style="margin-top:8px"><span style="font-weight:700;color:#b45309">Fit-check: awaiting clinic ✋</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RETAINER ORDERS -->
+      <section class="screen" id="s-retainer">
+        <div class="banner">Retainers are a <b>separate order</b>, triggered when the AMD/ATC presses <b>[Enter maintenance]</b>. Felix custom-designs each retainer; weaning is clinician-managed. Ship 2 days before the appointment.</div>
+        <div class="card"><h3>Incoming retainer orders</h3>
+          <table>
+            <tr><th>Order</th><th>Patient code</th><th>Design</th><th>Triggered</th><th>Due</th><th>Status</th></tr>
+            <tr><td>RET-3007</td><td>AMD-0012</td><td>Felix custom (STA-as-retainer)</td><td>Jul 20</td><td>Aug 3</td><td><span class="st s-prod">In production</span></td></tr>
+            <tr><td>RET-3005</td><td>AMD-0009</td><td>Felix custom (clear retainer)</td><td>Jul 6</td><td>Jul 20</td><td><span class="st s-done">Delivered</span></td></tr>
+          </table>
+          <p class="hint" style="margin-top:8px">Lab flow for retainer: receive final oral scan (.stl) from doctor site → receive Felix design → produce → ship to clinic. Same fit-check + payment-hold gate applies.</p>
         </div>
       </section>
     </div>
@@ -90,7 +108,7 @@
 function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
   document.getElementById('s-'+s).classList.add('on');
   document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
-  document.getElementById('title').textContent = s==='queue'?'Order queue':'Order detail';window.scrollTo(0,0);}
+  document.getElementById('title').textContent = {queue:'Order queue',order:'Order detail',retainer:'Retainer orders'}[s];window.scrollTo(0,0);}
 let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
 </script>
 </body>

@@ -153,6 +153,18 @@
     .hist .hd{width:56px;flex:0 0 auto;color:var(--muted);font-size:12px}
     .hist .hs{flex:1}.hist .hs .rr{font-size:12px}.hist .hs .st{color:var(--amber);letter-spacing:1px}
     .trend-up{color:var(--good);font-weight:700}.trend-dn{color:var(--coral);font-weight:700}
+    /* whole-person + premium */
+    .tier{font-size:9px;font-weight:800;letter-spacing:.5px;background:#fde68a;color:#7c4a03;padding:2px 7px;border-radius:20px;vertical-align:middle;margin-left:6px}
+    .whole{display:flex;align-items:center;gap:8px;background:linear-gradient(120deg,#ecfdf5,#d1fae5);border:1px solid #a7f3d0;border-radius:16px;padding:12px 14px;margin-bottom:14px;font-size:13px;cursor:pointer;color:#065f46}
+    .whole b{font-weight:700}
+    .prem-tag{font-size:9px;font-weight:800;letter-spacing:.4px;background:#fde68a;color:#7c4a03;padding:2px 7px;border-radius:20px;margin-left:6px}
+    .hs-top{display:flex;align-items:center;gap:14px}
+    .hs-ring{width:74px;height:74px;flex:0 0 auto}
+    .hs-score{font-size:22px;font-weight:800;fill:#7c3aed}
+    .hs-comp{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+    .hs-chip{font-size:11px;background:#f5f3ff;border:1px solid #e9d5ff;color:#6d28d9;padding:4px 9px;border-radius:20px;font-weight:600}
+    .hs-chip .up{color:var(--good);font-weight:800}
+    .hs-chip .dn{color:var(--coral);font-weight:800}
   </style>
 </head>
 <body>
@@ -160,7 +172,7 @@
 
   <div class="top">
     <div class="row">
-      <div><div class="hi" data-i18n="hi">Good morning</div><div class="name">Wang Xiaoming</div></div>
+      <div><div class="hi" data-i18n="hi">Good morning</div><div class="name">Wang Xiaoming <span class="tier">PREMIUM</span></div></div>
       <div style="display:flex;align-items:center">
         <div class="avatar">王</div>
         <button class="lang" onclick="toggleLang()" id="langBtn">中文</button>
@@ -175,6 +187,7 @@
 
   <!-- HOME -->
   <section class="screen active" id="s-home">
+    <div class="whole" onclick="go('journey')">🌱 <b data-i18n="wpT">A healthy body helps your STA work.</b><span data-i18n="wpX">&nbsp;See your whole-person progress →</span></div>
     <div class="card sta" id="staCard">
       <span class="pill">⏰ <span data-i18n="staDue">Due today · Wed</span></span>
       <h3 data-i18n="staTitle">Turn your STA appliance</h3>
@@ -250,9 +263,33 @@
     <div class="card">
       <h3 data-i18n="progress">Overall progress</h3>
       <div class="progbar"><i style="width:62%"></i></div>
-      <div class="sub"><b>Stage 6 of 9</b> · <span data-i18n="active">Active treatment</span> · 62%</div>
+      <div class="sub"><b>Stage 6 of 10</b> · <span data-i18n="active">Active treatment</span> · 58%</div>
     </div>
     <div class="card"><div class="tl" id="timeline"></div></div>
+
+    <div class="card" style="background:linear-gradient(135deg,#faf5ff,#f5f3ff);border:1px solid #e9d5ff">
+      <h3><span data-i18n="hsTitle">Your Health Score</span> <span class="prem-tag">PREMIUM</span></h3>
+      <div class="sub" style="margin-bottom:10px" data-i18n="hsSub">Rebuilt from your 6-month data vs your own baseline — a trend, not a diagnosis.</div>
+      <div class="hs-top">
+        <svg class="hs-ring" viewBox="0 0 36 36">
+          <path d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32" fill="none" stroke="#ede9fe" stroke-width="4"/>
+          <path d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32" fill="none" stroke="#7c3aed" stroke-width="4" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="26"/>
+          <text x="18" y="21" text-anchor="middle" class="hs-score">74</text>
+        </svg>
+        <div style="flex:1">
+          <div style="font-weight:700;font-size:14px;color:#5b21b6">+11 <span data-i18n="hsSince">since baseline</span> <span class="trend-up">▲</span></div>
+          <div class="sub" data-i18n="hsNote">Keep it up — your body is responding well to treatment.</div>
+        </div>
+      </div>
+      <div class="hs-comp">
+        <span class="hs-chip"><span data-i18n="hsAir">Airway</span> <span class="up">▲</span></span>
+        <span class="hs-chip"><span data-i18n="hsSleep">Sleep</span> <span class="up">▲</span></span>
+        <span class="hs-chip"><span data-i18n="hsInfl">Inflammation</span> <span class="up">▲</span></span>
+        <span class="hs-chip"><span data-i18n="hsPost">Posture</span> <span class="dn">▼</span></span>
+        <span class="hs-chip"><span data-i18n="hsFace">Facial profile</span> <span class="up">▲</span></span>
+      </div>
+      <button class="btn-ghost" style="margin-top:12px;width:100%" onclick="toast(t('hsReport'))">📋 <span data-i18n="hsBtn">Open my 6-month health report</span></button>
+    </div>
     <div class="card">
       <h3 data-i18n="planTitle">Your treatment plan</h3>
       <p class="sub" style="line-height:1.5" data-i18n="planBody">Airway-focused appliance therapy (STA) to widen the arch and improve nasal breathing, with myofunctional therapy. Active phase ~10–12 months, then a maintenance year.</p>
@@ -431,6 +468,7 @@ const STEPS=[
   {t:{en:"STA delivery",zh:"STA delivery"},d:{en:"May 24",zh:"5月24日"},st:"done"},
   {t:{en:"Active treatment",zh:"療程進行中"},d:{en:"You are here",zh:"目前階段"},st:"now"},
   {t:{en:"Maintenance",zh:"維持期"},d:{en:"~ next year",zh:"約明年"},st:"todo"},
+  {t:{en:"Retainer",zh:"維持器"},d:{en:"after expansion · weaning",zh:"擴張後・漸退"},st:"todo"},
   {t:{en:"Graduation 🎉",zh:"恭喜畢業 🎉"},d:{en:"Goal",zh:"目標"},st:"todo"},
 ];
 const I18N={
@@ -472,6 +510,11 @@ const I18N={
   c3:{en:"Totally normal. Keep it up — see you Aug 9!",zh:"很正常喔，繼續加油——8月9日見！"},
   nHome:{en:"Home",zh:"首頁"},nAppts:{en:"Appts",zh:"約診"},nJourney:{en:"Journey",zh:"旅程"},nLearn:{en:"Learn",zh:"衛教"},nMe:{en:"Me",zh:"我的"},
   installTip:{en:"Tap Share → Add to Home Screen to install",zh:"點擊 分享 → 加入主畫面 即可安裝"},
+  wpT:{en:"A healthy body helps your STA work.",zh:"健康的身體，能讓STA發揮效果。"},wpX:{en:" See your whole-person progress →",zh:" 查看你的全人健康進度 →"},
+  hsTitle:{en:"Your Health Score",zh:"你的健康分數"},hsSub:{en:"Rebuilt from your 6-month data vs your own baseline — a trend, not a diagnosis.",zh:"依你每半年的數據與自身基準重新計算——是趨勢，非診斷。"},
+  hsSince:{en:"since baseline",zh:"較基準"},hsNote:{en:"Keep it up — your body is responding well to treatment.",zh:"繼續保持——你的身體對療程反應良好。"},
+  hsAir:{en:"Airway",zh:"氣道"},hsSleep:{en:"Sleep",zh:"睡眠"},hsInfl:{en:"Inflammation",zh:"發炎"},hsPost:{en:"Posture",zh:"姿勢"},hsFace:{en:"Facial profile",zh:"臉型"},
+  hsBtn:{en:"Open my 6-month health report",zh:"開啟我的半年健康報告"},hsReport:{en:"Opening your 6-month health report…",zh:"開啟你的半年健康報告…"},
   rateNudgeT:{en:"How was your last visit?",zh:"上次回診感覺如何？"},rateNudgeX:{en:"Rate your ATC & dentist · takes 20 seconds",zh:"為個管師與醫師評分・只要20秒"},rateNow:{en:"Rate",zh:"評分"},
   rateCare:{en:"Rate my ATC & dentist",zh:"為個管師與醫師評分"},
   rateTitle:{en:"⭐ Rate my care team",zh:"⭐ 為我的照護團隊評分"},

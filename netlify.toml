@@ -1,0 +1,14 @@
+# Netlify config for the AMD Platform portal (static site, no build step)
+[build]
+  publish = "."
+
+# Don't long-cache HTML while we iterate — always serve the latest
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/*/index.html"
+  [headers.values]
+    Cache-Control = "no-cache"

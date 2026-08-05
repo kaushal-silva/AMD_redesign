@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AMD · FMD Site (Functional Medicine)</title>
+<style>
+  :root{--amber:#b45309;--amber-l:#f59e0b;--amber-d:#78350f;--bg:#faf7f2;--card:#fff;--ink:#1c1917;
+    --muted:#78716c;--line:#eee6dc;--shadow:0 2px 10px rgba(120,80,20,.06);--blue:#1e40af;--green:#15803d;--red:#b91c1c}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .app{display:flex;min-height:100vh}
+  .side{width:230px;background:#3a2a12;color:#e7d9c3;padding:18px 12px;position:sticky;top:0;height:100vh;flex:0 0 auto}
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;padding:6px 8px 2px}
+  .brand .lg{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,#d97706,#f59e0b);display:flex;align-items:center;justify-content:center;font-weight:800}
+  .brand small{display:block;font-size:10px;color:#e6a95b;font-weight:400}
+  .prem{font-size:10px;color:#e6a95b;padding:6px 8px 14px;line-height:1.4}
+  .nav a{display:flex;gap:10px;padding:10px 12px;border-radius:9px;color:#e7d9c3;text-decoration:none;font-size:14px;cursor:pointer;margin-bottom:2px;align-items:center}
+  .nav a:hover{background:#ffffff12}.nav a.on{background:var(--amber);color:#fff}
+  .nav a .b{margin-left:auto;background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px}
+  .role{font-size:10px;color:#c9a26b;text-transform:uppercase;letter-spacing:.6px;padding:0 8px;margin:12px 0 4px}
+  .back a{color:#c9a26b;font-size:12px;text-decoration:none}
+  .main{flex:1;min-width:0}
+  .bar{background:var(--card);border-bottom:1px solid var(--line);padding:12px 26px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:5}
+  .bar h2{flex:1;font-size:17px}.bar .who{font-size:13px;color:var(--muted)}
+  .tag{font-size:11px;background:#fef3c7;color:var(--amber);padding:4px 10px;border-radius:20px;font-weight:700}
+  .content{padding:22px 26px 60px;max-width:960px}
+  .screen{display:none;animation:f .2s}.screen.on{display:block}@keyframes f{from{opacity:0}to{opacity:1}}
+  .banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;padding:11px 15px;border-radius:10px;font-size:13px;margin-bottom:16px;line-height:1.55}
+  .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .card h3{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .pill{font-size:10px;background:#fef3c7;color:var(--amber);padding:2px 8px;border-radius:20px;font-weight:700}
+  .pill.blue{background:#dbeafe;color:var(--blue)}
+  .chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 14px;font-size:13px;cursor:pointer}
+  .chip.on{background:var(--amber);color:#fff;border-color:var(--amber)}
+  .p-row{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px;cursor:pointer;background:#fff;transition:.15s}
+  .p-row:hover{box-shadow:0 6px 18px rgba(120,80,20,.1);transform:translateY(-1px)}
+  .av{width:44px;height:44px;border-radius:50%;background:#fef3c7;color:var(--amber);display:flex;align-items:center;justify-content:center;font-weight:700;flex:0 0 auto}
+  .p-row .nm{font-weight:700}.p-row .sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .p-row .meta{text-align:right;font-size:12px;color:var(--muted);flex:0 0 auto}
+  .status{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px}
+  .s-new{background:#dbeafe;color:#1e40af}.s-active{background:#dcfce7;color:#15803d}.s-done{background:#f5f5f4;color:#78716c}
+  .badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;background:#fee2e2;color:#b91c1c}
+  .pd-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+  .pd-head .nm{font-size:20px;font-weight:700}.pd-head .sub{font-size:13px;color:var(--muted)}
+  .subnav{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:18px;flex-wrap:wrap}
+  .subnav a{padding:9px 14px;font-size:13px;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted);font-weight:600}
+  .subnav a.on{color:var(--amber);border-color:var(--amber)}
+  .pv{display:none}.pv.on{display:block}
+  label{font-size:12px;color:var(--muted);font-weight:600;display:block;margin:12px 0 5px}
+  input,textarea,select{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px;font-family:inherit;background:#fdfdfd}
+  input[type=checkbox]{width:auto;transform:scale(1.15);accent-color:var(--amber)}
+  textarea{min-height:80px;resize:vertical}
+  .btn{background:var(--amber);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer;font-size:14px}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .kv{display:flex;gap:8px;font-size:13px;padding:8px 0;border-bottom:1px solid var(--line)}
+  .kv b{width:150px;color:var(--muted);font-weight:600;flex:0 0 auto}.kv:last-child{border-bottom:none}
+  .labrow{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .labrow .nm2{flex:1;font-weight:600}.labrow .val{font-weight:700}
+  .hi{color:#b91c1c}.lo{color:#b45309}.ok{color:#15803d}
+  .imgrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+  .imgmock{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0e0a08}
+  .imgmock svg{display:block;width:100%;height:96px}
+  .imgmock .cap{padding:8px 10px;font-size:12px;font-weight:600;border-top:1px solid var(--line);background:#fff}
+  .lock-item{background:#f5f5f4;border:1px dashed #d6d3d1;border-radius:10px;padding:12px 14px;color:var(--muted);font-size:13px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .chatlog{background:#faf7f2;border-radius:10px;padding:14px}
+  .m{max-width:74%;padding:9px 13px;border-radius:14px;font-size:13px;margin-bottom:8px;line-height:1.4}
+  .m.them{background:#fff;box-shadow:var(--shadow)}.m.me{background:var(--amber);color:#fff;margin-left:auto}
+  .m .who{font-size:10px;opacity:.7;margin-bottom:2px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+  .kpi{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .kpi .n{font-size:26px;font-weight:800;color:var(--amber)}.kpi .l{font-size:12px;color:var(--muted);margin-top:3px}
+  .hint{font-size:11px;color:var(--muted)}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c1917;color:#fff;padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
+  .toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="lg">FM</div> <div>FMD<small>Functional Medicine</small></div></div>
+    <div class="prem">⭐ Premium add-on · patient-choice · limited-access</div>
+    <div class="role">Work</div>
+    <nav class="nav">
+      <a class="on" data-s="review" onclick="go('review')">🧪 For my review <span class="b">2</span></a>
+      <a data-s="referred" onclick="go('referred')">↪ Referred patients <span class="b">1</span></a>
+      <a data-s="patient" onclick="go('patient')">📋 Open patient</a>
+    </nav>
+    <div class="role">Insights</div>
+    <nav class="nav"><a data-s="mgmt" onclick="go('mgmt')">📊 Patient management</a></nav>
+    <div class="role">Account</div>
+    <nav class="nav">
+      <a onclick="toast('Chat with AMD Taiwan')">💬 Contact AMD Taiwan</a>
+      <a onclick="toast('Online shop (supplement samples)')">🛒 Online shop</a>
+      <a onclick="toast('Education / courses')">🎓 Education</a>
+    </nav>
+    <div class="nav back" style="padding:8px;margin-top:8px"><a href="../index.html">← Portal</a></div>
+  </aside>
+
+  <div class="main">
+    <div class="bar"><h2 id="title">For my review</h2><span class="tag">⭐ Premium add-on</span><span class="who">Dr. — · Functional Medicine (interim: Ryan)</span></div>
+    <div class="content">
+
+      <!-- FOR REVIEW -->
+      <section class="screen on" id="s-review">
+        <div class="banner">⭐ FMD is a <b>Premium add-on</b> the patient chooses. Once the ATC uploads a patient's <b>blood + sleep tests</b>, they appear here for you to review and upload a <b>diet + supplement suggestion report</b>. You see <b>only</b> the data relevant to that: basic info, first-visit, limited photos, blood &amp; sleep — not CBCT, S+/Schwarz, diagnosis or STA design.</div>
+        <div class="chips">
+          <span class="chip on" onclick="filt(this,'all')">All (2)</span>
+          <span class="chip" onclick="filt(this,'await')">Awaiting my report (2)</span>
+          <span class="chip" onclick="filt(this,'done')">Reported (0)</span>
+        </div>
+        <div id="reviewList"></div>
+      </section>
+
+      <!-- REFERRED -->
+      <section class="screen" id="s-referred">
+        <div class="banner">↪ You also receive <b>referrals from AMD/ATC</b> when a patient isn't keeping up with expansion (e.g. diet/compliance support). Same least-access rules apply.</div>
+        <div class="card"><h3>Referred to you</h3>
+          <div class="p-row" onclick="go('patient')">
+            <div class="av">陳</div>
+            <div style="flex:1"><div class="nm">Patient · AMD-0015</div><div class="sub">Referred by Dr. Chen · expansion progress stalling, ? nutrition</div></div>
+            <span class="badge">New message</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- PATIENT DETAIL -->
+      <section class="screen" id="s-patient">
+        <div class="pd-head">
+          <div class="av">王</div>
+          <div style="flex:1">
+            <div class="nm">Wang Xiaoming <span class="pill">AMD-0021</span> <span class="pill blue">Premium</span></div>
+            <div class="sub">Blood + sleep uploaded Jul 15 · awaiting your suggestion report</div>
+          </div>
+          <span class="badge">Awaiting report</span>
+        </div>
+        <div class="subnav">
+          <a class="on" data-pv="overview" onclick="pv('overview')">Overview</a>
+          <a data-pv="labs" onclick="pv('labs')">Blood &amp; sleep</a>
+          <a data-pv="images" onclick="pv('images')">Limited images</a>
+          <a data-pv="report" onclick="pv('report')">➕ Upload suggestion</a>
+          <a data-pv="chat" onclick="pv('chat')">Chat with AMD</a>
+          <a data-pv="locked" onclick="pv('locked')">🔒 Not shared</a>
+        </div>
+
+        <div class="pv on" id="pv-overview">
+          <div class="card"><h3>Basic info + first visit <span class="pill">read-only</span></h3>
+            <div class="kv"><b>Patient</b> Wang Xiaoming · AMD-0021 · Female, 36</div>
+            <div class="kv"><b>Chief complaint</b> Fatigue, unrefreshing sleep, bruxism</div>
+            <div class="kv"><b>Health goals</b> Sleep through the night · Stop grinding · Nasal breathing</div>
+            <div class="kv"><b>Referred / opted in</b> Premium whole-person program</div>
+          </div>
+        </div>
+
+        <div class="pv" id="pv-labs">
+          <div class="card"><h3>Blood test <span class="pill">Jul 15</span></h3>
+            <div class="labrow"><div class="nm2">hs-CRP (inflammation)</div><div class="val hi">3.4 mg/L ↑</div></div>
+            <div class="labrow"><div class="nm2">Vitamin D</div><div class="val lo">21 ng/mL ↓</div></div>
+            <div class="labrow"><div class="nm2">Ferritin</div><div class="val ok">78 ng/mL</div></div>
+            <div class="labrow"><div class="nm2">HbA1c</div><div class="val ok">5.4 %</div></div>
+            <div class="labrow"><div class="nm2">Magnesium</div><div class="val lo">1.7 mg/dL ↓</div></div>
+          </div>
+          <div class="card"><h3>Sleep assessment <span class="pill">Jul 15</span></h3>
+            <div class="kv"><b>ESS (Epworth)</b> 14 → flagged</div>
+            <div class="kv"><b>STOP-Bang</b> 4 (intermediate)</div>
+            <div class="hint" style="margin-top:6px">Note: formal OSA diagnosis requires a sleep-medicine physician. FMD advises on the nutritional/lifestyle contribution only.</div>
+          </div>
+        </div>
+
+        <div class="pv" id="pv-images">
+          <div class="banner">You can view only the images relevant to functional review — extraoral (profile + whole body) and intraoral (teeth + tongue).</div>
+          <div class="card"><h3>Permitted images</h3>
+            <div class="imgrow">
+              <div class="imgmock" data-img="profile"><div class="cap">Extraoral · profile</div></div>
+              <div class="imgmock" data-img="body"><div class="cap">Whole body / posture</div></div>
+              <div class="imgmock" data-img="teeth"><div class="cap">Intraoral · teeth</div></div>
+              <div class="imgmock" data-img="tongue"><div class="cap">Tongue</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pv" id="pv-report">
+          <div class="banner">Your diet + supplement suggestion goes to HQ (folded into the formal plan) and to the patient. It also seeds their <b>daily tasks</b> (supplements/diet).</div>
+          <div class="card"><h3>Upload diet &amp; supplement suggestion</h3>
+            <label>Summary of findings</label>
+            <textarea placeholder="e.g. low vitamin D + magnesium, elevated hs-CRP; support bone-building diet during expansion…"></textarea>
+            <label>Supplement recommendations</label>
+            <div style="border:1px solid var(--line);border-radius:9px;padding:10px 12px">
+              <label style="margin:0 0 6px"><input type="checkbox" checked> Vitamin D3 2000 IU daily</label>
+              <label style="margin:6px 0"><input type="checkbox" checked> Magnesium glycinate (evening)</label>
+              <label style="margin:6px 0"><input type="checkbox" checked> Omega-3 (anti-inflammatory)</label>
+              <label style="margin:6px 0 0"><input type="checkbox"> + Add supplement…</label>
+            </div>
+            <label>Daily diet guidance</label>
+            <textarea placeholder="Bone-building diet: bone broth, leafy greens, protein…"></textarea>
+            <label>Re-check interval</label>
+            <select><option>6 months (with Premium comprehensive workup)</option><option>3 months</option></select>
+            <div style="margin-top:14px"><button class="btn" onclick="toast('Suggestion uploaded → HQ + patient notified')">Upload suggestion report</button></div>
+          </div>
+        </div>
+
+        <div class="pv" id="pv-chat">
+          <div class="card"><h3>Chat with AMD / ATC</h3>
+            <div class="chatlog">
+              <div class="m them"><div class="who">Dr. Chen (AMD)</div>Her hs-CRP is up and expansion feels slow — any nutrition angle?</div>
+              <div class="m me"><div class="who">You (FMD)</div>Low D + magnesium; starting supplements + bone-building diet. Re-check bloods at the 6-month workup.</div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px"><input placeholder="Message the AMD/ATC…" /><button class="btn">Send</button></div>
+          </div>
+        </div>
+
+        <div class="pv" id="pv-locked">
+          <div class="card"><h3>Not shared with you</h3>
+            <p class="hint" style="margin-bottom:12px">Least-access — only functional-review-relevant data reaches you:</p>
+            <div class="lock-item">🔒 CBCT, Pano, cephalogram &amp; airway imaging</div>
+            <div class="lock-item">🔒 S+ / Schwarz analysis &amp; STA design</div>
+            <div class="lock-item">🔒 Diagnosis &amp; treatment plan</div>
+            <div class="lock-item">🔒 Billing &amp; other specialists' notes</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MGMT -->
+      <section class="screen" id="s-mgmt">
+        <div class="banner">Your view of the FMD collaboration (Premium patients + referrals). Expands later.</div>
+        <div class="card"><h3>This month</h3>
+          <div class="kpis">
+            <div class="kpi"><div class="n">2</div><div class="l">Awaiting my report</div></div>
+            <div class="kpi"><div class="n">1</div><div class="l">Referrals</div></div>
+            <div class="kpi"><div class="n">14</div><div class="l">Premium patients</div></div>
+            <div class="kpi"><div class="n">6</div><div class="l">Reports uploaded (YTD)</div></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const X="xmlns='http://www.w3.org/2000/svg'";
+const IMG={
+ profile:`<svg ${X} viewBox='0 0 200 96'><rect width='200' height='96' fill='#d7c2af'/><path d='M120 14 q-40 2 -46 36 q-3 16 5 24 l-4 6 5 4' fill='#f2ddc8' stroke='#c8a887'/><circle cx='98' cy='46' r='2.5' fill='#3b2f26'/></svg>`,
+ body:`<svg ${X} viewBox='0 0 200 96'><rect width='200' height='96' fill='#eef3f6'/><line x1='100' y1='6' x2='100' y2='90' stroke='#cbd5e1' stroke-dasharray='4 4'/><circle cx='100' cy='22' r='8' fill='#94a3b8'/><path d='M100 30 l0 30 M100 38 l-14 10 M100 38 l14 10 M100 60 l-10 26 M100 60 l10 26' stroke='#94a3b8' stroke-width='4'/></svg>`,
+ teeth:`<svg ${X} viewBox='0 0 200 96'><rect width='200' height='96' fill='#b5545a'/><path d='M40 78 Q100 14 160 78' fill='none' stroke='#fff' stroke-width='16' stroke-linecap='round'/></svg>`,
+ tongue:`<svg ${X} viewBox='0 0 200 96'><rect width='200' height='96' fill='#c56a6a'/><ellipse cx='100' cy='58' rx='40' ry='26' fill='#e88a8a'/><path d='M100 34 v40' stroke='#c56a6a' stroke-width='2'/></svg>`,
+};
+function renderImgMocks(){document.querySelectorAll('.imgmock[data-img]').forEach(el=>{if(el.querySelector('svg'))return;const k=el.getAttribute('data-img');if(IMG[k])el.insertAdjacentHTML('afterbegin',IMG[k]);});}
+
+const REVIEW=[
+ {init:"王",n:"Wang Xiaoming",mrn:"AMD-0021",note:"Blood + sleep uploaded Jul 15",status:"await",msg:true},
+ {init:"張",n:"Zhang Ting",mrn:"AMD-0012",note:"Blood + sleep uploaded Jul 12",status:"await",msg:false},
+];
+let curFilt='all';
+function renderReview(){
+  document.getElementById('reviewList').innerHTML=REVIEW.filter(r=>curFilt==='all'||r.status===curFilt).map(r=>`
+    <div class="p-row" onclick="go('patient')"><div class="av">${r.init}</div>
+      <div style="flex:1"><div class="nm">${r.n} <span class="pill">${r.mrn}</span> <span class="pill blue">Premium</span></div><div class="sub">${r.note}</div></div>
+      <div class="meta"><div class="status s-new">Awaiting report</div>${r.msg?'<div style="margin-top:6px;color:#b91c1c">● new message</div>':''}</div>
+    </div>`).join('')||'<p class="hint">Nothing here.</p>';
+}
+function filt(el,f){document.querySelectorAll('#s-review .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');curFilt=f;renderReview();}
+const TITLES={review:'For my review',referred:'Referred patients',patient:'Patient · functional review',mgmt:'Patient management'};
+function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
+  document.getElementById('s-'+s).classList.add('on');
+  document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
+  document.getElementById('title').textContent=TITLES[s];window.scrollTo(0,0);}
+function pv(v){document.querySelectorAll('.pv').forEach(x=>x.classList.remove('on'));
+  document.getElementById('pv-'+v).classList.add('on');
+  document.querySelectorAll('.subnav a').forEach(a=>a.classList.toggle('on',a.dataset.pv===v));
+  if(v==='images')renderImgMocks();}
+let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+renderReview();
+</script>
+</body>
+</html>
