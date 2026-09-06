@@ -191,8 +191,9 @@
     <div class="card sta" id="staCard">
       <span class="pill">⏰ <span data-i18n="staDue">Due today · Wed</span></span>
       <h3 data-i18n="staTitle">Turn your STA appliance</h3>
-      <div class="meta" data-i18n="staMeta">2 gears · ½ turn each · since Jul 6</div>
-      <div class="meta" style="margin-top:4px" data-i18n="staFreq">Schedule: every Sunday & Wednesday</div>
+      <div class="meta" data-i18n="staMeta">Upper appliance · Gear 1: ½ turn · Gear 2: ¼ turn · Gear 3: hold</div>
+      <div class="meta" style="margin-top:4px" data-i18n="staFreq">Schedule: every Sunday & Wednesday · since Jul 6</div>
+      <div class="meta" style="margin-top:6px;text-decoration:underline;cursor:pointer" onclick="toast(t('staPhoto'))" data-i18n="staSeePhoto">📷 See your appliance photo — which gear to turn</div>
       <button class="sta-btn" id="staBtn" onclick="doSta()" data-i18n="staBtn">Mark as done ✓</button>
       <div class="burst" id="staBurst">🎉 One step closer to health!</div>
     </div>
@@ -263,7 +264,14 @@
     <div class="card">
       <h3 data-i18n="progress">Overall progress</h3>
       <div class="progbar"><i style="width:62%"></i></div>
-      <div class="sub"><b>Stage 6 of 10</b> · <span data-i18n="active">Active treatment</span> · 58%</div>
+      <div class="sub"><b>Stage 6 of 8</b> · <span data-i18n="active">Active treatment</span></div>
+      <div class="visit-prog">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+          <span data-i18n="visitsDone">Visits completed</span><b>7</b>
+        </div>
+        <div class="progbar" style="background:#e6ecea"><i style="width:70%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></i></div>
+        <div class="sub" style="margin-top:4px" data-i18n="visitNote">Every visit moves you forward — you're steadily progressing 💪</div>
+      </div>
     </div>
     <div class="card"><div class="tl" id="timeline"></div></div>
 
@@ -294,6 +302,7 @@
       <h3 data-i18n="planTitle">Your treatment plan</h3>
       <p class="sub" style="line-height:1.5" data-i18n="planBody">Airway-focused appliance therapy (STA) to widen the arch and improve nasal breathing, with myofunctional therapy. Active phase ~10–12 months, then a maintenance year.</p>
       <button class="btn-ghost" style="margin-top:10px;width:100%" onclick="toast(t('planPDF'))">📄 <span data-i18n="seePlan">See full treatment plan (PDF)</span></button>
+      <div class="sub" style="margin-top:8px" data-i18n="planShared">Shared with you at your report reading · your dentist owns your plan</div>
     </div>
     <div class="card">
       <h3 data-i18n="seeChange">See your change</h3>
@@ -306,12 +315,13 @@
         <span class="ba-lbl r" data-i18n="after">Now · Jul</span>
       </div>
       <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-        <span class="link-i">Face</span><span class="link-i">Intraoral</span><span class="link-i">CBCT airway</span>
+        <span class="link-i">Face</span><span class="link-i">Intraoral</span><span class="link-i" data-i18n="posture">Posture</span><span class="link-i">CBCT airway</span>
       </div>
     </div>
     <div class="card">
       <h3 data-i18n="allReports">All images & reports</h3>
       <div class="rep"><div class="ic">📷</div><div style="flex:1"><div class="r-t">Intraoral photos</div><div class="r-d">4 sets · latest Jul 12</div></div><span class="link-i" data-i18n="compare">Compare</span></div>
+      <div class="rep"><div class="ic">🧍</div><div style="flex:1"><div class="r-t" data-i18n="mskT">Posture scan (MSKAlign)</div><div class="r-d" data-i18n="mskD">LIDAR · low radiation · Apr, Jun, Jul</div></div><span class="link-i" data-i18n="compare">Compare</span></div>
       <div class="rep"><div class="ic">🦷</div><div style="flex:1"><div class="r-t">CBCT airway scan</div><div class="r-d">2 scans · Apr, Jul</div></div><span class="link-i" data-i18n="compare">Compare</span></div>
       <div class="rep"><div class="ic">😴</div><div style="flex:1"><div class="r-t">Sleep test (ESS)</div><div class="r-d">Score 14 → 8</div></div><span class="link-i">View</span></div>
     </div>
@@ -438,7 +448,7 @@
     </div>
   </section>
 
-  <div class="install" id="installBar"><span>📲 <span data-i18n="installTip">Tap Share → Add to Home Screen to install</span></span></div>
+  <div class="install" id="installBar"><span>📲 <span data-i18n="installTip">Download AMD free on the App Store & Google Play</span></span></div>
 </div>
 
 <nav class="nav" id="nav">
@@ -459,24 +469,26 @@ const TASKS=[
   {id:4,name:{en:"Green smoothie",zh:"Green smoothie"},done:false},
   {id:5,name:{en:"Daily vitamins",zh:"每日維生素"},done:false},
 ];
+/* Canonical 8-stage journey (per Nancy's "Journey corresponding to" mapping).
+   Retainer is an optional add-on inside Maintenance, not a tracked stage. */
 const STEPS=[
-  {t:{en:"Consultation",zh:"諮詢"},d:{en:"Mar 20",zh:"3月20日"},st:"done"},
   {t:{en:"Initial visit · data",zh:"初診・收集資料"},d:{en:"Apr 2",zh:"4月2日"},st:"done"},
-  {t:{en:"Analysis & reports",zh:"資料與報告分析"},d:{en:"Apr 18",zh:"4月18日"},st:"done"},
-  {t:{en:"Diagnosis & plan",zh:"診斷與治療計畫"},d:{en:"Apr 25",zh:"4月25日"},st:"done"},
-  {t:{en:"STA fabrication",zh:"製作STA"},d:{en:"May 2",zh:"5月2日"},st:"done"},
+  {t:{en:"Analysis",zh:"資料與報告分析"},d:{en:"Apr 18",zh:"4月18日"},st:"done"},
+  {t:{en:"Diagnosis & Plan",zh:"診斷與治療計畫"},d:{en:"Apr 25",zh:"4月25日"},st:"done"},
+  {t:{en:"STA fabrication",zh:"製作STA"},d:{en:"May 20",zh:"5月20日"},st:"done"},
   {t:{en:"STA delivery",zh:"STA delivery"},d:{en:"May 24",zh:"5月24日"},st:"done"},
   {t:{en:"Active treatment",zh:"療程進行中"},d:{en:"You are here",zh:"目前階段"},st:"now"},
   {t:{en:"Maintenance",zh:"維持期"},d:{en:"~ next year",zh:"約明年"},st:"todo"},
-  {t:{en:"Retainer",zh:"維持器"},d:{en:"after expansion · weaning",zh:"擴張後・漸退"},st:"todo"},
   {t:{en:"Graduation 🎉",zh:"恭喜畢業 🎉"},d:{en:"Goal",zh:"目標"},st:"todo"},
 ];
 const I18N={
   hi:{en:"Good morning",zh:"早安"},goal:{en:"Goal",zh:"目標"},
   g1:{en:"Sleep through the night",zh:"一覺到天亮"},g2:{en:"Stop teeth grinding",zh:"停止磨牙"},g3:{en:"Breathe through nose",zh:"用鼻子呼吸"},
   staDue:{en:"Due today · Wed",zh:"今天要做・週三"},staTitle:{en:"Turn your STA appliance",zh:"轉動你的STA牙套"},
-  staMeta:{en:"2 gears · ½ turn each · since Jul 6",zh:"2個齒輪・各轉半圈・自7月6日起"},
-  staFreq:{en:"Schedule: every Sunday & Wednesday",zh:"排程：每週日和週三"},staBtn:{en:"Mark as done ✓",zh:"完成 ✓"},
+  staMeta:{en:"Upper appliance · Gear 1: ½ turn · Gear 2: ¼ turn · Gear 3: hold",zh:"上顎裝置・齒輪1：轉半圈・齒輪2：轉1/4圈・齒輪3：暫停"},
+  staFreq:{en:"Schedule: every Sunday & Wednesday · since Jul 6",zh:"排程：每週日和週三・自7月6日起"},staBtn:{en:"Mark as done ✓",zh:"完成 ✓"},
+  staSeePhoto:{en:"📷 See your appliance photo — which gear to turn",zh:"📷 查看裝置照片——該轉哪個齒輪"},staPhoto:{en:"Opening your appliance photo with gears marked…",zh:"開啟標示齒輪的裝置照片…"},
+  visitsDone:{en:"Visits completed",zh:"已完成回診"},visitNote:{en:"Every visit moves you forward — you're steadily progressing 💪",zh:"每次回診都在前進——你正穩定進步 💪"},
   today:{en:"Today's tasks",zh:"今日任務"},dayStreak:{en:"day streak",zh:"天連續"},
   freeze:{en:"Missed a day? You have 1 streak-freeze left — your streak stays safe.",zh:"忘記打卡？你還有1次連續凍結——連續紀錄不會中斷。"},
   nextIn:{en:"Next check-up in",zh:"下次回診還有"},days:{en:"days",zh:"天"},viewAppts:{en:"Appointments",zh:"約診"},
@@ -488,9 +500,11 @@ const I18N={
   planTitle:{en:"Your treatment plan",zh:"你的治療計畫"},
   planBody:{en:"Airway-focused appliance therapy (STA) to widen the arch and improve nasal breathing, with myofunctional therapy. Active phase ~10–12 months, then a maintenance year.",zh:"以氣道為核心的STA矯正，擴張牙弓、改善鼻呼吸，搭配口腔肌功能訓練。療程約10–12個月，之後一年維持期。"},
   seePlan:{en:"See full treatment plan (PDF)",zh:"查看完整治療計畫 (PDF)"},
+  planShared:{en:"Shared with you at your report reading · your dentist owns your plan",zh:"於看報告時與你分享・你的治療計畫由你的醫師負責"},
   seeChange:{en:"See your change",zh:"看見你的改變"},baseline:{en:"Always compared to your first (baseline) photo.",zh:"永遠與你的第一張（基準）照片比較。"},
   before:{en:"Baseline · Apr",zh:"基準・4月"},after:{en:"Now · Jul",zh:"現在・7月"},
   allReports:{en:"All images & reports",zh:"所有影像與報告"},compare:{en:"Compare",zh:"比較"},
+  posture:{en:"Posture",zh:"姿勢"},mskT:{en:"Posture scan (MSKAlign)",zh:"姿勢掃描 (MSKAlign)"},mskD:{en:"LIDAR · low radiation · Apr, Jun, Jul",zh:"LIDAR・低輻射・4月、6月、7月"},
   learnShare:{en:"Learn & earn",zh:"衛教與獎勵"},readPts:{en:"Read an article: +10 XP",zh:"閱讀文章：+10 XP"},
   art1:{en:"Why nasal breathing matters",zh:"為什麼鼻呼吸很重要"},art1x:{en:"How airway health affects sleep, focus and mood.",zh:"氣道健康如何影響睡眠、專注與情緒。"},
   art2:{en:"Tongue posture 101",zh:"舌頭姿勢入門"},art2x:{en:"A 2-minute daily exercise for the right resting posture.",zh:"每天2分鐘，訓練正確的休息姿勢。"},
@@ -509,7 +523,7 @@ const I18N={
   c2:{en:"A little tight the first day but okay now 🙂",zh:"第一天有點緊，現在還好 🙂"},
   c3:{en:"Totally normal. Keep it up — see you Aug 9!",zh:"很正常喔，繼續加油——8月9日見！"},
   nHome:{en:"Home",zh:"首頁"},nAppts:{en:"Appts",zh:"約診"},nJourney:{en:"Journey",zh:"旅程"},nLearn:{en:"Learn",zh:"衛教"},nMe:{en:"Me",zh:"我的"},
-  installTip:{en:"Tap Share → Add to Home Screen to install",zh:"點擊 分享 → 加入主畫面 即可安裝"},
+  installTip:{en:"Download AMD free on the App Store & Google Play",zh:"於 App Store 和 Google Play 免費下載 AMD"},
   wpT:{en:"A healthy body helps your STA work.",zh:"健康的身體，能讓STA發揮效果。"},wpX:{en:" See your whole-person progress →",zh:" 查看你的全人健康進度 →"},
   hsTitle:{en:"Your Health Score",zh:"你的健康分數"},hsSub:{en:"Rebuilt from your 6-month data vs your own baseline — a trend, not a diagnosis.",zh:"依你每半年的數據與自身基準重新計算——是趨勢，非診斷。"},
   hsSince:{en:"since baseline",zh:"較基準"},hsNote:{en:"Keep it up — your body is responding well to treatment.",zh:"繼續保持——你的身體對療程反應良好。"},
@@ -651,7 +665,7 @@ function renderHist(){
 renderStars('atc');renderStars('dentist');renderHist();
 
 applyLang();initBA();sizeBefore();
-if(/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone){document.getElementById('installBar').style.display='flex';}
+document.getElementById('installBar').style.display='flex'; // native app — App Store / Google Play (mock preview)
 
 /* self-heal: prototype has NO service worker — remove any old one + clear caches so updates always show */
 if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister()));}

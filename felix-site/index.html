@@ -109,7 +109,7 @@
 
       <!-- HOME -->
       <section class="screen on" id="s-home">
-        <div class="banner">🔒 <b>Cross-border privacy (Taiwan PDPA + AI-era rules).</b> You see <b>de-identified</b> cases only — patient code + age range, no name/address/DOB. Faces are masked, CBCT/scan data is de-identified by a certified vendor before it reaches you, and voice is shared as text transcripts. Access is <b>view + comment</b> via the guidance chat; you cannot edit records.</div>
+        <div class="banner">🩺 <b>Advisory / consultation only — not treatment.</b> The treating AMD owns the diagnosis &amp; device design; you're consulted <b>only when the AMD chooses</b>. For each consult you receive a <b>de-identified packet — lateral cephalogram + analysis + the proposed spec</b>, view-only &amp; watermarked. No CBCT, oral scan, face/voice or identifiers cross. <b>Nothing identifiable leaves Taiwan.</b> You return written advice; the AMD keeps the decision.</div>
         <div class="chips">
           <span class="chip on" onclick="filt(this,'all')">All (2)</span>
           <span class="chip" onclick="filt(this,'new')">Needs review (1)</span>
@@ -130,8 +130,9 @@
         </div>
         <div class="subnav">
           <a class="on" data-pv="summary" onclick="pv('summary')">Case summary</a>
-          <a data-pv="imaging" onclick="pv('imaging')">Imaging (de-identified)</a>
+          <a data-pv="imaging" onclick="pv('imaging')">Consult packet</a>
           <a data-pv="records" onclick="pv('records')">Follow-up records</a>
+          <a data-pv="author" onclick="pv('author')">✍️ Return advice</a>
           <a data-pv="chat" onclick="pv('chat')">Guidance chat</a>
           <a data-pv="locked" onclick="pv('locked')">🔒 Not shared</a>
         </div>
@@ -145,28 +146,21 @@
             <div class="kv"><b>Demographics</b> Female · age 35–37 (range only)</div>
             <div class="kv"><b>Presentation</b> Narrow arch, mouth breathing, sleep-disordered breathing</div>
             <div class="kv"><b>Baseline scales</b> ESS 14 · STOP-Bang 4</div>
-            <div class="kv"><b>Question for you</b> Widening rate given CBCT airway — accelerate or hold?</div>
+            <div class="kv"><b>AMD's question</b> Transverse widening rate given the lateral ceph + analysis — accelerate or hold?</div>
+            <div class="kv"><b>Your role</b> <span class="viewonly">Advisory only — the AMD decides</span></div>
           </div>
         </div>
 
-        <!-- imaging -->
+        <!-- consult packet -->
         <div class="pv" id="pv-imaging">
-          <div class="banner">Images arrive already de-identified: facial features preserved for clinical read, identity altered. CBCT is de-identified DICOM. View only — no download of raw identifiable data.</div>
-          <div class="card"><h3>Airway · baseline vs latest <span class="viewonly">view only</span></h3>
-            <div class="ba" id="baImg">
-              <div class="lay" id="baAfter"></div>
-              <div class="after-wrap" id="baBeforeWrap"><div id="baBefore" style="height:100%"></div></div>
-              <div class="handle" id="baHandle"></div>
-              <span class="tg l">Baseline · Apr</span><span class="tg r">Now · Jul</span>
-            </div>
-            <p class="hint" style="margin-top:8px">Drag to compare CBCT airway cross-section.</p>
-          </div>
-          <div class="card"><h3>De-identified image set</h3>
+          <div class="banner">🔖 The consult packet is exactly three items — <b>lateral cephalogram + analysis + the proposed spec</b> — all <b>watermarked &amp; view-only</b>. This is the maximum shareable under the cross-border rules.</div>
+          <div class="card"><h3>Consult packet <span class="viewonly">watermarked · view only</span></h3>
             <div class="imgrow">
-              <div class="imgmock" data-img="face"><div class="cap">Facial profile<small>features preserved, identity altered</small></div></div>
-              <div class="imgmock" data-img="cbct"><div class="cap">CBCT airway<small>de-identified DICOM</small></div></div>
-              <div class="imgmock" data-img="intra"><div class="cap">Intraoral<small>occlusal view</small></div></div>
+              <div class="imgmock" data-img="ceph"><div class="cap">Lateral cephalogram<small>watermarked</small></div></div>
+              <div class="imgmock" data-img="analysis"><div class="cap">Analysis (Susuoni+ / Schwartz)<small>summary values</small></div></div>
+              <div class="imgmock" data-img="spec"><div class="cap">Proposed device spec<small>from the AMD/ATC</small></div></div>
             </div>
+            <p class="hint" style="margin-top:10px">No CBCT, oral scan, face photo, voice or identifiers are included. No download of raw data.</p>
           </div>
         </div>
 
@@ -180,12 +174,22 @@
           </div>
         </div>
 
-        <!-- chat -->
+        <!-- return advice -->
+        <div class="pv" id="pv-author">
+          <div class="banner">✍️ You return <b>written advice only</b> — you don't author the diagnosis, treatment plan or device design (that's the treating AMD's, in-clinic). Your advice is logged to the case for the AMD to consider.</div>
+          <div class="card"><h3>Return consultation advice</h3>
+            <div class="kv"><b>On</b> Case KS-0021 · packet: lateral ceph + analysis + spec</div>
+            <label style="font-size:12px;color:var(--muted);font-weight:600;display:block;margin:12px 0 5px">Your advisory note</label>
+            <textarea style="width:100%;min-height:110px;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px;font-family:inherit" placeholder="e.g. Transverse target looks reasonable; consider holding the rate 2 weeks then reassess on the next lateral ceph…"></textarea>
+            <div style="background:#fff1f2;border:1px solid #fecdd3;color:#9f1239;border-radius:9px;padding:9px 12px;font-size:12px;margin-top:10px">Reminder: advisory only, not treatment. The AMD keeps the clinical decision and responsibility.</div>
+            <div style="margin-top:12px"><button class="btn" onclick="toast('Advisory note returned to the AMD (logged to case)')">Return advice to AMD</button></div>
+          </div>
+        </div>
         <div class="pv" id="pv-chat">
           <div class="banner">Your only write access: comment back to the AMD through this guidance channel. Messages are logged to the case.</div>
           <div class="card"><h3>Guidance chat with AMD</h3>
             <div class="chatlog">
-              <div class="m them"><div class="who">Dr. Chen (AMD)</div>Felix, would you widen faster given the CBCT airway? Her feedback transcript is attached (text only).</div>
+              <div class="m them"><div class="who">Dr. Chen (AMD)</div>Felix, given the lateral ceph + analysis + spec — would you widen faster, or hold? (Advisory only, my decision.)</div>
               <div class="m me"><div class="who">Dr. Liao</div>Hold current rate 2 more weeks, then reassess airway cross-section. Good trajectory — don't rush the transverse.</div>
               <div class="m them"><div class="who">Dr. Chen (AMD)</div>Understood, thank you.</div>
             </div>
@@ -196,12 +200,12 @@
         <!-- locked -->
         <div class="pv" id="pv-locked">
           <div class="card"><h3>Not shared with you</h3>
-            <p class="hint" style="margin-bottom:12px">Removed to comply with cross-border data rules and least-access:</p>
+            <p class="hint" style="margin-bottom:12px">Removed to comply with cross-border rules, least-access, and the advisory-only boundary:</p>
             <div class="lock-item">🔒 Patient name, address, DOB, contact, medical-record number</div>
-            <div class="lock-item">🔒 Raw (non-de-identified) photos &amp; original DICOM/STL files</div>
-            <div class="lock-item">🔒 Voice recordings (shared only as text transcripts)</div>
+            <div class="lock-item">🔒 CBCT, oral scan (STL), face photos &amp; voice — never cross the border</div>
+            <div class="lock-item">🔒 Raw (non-de-identified) records of any kind</div>
             <div class="lock-item">🔒 Billing &amp; the AMD's internal notes</div>
-            <div class="lock-item">🔒 Edit rights — you comment via chat, you don't edit records</div>
+            <div class="lock-item">🔒 Authoring / design rights — you advise only; the AMD owns the diagnosis, plan &amp; device design</div>
           </div>
         </div>
       </section>
@@ -212,17 +216,17 @@
         <div class="card"><h3>Why this site is different</h3>
           <p class="hint" style="line-height:1.6;color:var(--ink);font-size:13px">Dr. Liao is in the US, so sharing Taiwanese patient data with him crosses a border. Under Taiwan PDPA and newer AI-era rules, <b>faces and voices are themselves identifiable</b>. So nothing identifiable leaves Taiwan — data is transformed first.</p>
         </div>
-        <div class="card"><h3>The pipeline</h3>
+        <div class="card"><h3>The consult packet (all that crosses)</h3>
           <div class="flow">
-            <div class="n">Taiwan patient record</div><span class="ar">→</span>
-            <div class="n">Certified de-identification vendor (photos, CBCT/DICOM, STL)</div><span class="ar">→</span>
-            <div class="n">Code + age range, masked face, transcript</div><span class="ar">→</span>
-            <div class="n">Felix sees view-only</div>
+            <div class="n">AMD chooses to consult</div><span class="ar">→</span>
+            <div class="n">Packet built: lateral ceph + analysis + spec</div><span class="ar">→</span>
+            <div class="n">Watermarked, code + age range only</div><span class="ar">→</span>
+            <div class="n">Felix advises (view-only)</div>
           </div>
-          <p class="hint" style="margin-top:12px">Nancy identified 3 Taiwan-certified vendors that preserve facial features for clinical read while altering identity. <b>Open action:</b> confirm vendor fit and API before build.</p>
+          <p class="hint" style="margin-top:12px"><b>Never crosses:</b> CBCT, oral scan (STL), face photos, voice, or any identifier. Three attestations are required to send: explicit consent · PII pseudonymised · advisory-only (not treatment).</p>
         </div>
         <div class="card"><h3>Build rule</h3>
-          <p class="hint" style="line-height:1.6;color:var(--ink);font-size:13px">Enforce the masking at the <b>API layer</b>, not the UI — Felix's app should never receive identifiable fields in the first place. Hiding them only in the front-end is a real compliance risk.</p>
+          <p class="hint" style="line-height:1.6;color:var(--ink);font-size:13px">Enforce the packet limit at the <b>API layer</b>, not the UI — Felix's app should only ever receive the three watermarked packet items, never identifiable fields or excluded modalities. And Felix has <b>no authoring/design rights</b>: advisory only, telemedicine-compliant. The treating AMD owns and is responsible for the diagnosis, plan &amp; device design.</p>
         </div>
       </section>
 
@@ -238,6 +242,9 @@ const IMG={
  intra:`<svg ${X} viewBox='0 0 200 104'><rect width='200' height='104' fill='#8f3a44'/><path d='M40 84 Q100 18 160 84' fill='none' stroke='#e78a90' stroke-width='26' stroke-linecap='round'/><path d='M46 80 Q100 28 154 80' fill='none' stroke='#fff' stroke-width='15' stroke-linecap='round'/></svg>`,
  baseA:`<svg ${X} viewBox='0 0 320 200' preserveAspectRatio='xMidYMid slice'><rect width='320' height='200' fill='#0e2a33'/><path d='M210 24 q-70 0 -80 56 q-5 30 10 46' fill='none' stroke='#5eead4' stroke-width='3'/><path d='M170 60 q-20 26 -14 58 q4 20 18 30' fill='none' stroke='#5eead4' stroke-width='9' opacity='.6' stroke-linecap='round'/><text x='20' y='185' fill='#7fe9d8' font-family='sans-serif' font-size='14'>now · 96 mm²</text></svg>`,
  baseB:`<svg ${X} viewBox='0 0 320 200' preserveAspectRatio='xMidYMid slice'><rect width='320' height='200' fill='#243b4a'/><path d='M210 24 q-70 0 -80 56 q-5 30 10 46' fill='none' stroke='#7fd3c9' stroke-width='3'/><path d='M172 60 q-16 26 -12 58 q3 20 14 30' fill='none' stroke='#7fd3c9' stroke-width='6' opacity='.6' stroke-linecap='round'/><text x='20' y='185' fill='#9fb7c4' font-family='sans-serif' font-size='14'>baseline · 82 mm²</text></svg>`,
+ ceph:`<svg ${X} viewBox='0 0 200 104'><rect width='200' height='104' fill='#0c1a26'/><path d='M150 20 q-58 0 -66 46 q-4 24 8 36 l-6 12 8 4' fill='none' stroke='#bcd4e0' stroke-width='2'/><circle cx='118' cy='50' r='3' fill='#bcd4e0'/><path d='M70 58 l-10 8 10 4' fill='none' stroke='#9fbccb' stroke-width='1.5'/><text x='16' y='96' fill='#e6a3b4' font-family='sans-serif' font-size='9' opacity='.7'>WATERMARK</text></svg>`,
+ analysis:`<svg ${X} viewBox='0 0 200 104'><rect width='200' height='104' fill='#fff'/><g stroke='#be123c' stroke-width='1.5' fill='none'><line x1='20' y1='84' x2='180' y2='84'/><line x1='20' y1='20' x2='20' y2='84'/></g><rect x='36' y='50' width='16' height='34' fill='#fb7185'/><rect x='64' y='38' width='16' height='46' fill='#fb7185'/><rect x='92' y='58' width='16' height='26' fill='#fb7185'/><rect x='120' y='30' width='16' height='54' fill='#fb7185'/><text x='16' y='98' fill='#9f1239' font-family='sans-serif' font-size='9' opacity='.6'>Susuoni+ / Schwartz</text></svg>`,
+ spec:`<svg ${X} viewBox='0 0 200 104'><rect width='200' height='104' fill='#fdf2f8'/><path d='M40 78 Q100 26 160 78' fill='none' stroke='#e6d9c8' stroke-width='16' stroke-linecap='round'/><path d='M46 74 Q100 32 154 74' fill='none' stroke='#fff' stroke-width='9' stroke-linecap='round'/><rect x='92' y='48' width='16' height='10' rx='2' fill='#be123c'/><text x='16' y='96' fill='#9f1239' font-family='sans-serif' font-size='9' opacity='.6'>proposed spec · watermark</text></svg>`,
 };
 function uri(s){return "url(\"data:image/svg+xml,"+encodeURIComponent(s)+"\")";}
 function renderImgMocks(){document.querySelectorAll('.imgmock[data-img]').forEach(el=>{

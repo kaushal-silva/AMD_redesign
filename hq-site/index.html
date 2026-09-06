@@ -126,8 +126,8 @@
     <div class="role">Operate</div>
     <nav class="nav">
       <a class="on" data-s="dash" onclick="go('dash')">📊 Dashboard</a>
-      <a data-s="clinics" onclick="go('clinics')">🏥 AMD clinics</a>
-      <a data-s="upload" onclick="go('upload')">📤 Patient report / IP <span class="b">3</span></a>
+      <a data-s="clinics" onclick="go('clinics')">🏥 Clinics &amp; people</a>
+      <a data-s="upload" onclick="go('upload')">📋 Case monitoring <span class="b">3</span></a>
       <a data-s="sta" onclick="go('sta')">🚚 STA orchestration</a>
     </nav>
     <div class="role">Insight</div>
@@ -153,7 +153,7 @@
 
       <!-- ===== DASHBOARD ===== -->
       <section class="screen on" id="s-dash">
-        <div class="banner">🏛️ This is <b>AMD Taiwan's control panel</b>. HQ holds the strategic IP — S+, Schwarz, diagnosis & treatment plan, STA design — and orchestrates every clinic. The dashboard tells you <b>what needs HQ action today</b>.</div>
+        <div class="banner" style="background:#eff6ff;border-color:#bfdbfe;color:#1e3a8a">⚖️ <b>HQ is purely managerial — not clinical.</b> The treating <b>AMD is the Doctor on Record</b> and issues all diagnosis, treatment plans and device orders. HQ does <b>not</b> author or approve clinical work. Our job is to <b>monitor progress &amp; delays against our partner SLAs</b> (AMD · ATC · STA Lab · imaging) and <b>escalate</b> to keep cases moving. This separation is essential for compliance.</div>
         <div class="kpis">
           <div class="kpi"><div class="n">4</div><div class="l">Partner AMD clinics</div><div class="d upg">▲ 1 this quarter</div></div>
           <div class="kpi"><div class="n">142</div><div class="l">Active patients</div><div class="d upg">▲ 18 this month</div></div>
@@ -161,34 +161,40 @@
           <div class="kpi"><div class="n">2</div><div class="l">Plans to dispatch</div><div class="d dn">action needed</div></div>
           <div class="kpi"><div class="n">34</div><div class="l">Signed cases (YTD)</div><div class="d upg">▲ on target</div></div>
         </div>
-        <div class="card queue"><h3>⚡ HQ action queue</h3>
-          <div class="q"><div class="ic" style="background:#ede9fe;color:#6d28d9">📐</div>
-            <div class="t"><b>Upload S+ / Schwarz — Wang Xiaoming (AMD-0021)</b><div>Dr. Chen clinic · initial data received Jul 15</div></div>
-            <button class="btn sm" onclick="openPatient('AMD-0021')">Open</button></div>
-          <div class="q"><div class="ic" style="background:#ede9fe;color:#6d28d9">📄</div>
-            <div class="t"><b>Issue diagnosis & plan — Li Meihua (AMD-0018)</b><div>Dr. Chen clinic · S+ done, plan pending</div></div>
-            <button class="btn sm" onclick="openPatient('AMD-0018')">Open</button></div>
-          <div class="q"><div class="ic" style="background:#fef3c7;color:#b45309">🚚</div>
-            <div class="t"><b>Dispatch STA to lab — Chen Zhiming (AMD-0015)</b><div>Plan signed Jul 20 · not yet sent</div></div>
-            <button class="btn sm" onclick="go('sta')">Open</button></div>
+        <div class="card queue"><h3>⚡ SLA &amp; delay watch <span class="pill">monitor · escalate</span></h3>
+          <div class="q"><div class="ic" style="background:#fef3c7;color:#b45309">⏳</div>
+            <div class="t"><b>Analysis SLA at risk — Wang Xiaoming (AMD-0021)</b><div>Dr. Chen clinic · S+/Schwartz due to clinic in 1 day</div></div>
+            <button class="btn sm" onclick="toast('Nudged imaging + lab')">Nudge</button></div>
+          <div class="q"><div class="ic" style="background:#fef3c7;color:#b45309">📐</div>
+            <div class="t"><b>Draft spec pending — Li Meihua (AMD-0018)</b><div>Data ready 4 days · senior ATC not yet submitted to AMD</div></div>
+            <button class="btn sm" onclick="toast('Nudged senior ATC')">Nudge ATC</button></div>
           <div class="q"><div class="ic" style="background:#fee2e2;color:#dc2626">⏰</div>
-            <div class="t"><b>STA shipping overdue — Zhang Ting (AMD-0012)</b><div>Due to clinic Jul 22 · lab shows "in production"</div></div>
-            <button class="btn sm" onclick="go('sta')">Open</button></div>
+            <div class="t"><b>STA shipping overdue — Zhang Ting (AMD-0012)</b><div>Due to clinic Jul 22 · STA Lab shows "in production" · SLA breach</div></div>
+            <button class="btn sm" onclick="go('sta')">Escalate</button></div>
+          <div class="q"><div class="ic" style="background:#fee2e2;color:#dc2626">😟</div>
+            <div class="t"><b>Low satisfaction — Chen Zhiming (AMD-0015)</b><div>Dentist score 2.5 ▼ · flag to clinic for extra care</div></div>
+            <button class="btn sm" onclick="go('sat')">Review</button></div>
         </div>
       </section>
 
       <!-- ===== AMD CLINICS ===== -->
       <section class="screen" id="s-clinics">
-        <div class="banner">Navigate <b>partner AMD → their patients → open a patient</b> to upload the key reports. (Mirrors the Invisalign doctor portal your PO referenced.)</div>
+        <div class="banner">🏥 Set up and manage the network: <b>create clinics, add AMDs, and add or re-associate ATCs</b>. A clinic can have <b>multiple AMDs and ATCs</b>, and a senior ATC can cover <b>multiple clinics</b> to share the workload. (This is org management — not clinical.)</div>
         <div id="clinicView">
-          <div class="card"><h3>Partner AMD clinics</h3>
+          <div class="toolbar" style="display:flex;gap:8px;margin-bottom:14px">
+            <button class="btn" onclick="toast('New clinic created — add AMDs & ATCs')">➕ Create clinic</button>
+            <button class="btn ghost" onclick="toast('Invite / add AMD to a clinic')">➕ Add AMD</button>
+            <button class="btn ghost" onclick="toast('Add new ATC, or associate an existing ATC to another clinic')">➕ Add / associate ATC</button>
+          </div>
+          <div class="card"><h3>Clinics &amp; people</h3>
             <table>
-              <tr><th>Clinic</th><th>AMD</th><th>Patients</th><th>Active</th><th>Needs HQ action</th><th>Rev. share (Jul)</th><th></th></tr>
-              <tr class="click" onclick="openClinic('Chen')"><td><b>Daan Perfect Smile</b><div class="cond">Taipei</div></td><td>Dr. Chen</td><td>21</td><td>16</td><td><span class="pill r">2</span></td><td>NT$ 210k</td><td><button class="btn sm ghost">Open</button></td></tr>
-              <tr class="click" onclick="openClinic('Wu')"><td><b>Taichung Airway Clinic</b><div class="cond">Taichung</div></td><td>Dr. Wu</td><td>14</td><td>11</td><td><span class="pill r">1</span></td><td>NT$ 140k</td><td><button class="btn sm ghost">Open</button></td></tr>
-              <tr class="click" onclick="openClinic('Lin')"><td><b>Kaohsiung Sleep &amp; Smile</b><div class="cond">Kaohsiung</div></td><td>Dr. Lin</td><td>9</td><td>7</td><td><span class="pill g">0</span></td><td>NT$ 90k</td><td><button class="btn sm ghost">Open</button></td></tr>
-              <tr class="click" onclick="openClinic('New')"><td><b>Hsinchu Family Dental</b><div class="cond">Hsinchu · onboarding</div></td><td>Dr. Kao</td><td>3</td><td>1</td><td><span class="pill a">setup</span></td><td>—</td><td><button class="btn sm ghost">Open</button></td></tr>
+              <tr><th>Clinic</th><th>AMDs</th><th>ATCs (senior ★)</th><th>Patients</th><th>Rev. share (Jul)</th><th></th></tr>
+              <tr class="click" onclick="openClinic('Chen')"><td><b>Daan Perfect Smile</b><div class="cond">Taipei</div></td><td>Dr. Chen · Dr. Lee</td><td>Nancy ★ · Ken</td><td>21</td><td>NT$ 210k</td><td><button class="btn sm ghost">Manage</button></td></tr>
+              <tr class="click" onclick="openClinic('Wu')"><td><b>Taichung Airway Clinic</b><div class="cond">Taichung</div></td><td>Dr. Wu</td><td>Nancy ★ (shared) · Amy ★</td><td>14</td><td>NT$ 140k</td><td><button class="btn sm ghost">Manage</button></td></tr>
+              <tr class="click" onclick="openClinic('Lin')"><td><b>Kaohsiung Sleep &amp; Smile</b><div class="cond">Kaohsiung</div></td><td>Dr. Lin</td><td>Joy ★</td><td>9</td><td>NT$ 90k</td><td><button class="btn sm ghost">Manage</button></td></tr>
+              <tr class="click" onclick="openClinic('New')"><td><b>Hsinchu Family Dental</b><div class="cond">Hsinchu · onboarding</div></td><td>Dr. Kao</td><td>— <span class="pill a">assign ATC</span></td><td>3</td><td>—</td><td><button class="btn sm ghost">Manage</button></td></tr>
             </table>
+            <p class="hint" style="margin-top:8px">Note: Nancy (senior ATC) is associated to <b>two</b> clinics to balance workload. Junior ATCs (e.g. Ken) handle admin; senior ATCs also prepare device specs.</p>
           </div>
         </div>
         <div id="patientView" style="display:none">
@@ -204,7 +210,7 @@
 
       <!-- ===== UPLOAD IP ===== -->
       <section class="screen" id="s-upload">
-        <div class="banner">🔐 The IP workspace for one patient. Only HQ can create <b>S+, Schwarz, diagnosis & treatment plan, STA design</b>. Uploading each item advances the patient's journey timeline automatically.</div>
+        <div class="banner" style="background:#eff6ff;border-color:#bfdbfe;color:#1e3a8a">📋 <b>Read-only case monitoring.</b> This mirrors one patient's progress so HQ can watch SLAs and step in on delays. HQ does <b>not</b> author or approve anything here — diagnosis, plan, device design and the STA order are all the <b>treating AMD's</b> (doctor site).</div>
         <div class="card">
           <h3>Patient · <span id="upName">Wang Xiaoming</span> <span class="pill" id="upMrn">AMD-0021</span> <span class="hint" style="font-weight:400">· Dr. Chen clinic</span></h3>
           <div class="steps">
@@ -227,16 +233,17 @@
           </div>
         </div>
 
-        <div class="card"><h3>2 · Upload analysis &amp; plan (AMD Taiwan IP)</h3>
+        <div class="card"><h3>2 · Analysis inputs &amp; the AMD's plan</h3>
+          <div class="banner" style="margin-bottom:12px">Revised model: <b>diagnosis &amp; device design happen in-clinic</b> (treating AMD, delegable to the ATC). HQ orchestrates the pipeline &amp; analytics — it does <b>not</b> author the plan, and Dr. Felix is <b>advisory only</b>.</div>
           <div class="up"><div class="ic" data-svg="splus"></div>
-            <div class="t"><b>S+ analysis</b><div>3D jaw-position analysis from our software. Drives "Analysis" stage.</div></div>
-            <button class="btn ghost sm" onclick="markDone(this,'S+ uploaded → timeline: Analysis')">Upload</button></div>
+            <div class="t"><b>S+ (Susuoni+) analysis</b><div>From radiology processing. Drives "Analysis" stage.</div></div>
+            <button class="btn ghost sm" onclick="markDone(this,'S+ recorded → timeline: Analysis')">Record</button></div>
           <div class="up"><div class="ic" data-svg="schwarz"></div>
-            <div class="t"><b>Schwarz analysis</b><div>Arch-width / transverse analysis.</div></div>
-            <button class="btn ghost sm" onclick="markDone(this,'Schwarz uploaded')">Upload</button></div>
+            <div class="t"><b>Schwarz analysis</b><div>Arch-width / transverse — from the STA Lab.</div></div>
+            <button class="btn ghost sm" onclick="markDone(this,'Schwarz recorded')">Record</button></div>
           <div class="up"><div class="ic" data-svg="plan"></div>
-            <div class="t"><b>Diagnosis &amp; treatment plan (PDF)</b><div>Authored by Dr. Liao · released to clinic &amp; shown to patient in-app.</div></div>
-            <button class="btn ghost sm" onclick="markDone(this,'Plan uploaded → timeline: Diagnosis & Plan')">Upload</button></div>
+            <div class="t"><b>AMD's approved treatment plan (PDF)</b><div>Authored &amp; approved in-clinic by the treating AMD · shown to patient after the report reading (Stage 5).</div></div>
+            <button class="btn ghost sm" onclick="markDone(this,'AMD plan on file → timeline: Diagnosis & Plan')">On file</button></div>
           <label class="hint" style="font-weight:700;display:block;margin:8px 0 4px">Case difficulty grade (1 easy → 4 complex) — shown in the patient profile</label>
           <div class="grade">
             <span class="g1" onclick="grade(this)">1</span><span class="g2" onclick="grade(this)">2</span>
@@ -244,28 +251,22 @@
           </div>
         </div>
 
-        <div class="card"><h3>3 · Report generation <span class="pill a">open question for PO</span></h3>
-          <p class="hint" style="margin-bottom:10px">Nancy's open question: do we generate the diagnosis report <b>directly on this site</b>, or keep uploading Dr. Liao's PDF? This mock shows a lightweight in-site builder as an option to react to.</p>
+        <div class="card"><h3>3 · Report &amp; plan status <span class="pill">view only</span></h3>
+          <p class="hint" style="margin-bottom:10px">The AMD authors, approves and releases the treatment plan/report <b>in-clinic (doctor site)</b>. HQ sees <b>status only</b> — no authoring or release here.</p>
           <div class="rptbuild">
-            <div class="sec"><span>Cover · patient + clinic + difficulty</span><span class="pill g">auto</span></div>
-            <div class="sec"><span>Findings · S+ / Schwarz summary</span><span class="pill g">auto from upload</span></div>
-            <div class="sec"><span>Diagnosis narrative</span><span class="hint">Dr. Liao / HQ writes</span></div>
-            <div class="sec"><span>Treatment plan &amp; timeline</span><span class="hint">HQ writes</span></div>
-            <div class="sec"><span>STA prescription → lab</span><span class="hint">links to dispatch</span></div>
-          </div>
-          <div style="margin:12px 0;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;border-radius:10px;padding:11px 14px;font-size:12.5px">
-            🤖 <b>AI-assisted draft (Ryan's idea):</b> auto-compose the formal report from Felix's diagnosis/plan + the first-visit data (questionnaire, chief complaint) + the FMD diet/supplement suggestion. HQ reviews &amp; edits, then releases. Reduces manual writing.
-            <div style="margin-top:8px"><button class="btn" onclick="toast('AI draft generated → HQ to review & edit')" style="background:#16a34a">✨ Generate AI draft</button></div>
-          </div>
-          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn ghost" onclick="toast('Preview report PDF…')">👁 Preview report</button>
-            <button class="btn" onclick="toast('Report released → visible to clinic + patient')">Release to clinic &amp; patient</button>
+            <div class="sec"><span>Diagnosis &amp; plan authored</span><span class="pill g">by AMD ✓</span></div>
+            <div class="sec"><span>Released to patient (report reading · Stage 5)</span><span class="pill a">pending</span></div>
           </div>
         </div>
 
-        <div class="card"><h3>4 · After signature → dispatch STA</h3>
-          <p class="hint" style="margin-bottom:10px">When the AMD marks the plan "signed" (doctor site), HQ sends the STA design to the lab.</p>
-          <button class="btn" onclick="toast('STA design dispatched to lab → STA orchestration')">🚚 Dispatch STA design to lab</button>
+        <div class="card"><h3>4 · STA order — SLA tracking <span class="pill">monitor · escalate</span></h3>
+          <p class="hint" style="margin-bottom:10px">The AMD issues the <b>written prescription</b> and orders the STA. HQ tracks the STA Lab against the SLA and <b>escalates delays</b> — HQ does <b>not</b> issue or release the design.</p>
+          <div style="display:flex;gap:8px"><button class="btn ghost" onclick="go('sta')">Open STA tracking</button>
+            <button class="btn" onclick="toast('Escalated to STA Lab — SLA breach flagged')">Escalate delay</button></div>
+        </div>
+        <div class="card"><h3>5 · New-appliance request <span class="pill a">mid-treatment</span></h3>
+          <p class="hint" style="margin-bottom:10px">When an AMD requests a new appliance, the cycle repeats: new records in → Lab Schwarz + S+ → the <b>AMD/ATC design in-clinic</b> (optional de-identified Felix consult) → AMD approves &amp; orders → HQ <b>tracks the Lab SLA</b>.</p>
+          <div class="steps" style="margin:0"><div class="s done">New records in</div><div class="s now">Schwarz + S+</div><div class="s">AMD/ATC design</div><div class="s">Dispatch to Lab</div></div>
         </div>
       </section>
 
@@ -497,7 +498,7 @@ function openThread(k){
 /* helpers */
 function markDone(btn,msg){const up=btn.closest('.up');up.classList.add('done');btn.textContent='✓ Uploaded';btn.disabled=true;toast(msg);}
 function grade(el){document.querySelectorAll('.grade span').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');toast('Difficulty grade set');}
-const TITLES={dash:'Dashboard',clinics:'AMD clinics',upload:'Patient report / IP',sta:'STA orchestration',kpi:'Analytics',sat:'Satisfaction & bonuses',msg:'Message hub'};
+const TITLES={dash:'Dashboard',clinics:'Clinics & people',upload:'Case monitoring',sta:'STA orchestration',kpi:'Analytics',sat:'Satisfaction & bonuses',msg:'Message hub'};
 function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
   document.getElementById('s-'+s).classList.add('on');
   document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));

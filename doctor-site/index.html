@@ -41,6 +41,7 @@
   .btn{background:var(--teal);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-size:14px;
     font-weight:600;cursor:pointer}
   .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.sm{padding:6px 11px;font-size:12px}
   .btn:active{transform:scale(.98)}
   .p-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
   .p-card{background:var(--card);border-radius:14px;padding:16px;box-shadow:var(--shadow);cursor:pointer;
@@ -107,6 +108,17 @@
     color:#115e59;margin-top:14px}
   .hint{font-size:11px;color:var(--muted);margin-top:4px}
   .pill{font-size:10px;background:#ccfbf1;color:var(--teal);padding:2px 8px;border-radius:20px;font-weight:700}
+  .pill.green{background:#dcfce7;color:#166534}
+  .pill.a{background:#fef3c7;color:#b45309}
+  label.chk{display:flex;align-items:center;gap:8px;font-weight:400;color:var(--ink);padding:5px 0;font-size:13.5px;cursor:pointer}
+  .rptbuild{border:1px solid var(--line);border-radius:10px;padding:8px 14px;background:#fbfdfc}
+  .rptbuild .sec{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .rptbuild .sec:last-child{border:none}
+  .ai-box{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;border-radius:10px;padding:11px 14px;font-size:12.5px;margin-top:12px}
+  .ver{display:flex;align-items:center;gap:10px;font-size:12.5px;padding:8px 0;border-bottom:1px solid var(--line)}
+  .ver:last-child{border:none}
+  .ver .vt{flex:1}.ver .badge2{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+  .b-draft{background:#fef3c7;color:#92400e}.b-latest{background:#dcfce7;color:#166534}.b-old{background:#f1f5f9;color:#64748b}
   .voice{font-size:11px;color:var(--blue);cursor:pointer}
   /* patient detail layout */
   .pd{display:flex;gap:20px}
@@ -243,6 +255,22 @@
             <div class="imgmock need" data-img="ceph"><div class="cap">Lateral cephalogram<small>Side skull X-ray <span class="todo-tag">upload</span></small></div></div>
             <div class="imgmock need" data-img="cbct"><div class="cap">CBCT<small>3D + airway <span class="todo-tag">upload</span></small></div></div>
             <div class="imgmock need" data-img="msk"><div class="cap">MSKalign<small>Posture scan <span class="todo-tag">upload</span></small></div></div>
+            <div class="imgmock need" data-img="msk"><div class="cap">Full-body posture<small>Mark pain / problem areas <span class="todo-tag">upload</span></small></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>4 · Three health goals <span class="pill">shows on patient app</span></h3>
+          <p class="hint" style="margin-bottom:10px">From the first-visit questionnaire. Enter manually for now; re-enter at each 6-month questionnaire (old vs new shown side-by-side).</p>
+          <div class="row"><div><label>Goal 1</label><input placeholder="Sleep through the night" /></div><div><label>Goal 2</label><input placeholder="Stop teeth grinding" /></div></div>
+          <div style="max-width:calc(50% - 7px)"><label>Goal 3</label><input placeholder="Breathe through nose" /></div>
+          <label style="margin-top:12px">Upload first-visit questionnaire (PDF / from iPad)</label><input type="file" />
+        </div>
+        <div class="card">
+          <h3>5 · Treatment journey dates <span class="pill">drives patient-site journey</span></h3>
+          <p class="hint" style="margin-bottom:10px">The profile-creation date isn't the clinic-visit date — enter the real dates so the patient's journey shows correctly.</p>
+          <div class="row">
+            <div><label>Consultation date</label><input type="date" /></div>
+            <div><label>Initial visit (data collection) date</label><input type="date" /></div>
           </div>
         </div>
         <button class="btn" onclick="toast('Profile created → timeline: Initial visit, data collection');go('detail')">Create profile</button>
@@ -258,10 +286,11 @@
             <a class="on" data-pv="basic" onclick="pv('basic')">Basic + first visit</a>
             <a data-pv="images" onclick="pv('images')">Images & comparison</a>
             <div class="grp">Treatment plan</div>
-            <a data-pv="plan" onclick="pv('plan')">Diagnosis & plan</a>
+            <a data-pv="plan" onclick="pv('plan')">Diagnosis & design</a>
             <a data-pv="records" onclick="pv('records')">Follow-up records</a>
             <a data-pv="addrec" onclick="pv('addrec')">➕ Add follow-up record</a>
             <a data-pv="tasks" onclick="pv('tasks')">Daily-task assignment</a>
+            <a data-pv="newapp" onclick="pv('newapp')">🔧 Request new appliance</a>
             <div class="grp">Coordination</div>
             <a data-pv="chat" onclick="pv('chat')">Chat with patient</a>
             <a data-pv="referral" onclick="pv('referral')">Referral</a>
@@ -307,8 +336,14 @@
             </div>
             <!-- images -->
             <div class="pv" id="pv-images">
-              <div class="banner">Drag the divider to compare two dates. The baseline (first) photo stays fixed as "before"; the latest visit is "after". This same comparison is what the patient sees in their app's Progress tab.</div>
-              <div class="card"><h3>Extraoral — profile · baseline vs latest</h3>
+              <div class="banner">Pick <b>any two records</b> to compare — the AMD chooses the "before" and "after" dates (not just baseline-vs-latest). Drag the divider to compare. This same comparison is what the patient sees in their app's Progress tab.</div>
+              <div class="card"><h3>Compare records</h3>
+                <div class="row" style="margin-bottom:14px">
+                  <div><label>Type</label><select><option>Extraoral — profile</option><option>Extraoral — frontal</option><option>Intraoral — occlusal</option><option>MSKAlign posture (LIDAR)</option><option>CBCT airway</option><option>Pano</option><option>Lateral cephalogram</option></select></div>
+                  <div style="display:flex;gap:8px"><div style="flex:1"><label>Before</label><select><option>Apr 2 (baseline)</option><option>Jun 14</option><option>Jul 12</option></select></div>
+                    <div style="flex:1"><label>After</label><select><option>Jul 12 (latest)</option><option>Jun 14</option><option>Apr 2</option></select></div></div>
+                </div>
+                <div style="font-weight:600;font-size:14px;margin-bottom:6px">Extraoral — profile · selected dates</div>
                 <div class="ba" id="baImg">
                   <div class="lay" id="baAfter"></div>
                   <div class="after-wrap" id="baBeforeWrap"><div id="baBefore" style="height:100%"></div></div>
@@ -330,27 +365,98 @@
                   <tr><td class="type">Pano</td><td><span class="datechip">Apr 2</span><span class="datechip">Jul 12</span></td><td>AMD/ATC</td></tr>
                   <tr><td class="type">Lateral cephalogram</td><td><span class="datechip">Apr 2</span><span class="datechip">Jul 12</span></td><td>AMD/ATC</td></tr>
                   <tr><td class="type">CBCT</td><td><span class="datechip">Apr 2</span><span class="datechip">Jul 12</span></td><td>AMD/ATC</td></tr>
-                  <tr><td class="type">MSKalign</td><td><span class="datechip">Apr 2</span></td><td>AMD/ATC</td></tr>
+                  <tr><td class="type">MSKAlign posture (LIDAR)</td><td><span class="datechip">Apr 2</span><span class="datechip">Jun 14</span><span class="datechip">Jul 12</span></td><td>AMD/ATC</td></tr>
                   <tr><td class="type">S+ analysis</td><td><span class="datechip hq">Apr 18 🔒</span></td><td>HQ (read-only)</td></tr>
                   <tr><td class="type">Schwarz analysis</td><td><span class="datechip hq">Apr 18 🔒</span></td><td>HQ (read-only)</td></tr>
                   <tr><td class="type">Sleep test (ESS)</td><td><span class="datechip">Apr 2</span><span class="datechip none">next: Oct</span></td><td>AMD/ATC</td></tr>
                   <tr><td class="type">Blood work</td><td><span class="datechip">Apr 2</span><span class="datechip none">next: Oct</span></td><td>AMD/ATC</td></tr>
                 </table>
               </div>
+
+              <div class="card"><h3>🧍 MSKAlign posture scans <span class="pill">LIDAR · low radiation</span></h3>
+                <p class="hint" style="margin-bottom:12px">High-precision LIDAR body/posture scan (not X-ray) — <b>very low radiation, so it can be captured often</b> to track posture change over time (unlike CBCT, ~every 6 months). AMD or ATC uploads the latest scan; the patient can view it in their app.</p>
+                <div class="imgrow" style="margin-bottom:12px">
+                  <div class="imgmock" data-img="msk"><div class="cap">Apr 2 · baseline<small>MSKAlign</small></div></div>
+                  <div class="imgmock" data-img="msk"><div class="cap">Jun 14<small>MSKAlign</small></div></div>
+                  <div class="imgmock" data-img="msk"><div class="cap">Jul 12 · latest<small>MSKAlign</small></div></div>
+                </div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <button class="btn" onclick="toast('MSKAlign scan uploaded → visible to patient + added to comparison')">⬆ Upload latest MSKAlign scan</button>
+                  <button class="btn ghost" onclick="toast('Compare MSKAlign: pick two dates above')">↔ Compare over time</button>
+                </div>
+              </div>
             </div>
             <!-- plan -->
             <div class="pv" id="pv-plan">
-              <div class="banner">Diagnosis & treatment plan is authored by Dr. Liao and uploaded from HQ — read/print only here. Also shown to the patient in-app as a PDF.</div>
-              <div class="card"><h3>Diagnosis & treatment plan <span class="pill">difficulty 3 / 4</span></h3>
-                <p class="hint" style="line-height:1.6">Airway-focused STA therapy to widen the arch and improve nasal breathing + myofunctional therapy. Active phase 10–12 months, then 1-year maintenance.</p>
-                <div style="margin-top:12px;display:flex;gap:10px">
-                  <button class="btn ghost" onclick="toast('Opening plan PDF…')">📄 View plan PDF</button>
-                  <button class="btn ghost" onclick="toast('Printing…')">🖨️ Print</button>
-                  <button class="btn" onclick="toast('Signed → notify HQ → dispatch STA to lab')">✅ Confirm plan signed</button>
+              <div class="banner">🩺 <b>Design happens in-clinic, before the report reading.</b> The <b>treating AMD is the Doctor on Record</b> — they own diagnosis &amp; device design, <b>issue the treatment plan and order STA creation</b>, and may delegate <b>spec prep</b> to a senior ATC (clinical responsibility always stays with the AMD). AMD Taiwan HQ is <b>managerial only</b> (monitors SLAs) and does not issue clinical decisions. A specialist consult with Dr. Felix is <b>optional, the AMD's choice</b>.</div>
+
+              <div class="card"><h3>① Diagnostics &amp; data complete <span class="pill green">ready to design</span></h3>
+                <div class="step-tags">
+                  <span class="tag">CBCT + lateral ceph</span><span class="tag">Susuoni+ (S+)</span><span class="tag">Schwartz (STA Lab)</span>
+                  <span class="tag">Clinical photos</span><span class="tag">Digital impression</span><span class="tag">Sleep study (if indicated)</span>
+                </div>
+                <p class="hint" style="margin-top:8px">AMD + ATC notified when everything is in — design can begin.</p>
+              </div>
+
+              <div class="card"><h3>② Spec prep <span class="pill">delegable to a senior ATC</span></h3>
+                <p class="hint" style="margin-bottom:10px">Spec design is done by a <b>senior ATC</b> (junior ATCs handle admin). The AMD delegates to a senior ATC — logged as a delegation, <b>not</b> a hand-off of responsibility. The senior ATC works up the proposed spec <b>from their own ATC portal</b>; it lands here for the AMD to finalise.</p>
+                <label>Delegate to (senior ATC)</label>
+                <select id="delegateAtc"><option>Select senior ATC…</option><option>Nancy Cheng (Senior ATC)</option><option>Amy Wu (Senior ATC)</option><option>Joy Kao (Senior ATC)</option></select>
+                <div style="margin-top:10px"><button class="btn ghost" onclick="toast('Delegation logged: AMD → selected senior ATC')">Delegate spec prep</button></div>
+                <p class="hint" style="margin-top:8px">Draft spec status: <b style="color:var(--amber)">awaiting senior ATC upload</b> (they submit from the ATC portal).</p>
+              </div>
+
+              <div class="card" style="border:1px solid #86efac"><h3>③ AMD review &amp; approve <span class="pill green">★ audit trail</span></h3>
+                <p class="hint" style="margin-bottom:10px">The AMD exercises independent clinical judgement, may modify, then approves. The system records preparer, modifications, approver and timestamp — the compliance backbone.</p>
+                <div class="kv"><b>Preparer</b> Nancy Cheng (senior ATC) · via ATC portal</div>
+                <div class="kv"><b>Modifications by AMD</b> widened transverse target 0.5mm; staged gear 3</div>
+                <div class="kv"><b>Approver</b> Dr. Chen (treating AMD)</div>
+                <div class="kv"><b>Timestamp</b> — (set on approve)</div>
+                <div style="margin-top:10px"><button class="btn" style="background:#16a34a" onclick="toast('✅ Spec approved by AMD · audit trail recorded')">✅ AMD approve spec</button></div>
+              </div>
+
+              <div class="card" style="border:1px dashed #fca5a5"><h3>④ Specialist consult — optional <span class="pill" style="background:#fee2e2;color:#b91c1c">AMD's choice</span></h3>
+                <p class="hint" style="margin-bottom:10px">Only if the AMD chooses. Felix receives a <b>de-identified packet: lateral ceph + analysis + the spec</b> — view-only &amp; watermarked — and returns <b>advice</b>. No CBCT, oral scan, face/voice or identifiers cross. <b>Advisory only; nothing identifiable leaves Taiwan.</b></p>
+                <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 14px">
+                  <div style="font-weight:700;font-size:12.5px;color:#7f1d1d;margin-bottom:8px">Compliance attestations (required to share):</div>
+                  <label class="chk"><input type="checkbox"> Explicit patient consent has been received</label>
+                  <label class="chk"><input type="checkbox"> All PII pseudonymised / de-identified</label>
+                  <label class="chk"><input type="checkbox"> Consultation &amp; advisory only — NOT treatment (telemedicine compliance)</label>
+                </div>
+                <div style="margin-top:10px"><button class="btn ghost" onclick="toast('De-identified packet: lateral ceph + analysis + spec (watermarked)')">👁 Preview de-identified packet</button>
+                  <button class="btn" style="margin-left:8px;background:#be123c" onclick="toast('De-identified consult sent to Dr. Felix (advisory only)')">Send consult to Dr. Felix</button></div>
+              </div>
+
+              <div class="card"><h3>⑤ Final treatment plan → generate &amp; share <span class="pill">AMD owns this</span></h3>
+                <p class="hint" style="margin-bottom:10px">The AMD builds the patient-facing report from the approved spec. HQ's AI can draft the wording, but the <b>clinical content and approval are the AMD's</b>.</p>
+                <div class="rptbuild">
+                  <div class="sec"><span>Cover · patient + clinic + difficulty</span><span class="pill green">auto</span></div>
+                  <div class="sec"><span>Findings · S+ / Schwartz summary</span><span class="pill green">auto from data</span></div>
+                  <div class="sec"><span>Diagnosis narrative</span><span class="hint">AMD writes</span></div>
+                  <div class="sec"><span>Treatment plan &amp; timeline</span><span class="hint">AMD writes / approves</span></div>
+                  <div class="sec"><span>Prescription → lab</span><span class="hint">AMD issues · legal anchor</span></div>
+                </div>
+                <div class="ai-box">🤖 <b>AI-assisted draft:</b> auto-compose from the approved spec + first-visit data + FMD suggestion (Premium). AMD reviews &amp; approves.
+                  <div style="margin-top:8px"><button class="btn sm" style="background:#16a34a" onclick="toast('AI draft generated → AMD to review')">✨ Generate AI draft</button></div>
+                </div>
+                <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+                  <button class="btn ghost" onclick="toast('Preview report…')">👁 Preview report</button>
+                  <button class="btn ghost" onclick="toast('Shared with specialist')">Share with specialist</button>
+                  <button class="btn" onclick="toast('Shared with patient → now visible on patient app (report reading · Stage 5). Further edits create a new version.')">Share with patient (Stage 5)</button>
                 </div>
               </div>
-              <div class="card"><h3>STA photos <span class="pill">uploaded by AMD/ATC</span></h3>
-                <div class="cmp"><div class="ph">🦷 STA upper</div><div class="ph">🦷 STA lower</div></div>
+
+              <div class="card"><h3>Versions &amp; audit <span class="pill a">editable until shared with patient</span></h3>
+                <p class="hint" style="margin-bottom:10px">Everything the AMD creates stays <b>editable until it's shared with the patient</b>. Every save keeps a <b>version</b> (full audit trail). The <b>patient only ever sees the latest shared version</b>.</p>
+                <div class="ver"><span class="vt"><b>v3</b> · Jul 12 14:20 · Dr. Chen — widened transverse target</span><span class="badge2 b-latest">latest · shared</span></div>
+                <div class="ver"><span class="vt"><b>v2</b> · Jul 12 11:05 · Dr. Chen — added myofunctional plan</span><span class="badge2 b-old">superseded</span></div>
+                <div class="ver"><span class="vt"><b>v1</b> · Jul 11 · Nancy Cheng (senior ATC) — draft spec</span><span class="badge2 b-draft">draft</span></div>
+                <div style="margin-top:10px"><button class="btn ghost" onclick="toast('Editing creates v4 (draft) — patient still sees v3 until you re-share')">✏️ Edit (new version)</button></div>
+              </div>
+
+              <div class="card"><h3>⑥ Written prescription → STA Lab <span class="pill green">★ legal anchor</span></h3>
+                <p class="hint" style="margin-bottom:10px">After the patient agrees at the report reading, the treating AMD issues the final <b>written prescription</b> and sends the approved spec to the STA Lab to manufacture.</p>
+                <button class="btn" onclick="toast('Written prescription issued → STA Lab to manufacture')">✍️ Issue prescription → STA Lab</button>
               </div>
             </div>
             <!-- records -->
@@ -383,10 +489,13 @@
                 <label>D · Consultation notes <span class="voice">🎙️ dictate</span></label><textarea></textarea>
                 <label>E · Areas to strengthen <span class="voice">🎙️ dictate</span></label><textarea></textarea>
                 <label>F · STA adjustment update → drives patient app "STA reminder"</label>
+                <p class="hint" style="margin:0 0 8px">A patient may have multiple appliances, each with multiple gears. Set a turn amount per gear (or "hold"). Tag each gear on the STA photo so the patient knows exactly which to turn.</p>
+                <div style="display:flex;gap:8px;margin-bottom:8px"><select style="max-width:220px"><option>Upper appliance</option><option>Lower appliance</option><option>+ Add appliance…</option></select>
+                  <button class="btn sm ghost" onclick="toast('Open STA photo → tag gears')">📷 Tag gears on photo</button></div>
                 <div>
                   <span class="gear"><input type="checkbox" checked> Gear 1 · <input style="width:50px" value="½"> turn · <input style="width:60px" value="2×/wk"></span>
-                  <span class="gear"><input type="checkbox" checked> Gear 2 · <input style="width:50px" value="½"> turn · <input style="width:60px" value="2×/wk"></span>
-                  <span class="gear"><input type="checkbox"> Gear 3 ✗ no turn</span>
+                  <span class="gear"><input type="checkbox" checked> Gear 2 · <input style="width:50px" value="¼"> turn · <input style="width:60px" value="2×/wk"></span>
+                  <span class="gear"><input type="checkbox"> Gear 3 · <input style="width:50px" value="hold"> </span>
                 </div>
                 <label style="margin-top:12px">H · Internal note <span class="pill" style="background:#fee2e2;color:#b91c1c">hidden from patient</span></label><textarea></textarea>
                 <label>Next appointment</label>
@@ -448,6 +557,18 @@
               </div>
             </div>
             <!-- finish -->
+            <div class="pv" id="pv-newapp">
+              <div class="banner">Mid-treatment a patient may need a <b>new appliance</b> (e.g. next-phase expander, or a replacement). This kicks off a fresh design cycle: upload the new records → Lab does Schwarz → HQ does S+ → Felix designs → HQ dispatches to Lab.</div>
+              <div class="card"><h3>Request a new appliance</h3>
+                <label>Reason</label><input placeholder="e.g. next-phase expander / replacement (lost/broken)" />
+                <label style="margin-top:8px">Upload new records for the design</label>
+                <div class="step-tags" style="margin-top:6px">
+                  <span class="tag">Oral scan (STL)</span><span class="tag">Intraoral photos</span><span class="tag">Lateral cephalogram</span>
+                </div>
+                <p class="hint" style="margin-top:10px">On submit: Lab is asked for a <b>Schwarz</b>, HQ creates <b>S+</b>; with both, HQ notifies <b>Felix</b> to design the new appliance → Felix uploads → HQ dispatches to Lab.</p>
+                <div style="margin-top:12px"><button class="btn" onclick="toast('New-appliance request sent → Lab (Schwarz) + HQ (S+) → Felix design')">Submit new-appliance request</button></div>
+              </div>
+            </div>
             <div class="pv" id="pv-finish">
               <div class="card"><h3>Finish</h3>
                 <p class="hint" style="margin-bottom:14px">Maintenance: STA turning stops, daily tasks reduce to nutrition. After ~1 year → graduate.</p>

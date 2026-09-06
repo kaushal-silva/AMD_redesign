@@ -90,7 +90,7 @@
 
       <!-- RETAINER ORDERS -->
       <section class="screen" id="s-retainer">
-        <div class="banner">Retainers are a <b>separate order</b>, triggered when the AMD/ATC presses <b>[Enter maintenance]</b>. Felix custom-designs each retainer; weaning is clinician-managed. Ship 2 days before the appointment.</div>
+        <div class="banner"><b>Default = the patient keeps their STA as the retainer.</b> A new retainer is an <b>add-on the patient requests and pays for</b>: Felix designs it → AMD confirms → HQ presses <b>[Make retainer]</b> → it appears here. Weaning is clinician-managed. All appliance orders (STA / other appliance / retainer) work the same way: receive design → produce → ship 2 days before the appointment.</div>
         <div class="card"><h3>Incoming retainer orders</h3>
           <table>
             <tr><th>Order</th><th>Patient code</th><th>Design</th><th>Triggered</th><th>Due</th><th>Status</th></tr>
@@ -98,6 +98,7 @@
             <tr><td>RET-3005</td><td>AMD-0009</td><td>Felix custom (clear retainer)</td><td>Jul 6</td><td>Jul 20</td><td><span class="st s-done">Delivered</span></td></tr>
           </table>
           <p class="hint" style="margin-top:8px">Lab flow for retainer: receive final oral scan (.stl) from doctor site → receive Felix design → produce → ship to clinic. Same fit-check + payment-hold gate applies.</p>
+          <p class="hint" style="margin-top:4px">Note: pressing <b>[Enter maintenance]</b> also sends the Lab a fresh <b>Schwarz</b> order (final-report data cycle) — separate from any retainer order.</p>
         </div>
       </section>
     </div>

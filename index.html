@@ -52,17 +52,26 @@
       <span class="chip mvp">MVP</span>
       <div class="ic i-teal">📱</div>
       <span class="role">Patient</span>
-      <h3>Patient App (PWA)</h3>
-      <p>Mobile app: daily task card, STA reminder, journey timeline, before/after progress, learn, chat.</p>
-      <div class="device">📱 Mobile · installable PWA</div>
+      <h3>Patient App (native)</h3>
+      <p>Native iOS / Android app: daily task card, STA reminder, journey timeline, before/after progress, health score, learn, chat.</p>
+      <div class="device">📱 App Store &amp; Google Play</div>
     </a>
 
     <a class="card" href="doctor-site/index.html">
       <span class="chip mvp">MVP</span>
       <div class="ic i-blue">🩺</div>
-      <span class="role">AMD + ATC</span>
+      <span class="role">AMD (Doctor on Record)</span>
       <h3>Doctor Site</h3>
-      <p>Patient dashboard, add patient, per-patient records, the follow-up record form, daily-task assignment, referrals, chat.</p>
+      <p>AMD owns diagnosis &amp; device design (delegable to a senior ATC). Report builder + versioning, follow-up records, referrals, Felix consult gate, prescription → lab.</p>
+      <div class="device">💻 Desktop / iPad</div>
+    </a>
+
+    <a class="card" href="atc-site/index.html">
+      <span class="chip mvp">MVP</span>
+      <div class="ic i-teal">🧑‍💼</div>
+      <span class="role">ATC (senior / junior)</span>
+      <h3>ATC Portal</h3>
+      <p>Create patients, oversee clinic(s), draft device specs for the AMD, book appointments, track progress, flag follow-up tasks.</p>
       <div class="device">💻 Desktop / iPad</div>
     </a>
 
@@ -71,7 +80,7 @@
       <div class="ic i-purple">🏛️</div>
       <span class="role">AMD Taiwan HQ</span>
       <h3>HQ Site</h3>
-      <p>Upload the IP (S+, Schwarz, diagnosis & plan, STA design), dispatch to lab, KPI analytics.</p>
+      <p>Managerial only (compliance): monitor SLAs &amp; delays, escalate, manage clinics &amp; people (AMDs/ATCs), analytics. No clinical authoring.</p>
       <div class="device">💻 Desktop</div>
     </a>
 
@@ -89,8 +98,8 @@
       <div class="ic i-rose">🌏</div>
       <span class="role">Dr. Liao (US)</span>
       <h3>Felix Site</h3>
-      <p>De-identified patient data to author the diagnosis, plan &amp; STA design; plus referral cases. Faces/PII masked.</p>
-      <div class="device">💻 Desktop · de-identified</div>
+      <p>Advisory-only specialist consult (dentist's choice). Receives a watermarked de-identified packet (lateral ceph + analysis + spec) and returns written advice — no authoring.</p>
+      <div class="device">💻 Desktop · advisory only</div>
     </a>
 
     <a class="card" href="fmd-site/index.html">

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AMD · ATC Portal</title>
+<style>
+  :root{--grn:#16a34a;--grn-d:#14532d;--grn-l:#22c55e;--bg:#f2f7f4;--card:#fff;--ink:#12211f;
+    --muted:#5b6b62;--line:#e3ece7;--shadow:0 2px 10px rgba(20,80,40,.06);--amber:#b45309;--blue:#1e40af;--red:#b91c1c}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .app{display:flex;min-height:100vh}
+  .side{width:232px;background:#0f3d24;color:#cfe9da;padding:18px 12px;position:sticky;top:0;height:100vh;flex:0 0 auto}
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;padding:6px 8px 2px}
+  .brand .lg{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,#16a34a,#4ade80);display:flex;align-items:center;justify-content:center;font-weight:800}
+  .brand small{display:block;font-size:10px;color:#8fd0ad;font-weight:400}
+  .role-note{font-size:10px;color:#8fd0ad;padding:6px 8px 12px}
+  .nav a{display:flex;gap:10px;padding:10px 12px;border-radius:9px;color:#cfe9da;text-decoration:none;font-size:14px;cursor:pointer;margin-bottom:2px;align-items:center}
+  .nav a:hover{background:#ffffff12}.nav a.on{background:var(--grn);color:#fff}
+  .nav a .b{margin-left:auto;background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px}
+  .nav a.senior-only{opacity:1}
+  .role{font-size:10px;color:#7fbf98;text-transform:uppercase;letter-spacing:.6px;padding:0 8px;margin:12px 0 4px}
+  .back a{color:#7fbf98;font-size:12px;text-decoration:none}
+  .main{flex:1;min-width:0}
+  .bar{background:var(--card);border-bottom:1px solid var(--line);padding:12px 26px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:5}
+  .bar h2{flex:1;font-size:17px}.bar .who{font-size:13px;color:var(--muted)}
+  .bar select{border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12px}
+  .bar .bell{position:relative;font-size:18px;cursor:pointer}.bar .bell b{position:absolute;top:-6px;right:-8px;background:#ef4444;color:#fff;font-size:9px;padding:1px 5px;border-radius:10px}
+  .content{padding:22px 26px 60px;max-width:1000px}
+  .screen{display:none;animation:f .2s}.screen.on{display:block}@keyframes f{from{opacity:0}to{opacity:1}}
+  .banner{background:#ecfdf3;border:1px solid #bbf7d0;color:#166534;padding:11px 15px;border-radius:10px;font-size:13px;margin-bottom:16px;line-height:1.55}
+  .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .card h3{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .pill{font-size:10px;background:#dcfce7;color:var(--grn);padding:2px 8px;border-radius:20px;font-weight:700}
+  .pill.blue{background:#dbeafe;color:var(--blue)}.pill.amber{background:#fef3c7;color:var(--amber)}
+  .chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 14px;font-size:13px;cursor:pointer}
+  .chip.on{background:var(--grn);color:#fff;border-color:var(--grn)}
+  .btn{background:var(--grn);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer;font-size:14px}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}.btn.sm{padding:6px 11px;font-size:12px}
+  .toolbar{display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+  .search{flex:1;min-width:200px;border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);padding:9px 10px;border-bottom:1px solid var(--line)}
+  td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+  tr.click{cursor:pointer}tr.click:hover td{background:#f6fbf8}
+  .av{width:34px;height:34px;border-radius:50%;background:#dcfce7;color:var(--grn);display:inline-flex;align-items:center;justify-content:center;font-weight:700;margin-right:8px}
+  .ready{font-size:10px;font-weight:700;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:20px}
+  .done{font-size:10px;font-weight:700;background:#dcfce7;color:#166534;padding:2px 8px;border-radius:20px}
+  .track{display:flex;gap:3px;width:120px}.track i{height:6px;flex:1;background:var(--line);border-radius:3px}.track i.on{background:var(--grn)}
+  label{font-size:12px;color:var(--muted);font-weight:600;display:block;margin:12px 0 5px}
+  input,textarea,select{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px;font-family:inherit;background:#fdfdfd}
+  input[type=checkbox]{width:auto;transform:scale(1.15);accent-color:var(--grn)}
+  textarea{min-height:70px;resize:vertical}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+  .kv{display:flex;gap:8px;font-size:13px;padding:8px 0;border-bottom:1px solid var(--line)}
+  .kv b{width:150px;color:var(--muted);font-weight:600;flex:0 0 auto}.kv:last-child{border-bottom:none}
+  .appt{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .appt .d{width:60px;flex:0 0 auto;text-align:center;background:#dcfce7;border-radius:9px;padding:6px}
+  .appt .d b{display:block;font-size:16px;color:var(--grn)}.appt .d span{font-size:10px;color:var(--muted)}
+  .appt .info{flex:1}.appt .info b{font-size:13px}.appt .info div{font-size:12px;color:var(--muted)}
+  .taskrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .hint{font-size:11px;color:var(--muted)}
+  .senior-hide{display:none}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#12211f;color:#fff;padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
+  .toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="lg">A</div> <div>ATC Portal<small>Airway Treatment Coordinator</small></div></div>
+    <div class="role-note" id="roleNote">Senior ATC · spec design + admin · multi-clinic</div>
+    <div class="role">Work</div>
+    <nav class="nav">
+      <a class="on" data-s="patients" onclick="go('patients')">👥 My patients</a>
+      <a data-s="add" onclick="go('add')">➕ Add patient</a>
+      <a class="senior-only" data-s="specs" onclick="go('specs')">📐 Draft specs <span class="b">2</span></a>
+      <a data-s="appts" onclick="go('appts')">📅 Appointments</a>
+      <a data-s="tasks" onclick="go('tasks')">✅ Follow-up tasks</a>
+    </nav>
+    <div class="role">Account</div>
+    <nav class="nav">
+      <a onclick="toast('Chat with AMD Taiwan')">💬 Contact AMD Taiwan</a>
+      <a onclick="toast('Account settings')">⚙️ Account</a>
+    </nav>
+    <div class="nav back" style="padding:8px;margin-top:8px"><a href="../index.html">← Portal</a></div>
+  </aside>
+
+  <div class="main">
+    <div class="bar">
+      <h2 id="title">My patients</h2>
+      <label style="font-size:11px;color:var(--muted);margin:0">Signed in as
+        <select id="roleSel" onchange="setRole()" style="width:auto;display:inline-block;margin-left:6px">
+          <option value="senior">Senior ATC · Nancy Cheng</option>
+          <option value="junior">Junior ATC · admin</option>
+        </select>
+      </label>
+      <span class="bell" onclick="toast('2 patients have data ready for spec')">🔔<b>2</b></span>
+    </div>
+    <div class="content">
+
+      <!-- PATIENTS -->
+      <section class="screen on" id="s-patients">
+        <div class="banner">You create patient accounts (like an AMD), and see <b>every patient in the clinic(s) you cover</b>. Senior ATCs may oversee multiple clinics to share the workload.</div>
+        <div class="chips senior-only-block">
+          <span class="chip on" onclick="filtClinic(this,'all')">All clinics</span>
+          <span class="chip" onclick="filtClinic(this,'Daan')">Daan Perfect Smile</span>
+          <span class="chip" onclick="filtClinic(this,'Taichung')">Taichung Airway</span>
+        </div>
+        <div class="toolbar">
+          <input class="search" placeholder="Search patients…" />
+          <button class="btn" onclick="go('add')">➕ Add patient</button>
+        </div>
+        <div class="card"><table>
+          <tr><th>Patient</th><th>Clinic</th><th>AMD</th><th>Stage</th><th>Next appt</th><th>Data</th></tr>
+          <tbody id="patientRows"></tbody>
+        </table></div>
+      </section>
+
+      <!-- ADD PATIENT -->
+      <section class="screen" id="s-add">
+        <div class="banner">ATCs can create patient accounts. After the assessment fee, set up the profile, assign the treating AMD &amp; clinic, and record consultation + initial-visit dates.</div>
+        <div class="card"><h3>New patient</h3>
+          <div class="row"><div><label>Full name</label><input placeholder="王小明" /></div><div><label>MRN</label><input placeholder="AMD-0025" /></div></div>
+          <div class="row"><div><label>Clinic</label><select><option>Daan Perfect Smile</option><option>Taichung Airway</option></select></div>
+            <div><label>Treating AMD (Doctor on Record)</label><select><option>Dr. Chen</option><option>Dr. Wu</option></select></div></div>
+          <div class="row"><div><label>Consultation date</label><input type="date" /></div><div><label>Initial visit (data) date</label><input type="date" /></div></div>
+          <div style="margin-top:12px"><button class="btn" onclick="toast('Patient created · LINE group set · lifecycle = Onboarding');go('patients')">Create patient</button></div>
+        </div>
+      </section>
+
+      <!-- DRAFT SPECS (senior only) -->
+      <section class="screen" id="s-specs">
+        <div class="banner">📐 <b>Senior-ATC task.</b> When a patient's diagnostics &amp; data are complete you're notified here. Prepare the <b>draft device spec</b> from the scans and submit it to the treating AMD to <b>finalise &amp; approve</b> — responsibility stays with the AMD.</div>
+        <div class="card"><h3>Ready for spec</h3>
+          <div id="specRows"></div>
+        </div>
+        <div class="card" id="specEditor"><h3>Prepare draft spec · Wang Xiaoming (AMD-0021)</h3>
+          <p class="hint" style="margin-bottom:10px">From: CBCT + lateral ceph + Susuoni+ (S+) + Schwartz + photos + impression.</p>
+          <label>Proposed device</label><select><option>STA expander — upper</option><option>STA expander — upper + lower</option><option>Other appliance</option></select>
+          <label>Gear / turn plan (proposed)</label>
+          <textarea placeholder="e.g. Gear 1 ½ turn 2×/wk; Gear 2 ¼ turn 2×/wk; Gear 3 hold…"></textarea>
+          <label>Notes for the AMD</label><textarea placeholder="Transverse target, staging suggestions, anything to flag…"></textarea>
+          <div style="margin-top:12px"><button class="btn" onclick="toast('Draft spec submitted → Dr. Chen to finalise & approve')">Submit draft spec to AMD</button></div>
+        </div>
+      </section>
+
+      <!-- APPOINTMENTS -->
+      <section class="screen" id="s-appts">
+        <div class="banner">Book and manage appointments for your patients — including the first referral appointment (better attendance when booked in-clinic).</div>
+        <div class="card"><h3>Upcoming appointments</h3>
+          <div class="appt"><div class="d"><b>9</b><span>Aug</span></div><div class="info"><b>Wang Xiaoming · Airway review</b><div>Daan · Dr. Chen · 2:30 PM</div></div><span class="pill">booked</span></div>
+          <div class="appt"><div class="d"><b>2</b><span>Aug</span></div><div class="info"><b>Li Meihua · STA delivery</b><div>Daan · Dr. Chen · 10:00 AM</div></div><span class="pill">booked</span></div>
+          <div style="margin-top:12px"><button class="btn" onclick="toast('Appointment booked → appears in patient app + doctor site')">➕ Book appointment</button></div>
+        </div>
+      </section>
+
+      <!-- FOLLOW-UP TASKS -->
+      <section class="screen" id="s-tasks">
+        <div class="banner">Add follow-up tasks for the treating <b>AMD to review</b> — you flag, the AMD decides. Keeps the AMD's clinical responsibility intact.</div>
+        <div class="card"><h3>Tasks flagged for AMD review</h3>
+          <div class="taskrow"><input type="checkbox"> <span style="flex:1"><b>Wang Xiaoming</b> — patient reports jaw soreness 3 days; review turn rate?</span><span class="pill amber">for Dr. Chen</span></div>
+          <div class="taskrow"><input type="checkbox"> <span style="flex:1"><b>Chen Zhiming</b> — 6-month workup due; schedule comprehensive collection</span><span class="pill amber">for Dr. Wu</span></div>
+          <div class="taskrow"><input type="checkbox" checked> <span style="flex:1;color:var(--muted);text-decoration:line-through"><b>Li Meihua</b> — confirm supplement reorder</span><span class="done">done</span></div>
+          <div style="margin-top:12px;display:flex;gap:8px"><input placeholder="New follow-up task…" style="flex:1" /><button class="btn" onclick="toast('Task added → AMD notified to review')">Add task</button></div>
+        </div>
+      </section>
+
+      <!-- PATIENT DETAIL -->
+      <section class="screen" id="s-patient">
+        <div class="banner">Patient progress at a glance — book their next appointment and flag follow-up tasks for the AMD.</div>
+        <div class="card"><h3>Wang Xiaoming <span class="pill">AMD-0021</span> · Daan · Dr. Chen</h3>
+          <div class="kv"><b>Stage</b> Active treatment (6/8) · Visit 7</div>
+          <div class="kv"><b>Next appointment</b> Aug 9 · Dr. Chen</div>
+          <div class="kv"><b>Satisfaction</b> ATC 4.8 ▲ · Dentist 3.0 ▼ <span class="pill amber">needs care</span></div>
+          <div class="kv"><b>Data</b> 6-month workup due Oct</div>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn ghost" onclick="go('appts')">📅 Book appointment</button>
+            <button class="btn ghost" onclick="go('tasks')">✅ Flag task for AMD</button>
+            <button class="btn ghost" onclick="toast('Opening progress + reports')">📊 View progress</button>
+            <button class="btn" onclick="toast('MSKAlign scan uploaded → visible to patient + added to comparison')">🧍 Upload MSKAlign scan</button>
+          </div>
+          <p class="hint" style="margin-top:10px">🧍 MSKAlign = LIDAR posture scan (low radiation) — upload the latest at each visit so the AMD can compare over time and the patient can see it.</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const PATIENTS=[
+  {init:"王",n:"Wang Xiaoming",mrn:"AMD-0021",clinic:"Daan",amd:"Dr. Chen",stage:6,next:"Aug 9",data:"ready"},
+  {init:"李",n:"Li Meihua",mrn:"AMD-0018",clinic:"Daan",amd:"Dr. Chen",stage:5,next:"Aug 2",data:"ok"},
+  {init:"黃",n:"Huang Shufen",mrn:"AMD-0007",clinic:"Taichung",amd:"Dr. Wu",stage:5,next:"Aug 6",data:"ready"},
+  {init:"張",n:"Zhang Ting",mrn:"AMD-0012",clinic:"Daan",amd:"Dr. Chen",stage:7,next:"Sep 1",data:"ok"},
+];
+let clinicFilt='all';
+function renderPatients(){
+  const rows=PATIENTS.filter(p=>clinicFilt==='all'||p.clinic===clinicFilt).map(p=>{
+    const tr=[1,2,3,4,5,6,7,8].map(i=>`<i class="${i<=p.stage?'on':''}"></i>`).join('');
+    return `<tr class="click" onclick="go('patient')">
+      <td><span class="av">${p.init}</span><b>${p.n}</b><div class="hint" style="margin-left:42px">${p.mrn}</div></td>
+      <td>${p.clinic}</td><td>${p.amd}</td>
+      <td><div class="track">${tr}</div></td><td>${p.next}</td>
+      <td>${p.data==='ready'?'<span class="ready">ready for spec</span>':'<span class="done">ok</span>'}</td></tr>`;
+  }).join('');
+  document.getElementById('patientRows').innerHTML=rows;
+}
+function filtClinic(el,c){document.querySelectorAll('.chips .chip').forEach(x=>x.classList.remove('on'));el.classList.add('on');clinicFilt=c;renderPatients();}
+function renderSpecs(){
+  document.getElementById('specRows').innerHTML=PATIENTS.filter(p=>p.data==='ready').map(p=>`
+    <div class="appt"><div class="d"><span class="av" style="margin:0">${p.init}</span></div>
+      <div class="info"><b>${p.n} · ${p.mrn}</b><div>${p.clinic} · ${p.amd} · diagnostics complete</div></div>
+      <button class="btn sm" onclick="toast('Opening spec editor for ${p.n}')">Prepare spec</button></div>`).join('');
+}
+let role='senior';
+function setRole(){
+  role=document.getElementById('roleSel').value;
+  const senior=role==='senior';
+  document.querySelectorAll('.senior-only').forEach(e=>e.style.display=senior?'':'none');
+  document.querySelectorAll('.senior-only-block').forEach(e=>e.style.display=senior?'':'none');
+  document.getElementById('roleNote').textContent=senior?'Senior ATC · spec design + admin · multi-clinic':'Junior ATC · admin tasks · assigned clinic';
+  if(!senior && document.getElementById('s-specs').classList.contains('on')) go('patients');
+  toast(senior?'Senior ATC — can design specs & oversee multiple clinics':'Junior ATC — admin only (no spec design)');
+}
+const TITLES={patients:'My patients',add:'Add patient',specs:'Draft specs',appts:'Appointments',tasks:'Follow-up tasks',patient:'Patient'};
+function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
+  document.getElementById('s-'+s).classList.add('on');
+  document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
+  document.getElementById('title').textContent=TITLES[s];window.scrollTo(0,0);
+  if(s==='specs')renderSpecs();}
+let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2200);}
+renderPatients();
+</script>
+</body>
+</html>
