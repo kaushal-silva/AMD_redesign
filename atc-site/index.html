@@ -62,6 +62,28 @@
   .taskrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
   .hint{font-size:11px;color:var(--muted)}
   .senior-hide{display:none}
+  .pd-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .pd-head .big{width:46px;height:46px;border-radius:50%;background:#dcfce7;color:var(--grn);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex:0 0 auto}
+  .pd-head .nm{font-size:20px;font-weight:700}.pd-head .sub{font-size:13px;color:var(--muted)}
+  .dor{font-size:11px;background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;padding:3px 10px;border-radius:20px;font-weight:700}
+  .subnav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;flex-wrap:wrap}
+  .subnav a{padding:9px 12px;font-size:13px;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted);font-weight:600}
+  .subnav a.on{color:var(--grn);border-color:var(--grn)}
+  .pv{display:none}.pv.on{display:block}
+  .gate{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:10px;padding:11px 14px;font-size:12.5px;margin-bottom:14px;line-height:1.5}
+  .locked{display:flex;align-items:center;gap:10px;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;padding:11px 13px;margin:8px 0;color:#64748b;font-size:13px}
+  .locked .amd-only{margin-left:auto;font-size:10px;font-weight:800;background:#e0e7ff;color:#3730a3;padding:3px 9px;border-radius:20px;white-space:nowrap}
+  .rec{border:1px solid var(--line);border-radius:11px;padding:13px;margin-bottom:10px}
+  .rec .rh{display:flex;justify-content:space-between;font-size:13px;font-weight:700}.rec .rx{font-size:12.5px;color:#4b5563;margin-top:5px;line-height:1.5}
+  .step-tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-size:11px;background:#eef2f0;border:1px solid var(--line);border-radius:8px;padding:3px 9px}
+  .gear{display:inline-flex;align-items:center;gap:6px;background:#f0fdf4;border:1px solid #bbf7d0;padding:6px 10px;border-radius:8px;font-size:12px;margin:4px 6px 0 0}
+  .imgrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+  .imgmock{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0f2418}
+  .imgmock svg{display:block;width:100%;height:92px}.imgmock .cap{padding:7px 10px;font-size:12px;font-weight:600;border-top:1px solid var(--line);background:#fff}
+  .imgmock .cap small{display:block;color:var(--muted);font-weight:400;font-size:11px}
+  .voice{font-size:11px;color:var(--blue);cursor:pointer}
+  label.chk{display:flex;align-items:center;gap:8px;font-weight:400;color:var(--ink);padding:5px 0;font-size:14px;cursor:pointer}
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#12211f;color:#fff;padding:11px 18px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
   .toast.show{opacity:1}
 </style>
@@ -167,21 +189,137 @@
         </div>
       </section>
 
-      <!-- PATIENT DETAIL -->
+      <!-- PATIENT DETAIL (full record) -->
       <section class="screen" id="s-patient">
-        <div class="banner">Patient progress at a glance — book their next appointment and flag follow-up tasks for the AMD.</div>
-        <div class="card"><h3>Wang Xiaoming <span class="pill">AMD-0021</span> · Daan · Dr. Chen</h3>
-          <div class="kv"><b>Stage</b> Active treatment (6/8) · Visit 7</div>
-          <div class="kv"><b>Next appointment</b> Aug 9 · Dr. Chen</div>
-          <div class="kv"><b>Satisfaction</b> ATC 4.8 ▲ · Dentist 3.0 ▼ <span class="pill amber">needs care</span></div>
-          <div class="kv"><b>Data</b> 6-month workup due Oct</div>
-          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn ghost" onclick="go('appts')">📅 Book appointment</button>
-            <button class="btn ghost" onclick="go('tasks')">✅ Flag task for AMD</button>
-            <button class="btn ghost" onclick="toast('Opening progress + reports')">📊 View progress</button>
-            <button class="btn" onclick="toast('MSKAlign scan uploaded → visible to patient + added to comparison')">🧍 Upload MSKAlign scan</button>
+        <div class="pd-head">
+          <div class="big">王</div>
+          <div style="flex:1">
+            <div class="nm">Wang Xiaoming <span class="pill">AMD-0021</span></div>
+            <div class="sub">Daan Perfect Smile · Active treatment (6/8) · Visit 7</div>
           </div>
-          <p class="hint" style="margin-top:10px">🧍 MSKAlign = LIDAR posture scan (low radiation) — upload the latest at each visit so the AMD can compare over time and the patient can see it.</p>
+          <span class="dor">Doctor on Record: Dr. Chen (AMD)</span>
+        </div>
+
+        <div class="gate">🔒 As a <b>senior ATC</b> you have <b>full access to this patient's record</b> and can prepare almost everything the AMD can. Three things are reserved for the <b>Doctor on Record (Dr. Chen, AMD)</b> and are <b>locked here</b>: <b>(1)</b> issue the prescription / spec to the STA Lab, <b>(2)</b> send the specialist (Dr. Felix) consult, <b>(3)</b> release the treatment plan / report to the patient. You prepare the drafts — the AMD issues.</div>
+
+        <div class="subnav">
+          <a class="on" data-pv="overview" onclick="pv('overview')">Overview</a>
+          <a data-pv="info" onclick="pv('info')">Patient info</a>
+          <a data-pv="images" onclick="pv('images')">Images &amp; comparison</a>
+          <a data-pv="design" onclick="pv('design')">Diagnosis &amp; design</a>
+          <a data-pv="records" onclick="pv('records')">Follow-up records</a>
+          <a data-pv="tasks" onclick="pv('tasks')">Daily tasks</a>
+          <a data-pv="referral" onclick="pv('referral')">Referral</a>
+          <a data-pv="appts" onclick="pv('appts')">Appointments</a>
+        </div>
+
+        <!-- overview -->
+        <div class="pv on" id="pv-overview">
+          <div class="card"><h3>Overview</h3>
+            <div class="kv"><b>Stage</b> Active treatment (6/8) · Visit 7 · next check-up Aug 9</div>
+            <div class="kv"><b>Classification</b> Narrow arch · Mouth breathing · SDB</div>
+            <div class="kv"><b>Satisfaction</b> ATC 4.8 ▲ · Dentist 3.0 ▼ <span class="pill amber">needs care</span></div>
+            <div class="kv"><b>Plan tier</b> Premium (whole-person)</div>
+            <div class="kv"><b>Next data due</b> 6-month comprehensive workup · Oct</div>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn ghost" onclick="pv('appts')">📅 Book appointment</button>
+              <button class="btn ghost" onclick="go('tasks')">✅ Flag task for AMD</button>
+              <button class="btn" onclick="toast('MSKAlign scan uploaded → visible to patient + added to comparison')">🧍 Upload MSKAlign</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- patient info -->
+        <div class="pv" id="pv-info">
+          <div class="card"><h3>Basic + first visit <span class="pill">ATC can edit</span></h3>
+            <div class="kv"><b>Name / MRN</b> 王小明 · AMD-0021 · Female, 36</div>
+            <div class="kv"><b>Three health goals</b> Sleep through the night · Stop grinding · Nasal breathing</div>
+            <div class="kv"><b>Chief complaint</b> Fatigue, unrefreshing sleep, bruxism</div>
+            <div class="kv"><b>Referral source</b> Friend referral (AMD-0009)</div>
+            <div class="kv"><b>Journey dates</b> Consult Mar 20 · Initial visit Apr 2</div>
+            <div style="margin-top:10px"><button class="btn ghost" onclick="toast('Edit basic info / goals / questionnaire')">✏️ Edit info &amp; goals</button></div>
+          </div>
+        </div>
+
+        <!-- images & comparison -->
+        <div class="pv" id="pv-images">
+          <div class="card"><h3>Images &amp; comparison <span class="pill">ATC can view + upload</span></h3>
+            <p class="hint" style="margin-bottom:10px">Full access to all imaging &amp; reports. Upload the latest scans at each visit; pick any two dates to compare (patient sees the same in their app).</p>
+            <div class="imgrow" style="margin-bottom:12px">
+              <div class="imgmock" data-img="msk"><div class="cap">MSKAlign posture<small>LIDAR · Apr, Jun, Jul</small></div></div>
+              <div class="imgmock" data-img="face"><div class="cap">Extraoral · profile<small>Apr, Jul</small></div></div>
+              <div class="imgmock" data-img="intra"><div class="cap">Intraoral<small>4 sets</small></div></div>
+            </div>
+            <div class="step-tags" style="margin-bottom:10px"><span class="tag">CBCT ×2</span><span class="tag">Pano ×2</span><span class="tag">Lateral ceph ×2</span><span class="tag">Sleep test</span><span class="tag">Blood work</span><span class="tag">S+ / Schwartz 🔒 view</span></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="toast('Upload latest scan → patient + comparison')">⬆ Upload scan</button>
+              <button class="btn ghost" onclick="toast('Pick two dates to compare')">↔ Compare over time</button></div>
+          </div>
+        </div>
+
+        <!-- diagnosis & design -->
+        <div class="pv" id="pv-design">
+          <div class="card"><h3>Diagnosis &amp; design <span class="pill">senior ATC prepares</span></h3>
+            <p class="hint" style="margin-bottom:10px">You prepare the <b>draft device spec</b> and can draft the treatment-plan wording from the scans &amp; analysis, then submit to the AMD to review, modify and approve.</p>
+            <label>Proposed device</label><select><option>STA expander — upper</option><option>STA expander — upper + lower</option></select>
+            <label>Gear / turn plan (proposed)</label>
+            <div><span class="gear">Gear 1 · <input style="width:44px" value="½"> · 2×/wk</span><span class="gear">Gear 2 · <input style="width:44px" value="¼"> · 2×/wk</span><span class="gear">Gear 3 · hold</span></div>
+            <label style="margin-top:10px">Draft notes for the AMD</label><textarea placeholder="Transverse target, staging, anything to flag…"></textarea>
+            <div style="margin-top:10px"><button class="btn" onclick="toast('Draft spec + notes submitted → Dr. Chen to finalise & approve')">Submit draft to AMD</button></div>
+          </div>
+          <div class="card"><h3>Doctor-on-Record only <span class="pill blue">Dr. Chen (AMD)</span></h3>
+            <div class="locked">🔒 Approve the spec &amp; issue the <b>prescription to the STA Lab</b> <span class="amd-only">AMD only</span></div>
+            <div class="locked">🔒 Send the <b>specialist (Dr. Felix) consult</b> <span class="amd-only">AMD only</span></div>
+            <div class="locked">🔒 <b>Release the treatment plan / report to the patient</b> (report reading) <span class="amd-only">AMD only</span></div>
+            <p class="hint" style="margin-top:8px">These require the treating dentist's licence &amp; clinical responsibility, so they can only be done by <b>Dr. Chen</b> on the AMD site.</p>
+          </div>
+        </div>
+
+        <!-- follow-up records -->
+        <div class="pv" id="pv-records">
+          <div class="card"><h3>Follow-up records <span class="pill">ATC usually adds these</span></h3>
+            <p class="hint" style="margin-bottom:10px">You lead the revisit (photos, video, questionnaire, Q&amp;A) and add the follow-up record; the AMD does the appliance/oral check.</p>
+            <div class="rec"><div class="rh"><span>Visit 7 · Jul 12</span><span style="color:var(--muted)">Nancy (ATC)</span></div><div class="rx">Sleeping better; less grinding. STA turning Sun &amp; Wed. Areas to strengthen: tongue posture.</div></div>
+            <div class="rec"><div class="rh"><span>Visit 6 · Jun 14</span><span style="color:var(--muted)">Nancy (ATC)</span></div><div class="rx">Added green smoothie to daily tasks. Uploaded MSKAlign.</div></div>
+            <div style="margin-top:8px"><button class="btn" onclick="toast('New follow-up record (AI voice autofill available)')">➕ Add follow-up record</button>
+              <span class="voice" style="margin-left:10px">🎙️ dictate → autofill</span></div>
+          </div>
+        </div>
+
+        <!-- daily tasks -->
+        <div class="pv" id="pv-tasks">
+          <div class="card"><h3>Daily-task assignment <span class="pill">ATC can assign</span></h3>
+            <p class="hint" style="margin-bottom:8px">Set the patient's daily tasks (feeds their app). Equal points each.</p>
+            <label class="chk"><input type="checkbox" checked> Tongue-to-palate exercise</label>
+            <label class="chk"><input type="checkbox" checked> Myofunctional training (5 min)</label>
+            <label class="chk"><input type="checkbox" checked> Bone broth</label>
+            <label class="chk"><input type="checkbox" checked> Green smoothie</label>
+            <label class="chk"><input type="checkbox"> Daily vitamins</label>
+            <label class="chk"><input type="checkbox"> + Add task…</label>
+            <div style="margin-top:10px"><button class="btn" onclick="toast('Tasks pushed to patient app')">Update tasks</button></div>
+          </div>
+        </div>
+
+        <!-- referral -->
+        <div class="pv" id="pv-referral">
+          <div class="gate">You can <b>prepare</b> the referral note; <b>only the AMD (Dr. Chen) can send it</b> as Doctor on Record.</div>
+          <div class="card"><h3>Prepare referral note</h3>
+            <div class="row"><div><label>Refer to</label><select><option>PT — Felicity</option><option>ENT clinic</option><option>Functional Medicine (FMD)</option><option>Dr. Felix (specialist consult)</option></select></div>
+              <div><label>Reason</label><input placeholder="e.g. lower-back pain → physio" /></div></div>
+            <label>Referral note [date · reason · request · consent scope]</label><textarea placeholder="Draft the note for the AMD to review & send…"></textarea>
+            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn" onclick="toast('Referral note drafted → Dr. Chen to review & send')">Save draft for AMD</button>
+              <div class="locked" style="margin:0;flex:1">🔒 Send referral / specialist consult <span class="amd-only">AMD only</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- appointments -->
+        <div class="pv" id="pv-appts">
+          <div class="card"><h3>Appointments <span class="pill">ATC books</span></h3>
+            <div class="appt"><div class="d"><b>9</b><span>Aug</span></div><div class="info"><b>Airway review · 2:30 PM</b><div>Dr. Chen · Daan</div></div><span class="pill">booked</span></div>
+            <div class="appt"><div class="d"><b>25</b><span>Jul</span></div><div class="info"><b>Physiotherapy · 3:00 PM</b><div>Felicity, PT · referral</div></div><span class="pill">booked</span></div>
+            <div style="margin-top:10px"><button class="btn" onclick="toast('Appointment booked → patient app + doctor site')">➕ Book appointment</button></div>
+          </div>
         </div>
       </section>
 
@@ -231,8 +369,19 @@ function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remov
   document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
   document.getElementById('title').textContent=TITLES[s];window.scrollTo(0,0);
   if(s==='specs')renderSpecs();}
+function pv(v){document.querySelectorAll('.pv').forEach(x=>x.classList.remove('on'));
+  const el=document.getElementById('pv-'+v); if(el)el.classList.add('on');
+  document.querySelectorAll('.subnav a').forEach(a=>a.classList.toggle('on',a.dataset.pv===v));
+  if(v==='images')renderImgMocks();}
+const X="xmlns='http://www.w3.org/2000/svg'";
+const IMG={
+ msk:`<svg ${X} viewBox='0 0 200 92'><rect width='200' height='92' fill='#eef3f6'/><line x1='100' y1='6' x2='100' y2='86' stroke='#cbd5e1' stroke-dasharray='4 4'/><circle cx='100' cy='20' r='8' fill='#64748b'/><path d='M100 28 l0 28 M100 34 l-13 9 M100 34 l13 9 M100 56 l-9 24 M100 56 l9 24' stroke='#64748b' stroke-width='4'/><g stroke='#16a34a' stroke-width='1.4'><line x1='82' y1='52' x2='118' y2='52'/></g></svg>`,
+ face:`<svg ${X} viewBox='0 0 200 92'><rect width='200' height='92' fill='#d7c2af'/><path d='M120 14 q-40 2 -46 34 q-3 16 5 24 l-4 6 5 4' fill='#f2ddc8' stroke='#c8a887'/><circle cx='98' cy='44' r='2.5' fill='#3b2f26'/></svg>`,
+ intra:`<svg ${X} viewBox='0 0 200 92'><rect width='200' height='92' fill='#b5545a'/><path d='M40 78 Q100 16 160 78' fill='none' stroke='#fff' stroke-width='15' stroke-linecap='round'/></svg>`,
+};
+function renderImgMocks(){document.querySelectorAll('.imgmock[data-img]').forEach(el=>{if(el.querySelector('svg'))return;const k=el.getAttribute('data-img');if(IMG[k])el.insertAdjacentHTML('afterbegin',IMG[k]);});}
 let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2200);}
-renderPatients();
+renderPatients();renderImgMocks();
 </script>
 </body>
 </html>
