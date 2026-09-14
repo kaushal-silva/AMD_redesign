@@ -111,6 +111,14 @@
   .pill.green{background:#dcfce7;color:#166534}
   .pill.a{background:#fef3c7;color:#b45309}
   label.chk{display:flex;align-items:center;gap:8px;font-weight:400;color:var(--ink);padding:5px 0;font-size:13.5px;cursor:pointer}
+  .q-grp{font-size:12px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;margin:14px 0 4px;padding-top:10px;border-top:1px dashed var(--line)}
+  .q-head{display:flex;font-size:10px;color:var(--muted);font-weight:700;padding:2px 0}
+  .q-head .q-lbl{flex:1}.q-head .q-scale span{width:30px;text-align:center;display:inline-block}
+  .q-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .q-row .q-lbl{flex:1}
+  .q-scale{display:flex}.q-scale label{width:30px;display:flex;justify-content:center;cursor:pointer}
+  .q-cols{display:grid;grid-template-columns:1fr 1fr;gap:2px 20px}
+  @media(max-width:640px){.q-cols{grid-template-columns:1fr}}
   .rptbuild{border:1px solid var(--line);border-radius:10px;padding:8px 14px;background:#fbfdfc}
   .rptbuild .sec{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
   .rptbuild .sec:last-child{border:none}
@@ -273,6 +281,84 @@
             <div><label>Initial visit (data collection) date</label><input type="date" /></div>
           </div>
         </div>
+        <div class="card"><h3>6 · Initial symptom assessment <span class="pill">初診患者症狀評估表</span></h3>
+          <div class="banner" style="margin-bottom:12px">Filled when the patient signs consent, makes the first payment and agrees to start. Sections 一–五 are the patient's answers (on iPad); section 六 is completed by the AMD/ATC.</div>
+          <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:9px;padding:10px 12px;font-size:12.5px;color:#166534">
+            <label class="chk"><input type="checkbox"> Consent / 個資同意 read &amp; signed by patient (or guardian if under 18)</label>
+            <label class="chk"><input type="checkbox"> First payment made · agrees to start treatment</label>
+            <div style="display:flex;gap:10px;margin-top:6px"><input placeholder="Patient signature 簽名" style="flex:1"><input type="date" style="width:170px"></div>
+          </div>
+
+          <div class="q-grp">二 · Consultation goals 諮詢目的 (max 3)</div>
+          <div class="task-assign q-cols">
+            <label class="chk"><input type="checkbox"> Snoring / poor sleep 打鼾／睡不好</label>
+            <label class="chk"><input type="checkbox"> Chronic fatigue 慢性疲勞</label>
+            <label class="chk"><input type="checkbox"> Headache / migraine 頭痛／偏頭痛</label>
+            <label class="chk"><input type="checkbox"> Nasal congestion 鼻塞</label>
+            <label class="chk"><input type="checkbox"> Allergic disease 過敏性疾病</label>
+            <label class="chk"><input type="checkbox"> TMJ pain 顳顎關節疼痛</label>
+            <label class="chk"><input type="checkbox"> Neck / shoulder pain 肩頸痠痛</label>
+            <label class="chk"><input type="checkbox"> Bite problems 咬合問題</label>
+            <label class="chk"><input type="checkbox"> Breathing difficulty 呼吸不順</label>
+            <label class="chk"><input type="checkbox"> GI problems 腸胃問題</label>
+            <label class="chk"><input type="checkbox"> Anxiety / mood 焦慮／情緒</label>
+            <label class="chk"><input type="checkbox"> Find cause of discomfort 找出原因</label>
+            <label class="chk"><input type="checkbox"> Improve appearance 改善外觀</label>
+            <label class="chk"><input type="checkbox"> Improve overall health 整體健康</label>
+          </div>
+
+          <div class="q-grp">三 · Symptoms over the last 30 days 最近30天 (0–4)</div>
+          <p class="hint" style="margin-bottom:4px">0 never · 1 occasional/mild · 2 occasional/severe · 3 frequent/mild · 4 frequent/severe</p>
+          <div class="q-head"><span class="q-lbl"></span><span class="q-scale"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span></span></div>
+          <div id="symptomTable"></div>
+
+          <div class="q-grp">四 · History 病史</div>
+          <div class="task-assign q-cols">
+            <label class="chk"><input type="checkbox"> Diagnosed with OSA 曾診斷睡眠呼吸中止</label>
+            <label class="chk"><input type="checkbox"> Family history of OSA 家人有OSA</label>
+            <label class="chk"><input type="checkbox"> Ortho with tooth extraction 矯正並拔牙</label>
+            <label class="chk"><input type="checkbox"> Multiple dental treatments 多顆牙齒治療</label>
+            <label class="chk"><input type="checkbox"> Cardiovascular (BP/lipids) 心血管疾病</label>
+            <label class="chk"><input type="checkbox"> Diabetes 糖尿病</label>
+            <label class="chk"><input type="checkbox"> GI / leaky gut / GERD 腸胃／胃食道逆流</label>
+            <label class="chk"><input type="checkbox"> Thyroid (hyper/hypo) 甲狀腺</label>
+            <label class="chk"><input type="checkbox"> Chronic allergy 長期過敏</label>
+            <label class="chk"><input type="checkbox"> Long-term sleeping pills 長期安眠藥</label>
+            <label class="chk"><input type="checkbox"> (M) Erectile dysfunction 勃起功能障礙</label>
+            <label class="chk"><input type="checkbox"> (F) Severe PMS 嚴重經前症候群</label>
+            <label class="chk"><input type="checkbox"> Autoimmune / rheumatic 自體免疫</label>
+            <label class="chk"><input type="checkbox"> Cancer 癌症</label>
+          </div>
+          <label style="margin-top:8px">Other history 其他病史</label><input placeholder="…" />
+
+          <div class="q-grp">五 · Top 3 concerns 目前最困擾的三件事</div>
+          <input style="margin-bottom:6px" placeholder="1." /><input style="margin-bottom:6px" placeholder="2." /><input placeholder="3." />
+
+          <div class="q-grp">六 · Clinical observation 臨床觀察 <span class="pill">AMD / ATC fills</span></div>
+          <div style="font-size:12px;font-weight:700;color:var(--muted);margin:6px 0 2px">Appearance 外觀</div>
+          <div class="task-assign q-cols">
+            <label class="chk"><input type="checkbox"> Mouth naturally open 嘴巴自然張開</label>
+            <label class="chk"><input type="checkbox"> Chin retruded 下巴後縮</label>
+            <label class="chk"><input type="checkbox"> Double chin 明顯雙下巴</label>
+            <label class="chk"><input type="checkbox"> Forward head 頭部前傾</label>
+            <label class="chk"><input type="checkbox"> Dark circles 黑眼圈</label>
+            <label class="chk"><input type="checkbox"> Facial asymmetry 臉部不對稱</label>
+            <label class="chk"><input type="checkbox"> High BMI BMI偏高</label>
+            <label class="chk"><input type="checkbox"> Thick neck (M&gt;38 / F&gt;35cm) 脖圍偏粗</label>
+            <label class="chk"><input type="checkbox"> Breathes while speaking 說話常需換氣</label>
+          </div>
+          <div style="font-size:12px;font-weight:700;color:var(--muted);margin:10px 0 2px">Oral status 口內狀況</div>
+          <div class="row"><div><label>Nasal breathing 鼻呼吸</label><select><option>Normal 正常</option><option>Left obstruction 左阻塞</option><option>Right obstruction 右阻塞</option><option>Bilateral 雙側阻塞</option></select></div>
+            <div><label>Mouth breathing 口呼吸</label><select><option>No</option><option>Yes</option></select></div></div>
+          <div class="row"><div><label>Mallampati</label><select><option>I</option><option>II</option><option>III</option><option>IV</option></select></div>
+            <div><label>Tongue position 舌位</label><select><option>Normal 正常</option><option>Low 低舌位</option></select></div></div>
+          <div class="row"><div><label>Tongue-tie grade 舌繫帶</label><select><option>I</option><option>II</option><option>III</option><option>IV</option></select></div>
+            <div><label>Bite 咬合</label><select><option>Class I</option><option>Class II</option><option>Class III</option></select></div></div>
+          <div class="row"><div><label>Neck posture 頸部姿勢</label><select><option>Normal 正常</option><option>Forward 前傾</option></select></div>
+            <div><label>OSA risk</label><select><option>Low 低</option><option>Medium 中</option><option>High 高</option></select></div></div>
+          <label class="chk" style="margin-top:6px"><input type="checkbox"> Tongue scalloping 舌頭有齒痕</label>
+        </div>
+
         <button class="btn" onclick="toast('Profile created → timeline: Initial visit, data collection');go('detail')">Create profile</button>
       </section>
 
@@ -667,6 +753,23 @@ function initBA(){
   window.addEventListener('resize',()=>window.baResize&&window.baResize());
   baReady=true;window.baResize();
 }
+/* symptom-assessment scoring table (section 三) */
+const SYMPTOMS=[
+ ["A · Sleep 睡眠",["Snoring 打鼾","Mouth-breathing in sleep 睡覺張口呼吸","Wake unrefreshed 睡醒仍很累","Daytime sleepiness 白天想睡","Night waking 半夜易醒"]],
+ ["B · Breathing 呼吸",["Frequent nasal congestion 經常鼻塞","Can't get enough air 吸不到氣","Mouth breathing 常用嘴巴呼吸"]],
+ ["C · Oral 口腔",["Grinding / clenching 磨牙或咬緊牙","TMJ pain or noise 顳顎關節疼痛/聲音","Dry mouth on waking 睡醒口乾"]],
+ ["D · Neurological 神經系統",["Brain fog 注意力不集中（腦霧）","Anxiety / tension 焦慮或緊張","Headache / migraine 頭痛或偏頭痛","Mood swings / irritable 情緒起伏/易怒","Poor memory 記憶力差/健忘","Slurred / stuttering speech 口齒不清"]],
+ ["E · Body function 身體功能",["Neck / shoulder pain 肩頸痠痛","GERD 胃食道逆流","Frequent fatigue 常覺得疲勞","Slow exercise recovery 運動恢復慢","Poor coordination / falls 協調差/易跌倒"]],
+];
+function renderSymptoms(){
+  const c=document.getElementById('symptomTable');if(!c)return;let n=0,h='';
+  SYMPTOMS.forEach(g=>{h+=`<div class="q-grp">${g[0]}</div>`;
+    g[1].forEach(s=>{n++;const nm='sym'+n;
+      h+=`<div class="q-row"><span class="q-lbl">${s}</span><span class="q-scale">`+
+        [0,1,2,3,4].map(v=>`<label><input type="radio" name="${nm}" value="${v}"></label>`).join('')+`</span></div>`;});});
+  c.innerHTML=h;
+}
+renderSymptoms();
 renderPatients();renderImgMocks();initBA();
 </script>
 </body>
