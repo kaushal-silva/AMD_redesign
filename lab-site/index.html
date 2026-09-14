@@ -46,17 +46,44 @@
     <div class="brand"><div class="lg">🔧</div> STA Lab</div>
     <div class="role">Production</div>
     <nav class="nav">
-      <a class="on" data-s="queue" onclick="go('queue')">📥 Order queue</a>
+      <a class="on" data-s="schwarz" onclick="go('schwarz')">📐 Schwarz analysis <span class="b" style="margin-left:auto;background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px">1</span></a>
+      <a data-s="queue" onclick="go('queue')">🦷 Appliance manufacture</a>
       <a data-s="order" onclick="go('order')">📦 Order detail</a>
       <a data-s="retainer" onclick="go('retainer')">🦷 Retainer orders</a>
     </nav>
     <div class="nav back" style="padding:8px"><a href="../index.html">← Portal</a></div>
   </aside>
   <div class="main">
-    <div class="bar"><h2 id="title">Order queue</h2><span class="who">Conova Lab · technician</span></div>
+    <div class="bar"><h2 id="title">Schwarz analysis</h2><span class="who">Conova Lab · technician</span></div>
     <div class="content">
-      <section class="screen on" id="s-queue">
-        <div class="banner">STA design orders dispatched from AMD Taiwan HQ. Update status here — it flows back to HQ and the Doctor site so ATCs can track delivery.</div>
+      <!-- SCHWARZ ANALYSIS (auto from STL upload) -->
+      <section class="screen on" id="s-schwarz">
+        <div class="banner">🔄 <b>Auto-created:</b> when the clinic uploads a patient's <b>oral scan (STL digital impression)</b>, a Schwarz-analysis request appears here. Download the STL, build the Schwarz analysis, and <b>upload it back</b> — it lands in the patient record and notifies HQ (drives the "Analysis" stage). Due <b>within 1 week</b> of the STL arriving.</div>
+        <div class="card"><h3>Schwarz analysis requests</h3>
+          <table>
+            <tr><th>Request</th><th>Patient code</th><th>STL received</th><th>Due</th><th>Status</th><th></th></tr>
+            <tr onclick="go('schdetail')" style="cursor:pointer"><td>SCH-4012</td><td>AMD-0021</td><td>Jul 15</td><td>Jul 22</td><td><span class="st s-new">New</span></td><td><button class="btn">Open</button></td></tr>
+            <tr onclick="go('schdetail')" style="cursor:pointer"><td>SCH-4009</td><td>AMD-0018</td><td>Jul 18</td><td>Jul 25</td><td><span class="st s-prod">Building</span></td><td><button class="btn">Open</button></td></tr>
+            <tr onclick="go('schdetail')" style="cursor:pointer"><td>SCH-4005</td><td>AMD-0012</td><td>Jul 8</td><td>Jul 15</td><td><span class="st s-done">Uploaded</span></td><td><button class="btn">Open</button></td></tr>
+          </table>
+        </div>
+      </section>
+
+      <section class="screen" id="s-schdetail">
+        <div class="card"><h3>Schwarz request SCH-4012 · AMD-0021</h3>
+          <div class="kv"><b>Trigger</b> Oral-scan STL uploaded by clinic (Jul 15) → request auto-created</div>
+          <div class="kv"><b>Oral scan (STL)</b> amd0021_impression.stl <button class="btn" style="margin-left:8px" onclick="toast('Downloading oral-scan STL…')">⬇ Download STL</button></div>
+          <div class="kv"><b>Due to system</b> Jul 22 (within 1 week)</div>
+          <div class="track">
+            <div class="stp done">STL received</div><div class="stp now">Building Schwarz</div><div class="stp">Uploaded</div>
+          </div>
+          <div style="margin-top:14px"><button class="btn" onclick="toast('Schwarz analysis uploaded → patient record + HQ notified → HQ creates Sassoni+ → Analysis stage')">⬆ Upload Schwarz analysis</button></div>
+          <p class="hint" style="margin-top:8px">Once uploaded: it appears in the patient record and notifies HQ. HQ then produces the Sassoni+ (S+) — together they complete the "Analysis" stage.</p>
+        </div>
+      </section>
+
+      <section class="screen" id="s-queue">
+        <div class="banner">🦷 <b>Appliance manufacture.</b> Created when the treating <b>AMD issues the approved design</b> (via HQ dispatch) — the design is authored in-clinic, not by the Lab. Download the design, manufacture the STA, and <b>ship 2 days before the patient's appointment</b>. (Retainers work the same way — see Retainer orders.)</div>
         <div class="card"><h3>Incoming orders</h3>
           <table>
             <tr><th>Order</th><th>Patient code</th><th>Received</th><th>Due</th><th>Status</th><th></th></tr>
@@ -68,9 +95,9 @@
         </div>
       </section>
       <section class="screen" id="s-order">
-        <div class="card"><h3>Order STA-2041 · AMD-0021</h3>
-          <div class="kv"><b>Design file</b> sta_amd0021_v2.stl <button class="btn" style="margin-left:8px" onclick="toast('Downloading design…')">Download</button></div>
-          <div class="kv"><b>Received from HQ</b> Jul 15, 2026</div>
+        <div class="card"><h3>Appliance order STA-2041 · AMD-0021</h3>
+          <div class="kv"><b>Approved design</b> sta_amd0021_v2.stl <span class="hint" style="margin-left:6px">(authored in-clinic by the AMD)</span> <button class="btn" style="margin-left:8px" onclick="toast('Downloading approved design…')">⬇ Download design</button></div>
+          <div class="kv"><b>Issued by</b> Dr. Chen (AMD) · dispatched via HQ · Jul 15, 2026</div>
           <div class="kv"><b>Due to clinic</b> Jul 29, 2026 (Dr. Chen, Taipei)</div>
           <div class="kv"><b>Courier / tracking</b> — (add when shipped)</div>
           <div class="track">
@@ -90,14 +117,14 @@
 
       <!-- RETAINER ORDERS -->
       <section class="screen" id="s-retainer">
-        <div class="banner"><b>Default = the patient keeps their STA as the retainer.</b> A new retainer is an <b>add-on the patient requests and pays for</b>: Felix designs it → AMD confirms → HQ presses <b>[Make retainer]</b> → it appears here. Weaning is clinician-managed. All appliance orders (STA / other appliance / retainer) work the same way: receive design → produce → ship 2 days before the appointment.</div>
+        <div class="banner"><b>Default = the patient keeps their STA as the retainer.</b> A new retainer is an <b>add-on the patient requests and pays for</b>: the <b>AMD designs it in-clinic</b> (optional Felix advisory consult) → AMD issues it → HQ dispatches → it appears here. Weaning is clinician-managed. All appliance orders (STA / other appliance / retainer) work the same way: download the AMD's approved design → produce → ship 2 days before the appointment.</div>
         <div class="card"><h3>Incoming retainer orders</h3>
           <table>
             <tr><th>Order</th><th>Patient code</th><th>Design</th><th>Triggered</th><th>Due</th><th>Status</th></tr>
-            <tr><td>RET-3007</td><td>AMD-0012</td><td>Felix custom (STA-as-retainer)</td><td>Jul 20</td><td>Aug 3</td><td><span class="st s-prod">In production</span></td></tr>
-            <tr><td>RET-3005</td><td>AMD-0009</td><td>Felix custom (clear retainer)</td><td>Jul 6</td><td>Jul 20</td><td><span class="st s-done">Delivered</span></td></tr>
+            <tr><td>RET-3007</td><td>AMD-0012</td><td>AMD design (STA-as-retainer)</td><td>Jul 20</td><td>Aug 3</td><td><span class="st s-prod">In production</span></td></tr>
+            <tr><td>RET-3005</td><td>AMD-0009</td><td>AMD design (clear retainer)</td><td>Jul 6</td><td>Jul 20</td><td><span class="st s-done">Delivered</span></td></tr>
           </table>
-          <p class="hint" style="margin-top:8px">Lab flow for retainer: receive final oral scan (.stl) from doctor site → receive Felix design → produce → ship to clinic. Same fit-check + payment-hold gate applies.</p>
+          <p class="hint" style="margin-top:8px">Lab flow for retainer: receive final oral scan (.stl) from doctor site → download the AMD's approved design → produce → ship to clinic. Same fit-check + payment-hold gate applies.</p>
           <p class="hint" style="margin-top:4px">Note: pressing <b>[Enter maintenance]</b> also sends the Lab a fresh <b>Schwarz</b> order (final-report data cycle) — separate from any retainer order.</p>
         </div>
       </section>
@@ -109,7 +136,7 @@
 function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
   document.getElementById('s-'+s).classList.add('on');
   document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
-  document.getElementById('title').textContent = {queue:'Order queue',order:'Order detail',retainer:'Retainer orders'}[s];window.scrollTo(0,0);}
+  document.getElementById('title').textContent = {schwarz:'Schwarz analysis',schdetail:'Schwarz request',queue:'Appliance manufacture',order:'Order detail',retainer:'Retainer orders'}[s];window.scrollTo(0,0);}
 let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
 </script>
 </body>
