@@ -595,9 +595,28 @@
                 <div style="margin-top:10px"><button class="btn ghost" onclick="toast('Editing creates v4 (draft) — patient still sees v3 until you re-share')">✏️ Edit (new version)</button></div>
               </div>
 
-              <div class="card"><h3>⑥ Written prescription → STA Lab <span class="pill green">★ legal anchor</span></h3>
-                <p class="hint" style="margin-bottom:10px">After the patient agrees at the report reading, the treating AMD issues the final <b>written prescription</b> and sends the approved spec to the STA Lab to manufacture.</p>
-                <button class="btn" onclick="toast('Written prescription issued → STA Lab to manufacture')">✍️ Issue prescription → STA Lab</button>
+              <div class="card"><h3>⑥ Patient agreement &amp; contract <span class="pill">off-system signing</span></h3>
+                <p class="hint" style="margin-bottom:10px">After the plan is shared, if the patient agrees to proceed they sign the treatment contract <b>off the system</b>. Record it here — this unlocks issuing the device to the lab.</p>
+                <label class="chk"><input type="checkbox" onchange="toast('Contract recorded — STA issuance unlocked')"> Patient agreed &amp; signed the contract (off-system) · 1st installment paid</label>
+              </div>
+
+              <div class="card"><h3>⑦ Issue STA device spec → STA Lab <span class="pill green">★ prescription = AMD legal anchor</span></h3>
+                <p class="hint" style="margin-bottom:10px">Once the contract is signed, the STA device spec is issued to the Lab to manufacture. The AMD's <b>written prescription is the legal anchor</b> (AMD signs it); the <b>AMD or a senior ATC</b> can then issue the approved spec to the Lab.</p>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <button class="btn" style="background:#1e40af" onclick="toast('Written prescription signed by AMD (legal anchor)')">✍️ AMD sign prescription</button>
+                  <button class="btn" onclick="toast('STA device spec issued → STA Lab to manufacture')">🚚 Issue STA spec → Lab</button>
+                </div>
+                <p class="hint" style="margin-top:8px">Issuing the spec to the Lab: <b>AMD or senior ATC</b>. Signing the prescription: <b>AMD only</b>.</p>
+              </div>
+
+              <div class="card"><h3>⑧ STA delivery — QC <span class="pill a">accept / reject</span></h3>
+                <p class="hint" style="margin-bottom:10px">When the Lab delivers, the AMD/ATC inspects the STA. Payment stays held until accepted. If it doesn't meet spec, <b>reject it</b> — the Lab must remanufacture (no payment released).</p>
+                <div class="kv"><b>Order</b> STA-2041 · received from Conova Lab · Jul 28</div>
+                <div class="kv"><b>Fit-check</b> <span style="color:#b45309;font-weight:700">awaiting QC</span></div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+                  <button class="btn" style="background:#16a34a" onclick="toast('✅ STA accepted → payment released → proceed to delivery/fitting')">✅ Accept &amp; release payment</button>
+                  <button class="btn" style="background:#dc2626" onclick="toast('❌ STA rejected → returned to Lab to remanufacture · payment held')">❌ Reject → remanufacture</button>
+                </div>
               </div>
             </div>
             <!-- records -->
