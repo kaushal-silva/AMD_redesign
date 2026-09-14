@@ -771,10 +771,53 @@
               </div>
             </div>
             <div class="pv" id="pv-finish">
-              <div class="card"><h3>Finish</h3>
-                <p class="hint" style="margin-bottom:14px">Maintenance: STA turning stops, daily tasks reduce to nutrition. After ~1 year → graduate.</p>
-                <button class="btn ghost" onclick="toast('Timeline → Maintenance phase')">Enter maintenance</button>
-                <button class="btn" style="margin-left:8px" onclick="toast('🎉 Timeline → Graduation!')">Graduate 🎉</button>
+              <div class="banner">🏁 Entering maintenance kicks off the <b>retainer cycle</b> — a mini-repeat of the design→manufacture flow. Default is to keep the STA as the retainer; if a <b>new retainer</b> is made (add-on, patient pays), the steps below run. After ~1 year of maintenance → graduate.</div>
+
+              <div class="card"><h3>① AMD confirms ready for maintenance</h3>
+                <p class="hint" style="margin-bottom:10px">The treating AMD confirms active treatment is complete and the patient is ready for maintenance. STA turning stops; daily tasks reduce to nutrition/holding.</p>
+                <button class="btn" style="background:#1e40af" onclick="toast('[Enter maintenance] → patient journey: Maintenance · final scans requested')">✅ Enter maintenance (AMD)</button>
+              </div>
+
+              <div class="card"><h3>② Final scans <span class="pill">final data collection</span></h3>
+                <p class="hint" style="margin-bottom:8px">Capture the final comprehensive set — feeds the final report <b>and</b> the retainer manufacture.</p>
+                <div class="step-tags" style="margin-bottom:10px"><span class="tag">Oral scan (STL)</span><span class="tag">Extraoral</span><span class="tag">Intraoral</span><span class="tag">CBCT</span><span class="tag">Lateral ceph</span><span class="tag">MSKAlign</span></div>
+                <button class="btn" onclick="toast('Final scans uploaded')">⬆ Upload final scans</button>
+              </div>
+
+              <div class="card"><h3>③ New analysis for the retainer <span class="pill">Lab + HQ informed</span></h3>
+                <p class="hint" style="margin-bottom:8px">The final <b>oral-scan STL auto-creates a new Schwarz request</b> at the Lab; HQ then makes a <b>new Sassoni+ (S+)</b>. Same analysis cycle as the STA — needed to manufacture the retainer.</p>
+                <div class="step-tags"><span class="tag">Final STL</span><span class="tag">→ Lab Schwarz</span><span class="tag">→ HQ Sassoni+</span><span class="tag">→ ready to design</span></div>
+              </div>
+
+              <div class="card"><h3>④ Retainer design <span class="pill">AMD or delegate to senior ATC</span></h3>
+                <p class="hint" style="margin-bottom:8px">Same as the STA: the AMD designs the retainer, or delegates spec prep to a senior ATC. Responsibility stays with the AMD.</p>
+                <label>Delegate to (senior ATC) — optional</label>
+                <select><option>AMD designs it</option><option>Nancy Cheng (Senior ATC)</option><option>Amy Wu (Senior ATC)</option></select>
+                <div style="margin-top:10px"><button class="btn ghost" onclick="toast('Delegation logged')">Delegate</button>
+                  <button class="btn" style="margin-left:8px" onclick="toast('Retainer design uploaded')">⬆ Upload retainer design</button></div>
+              </div>
+
+              <div class="card"><h3>⑤ Approve · or optional Felix consult</h3>
+                <p class="hint" style="margin-bottom:8px">The AMD <b>approves</b> the retainer design, or sends a <b>de-identified consult to Dr. Felix</b> for advisory review (same watermarked packet + attestations). Once the AMD has what they need back (ATC prep and/or Felix advice), they confirm.</p>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <button class="btn ghost" style="border-color:#fca5a5;color:#be123c" onclick="toast('De-identified retainer consult sent to Dr. Felix (advisory only)')">Send to Dr. Felix (advisory)</button>
+                  <button class="btn" style="background:#16a34a" onclick="toast('✅ Retainer design confirmed by AMD')">✅ AMD confirm retainer design</button>
+                </div>
+                <p class="hint" style="margin-top:6px">Confirmation is the AMD's — after ATC prep and/or Felix's advice is received.</p>
+              </div>
+
+              <div class="card"><h3>⑥ Issue retainer → Lab, QC, then to patient</h3>
+                <p class="hint" style="margin-bottom:8px">Once confirmed, issue the retainer spec to the Lab (AMD or senior ATC). QC on delivery, then fit/issue to the patient.</p>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <button class="btn" onclick="toast('Retainer spec issued → STA Lab to manufacture')">🚚 Issue retainer → Lab</button>
+                  <button class="btn" style="background:#16a34a" onclick="toast('✅ Retainer accepted → payment released → fit to patient')">✅ Accept (QC)</button>
+                  <button class="btn" style="background:#dc2626" onclick="toast('❌ Retainer rejected → Lab remanufacture · payment held')">❌ Reject → remanufacture</button>
+                </div>
+              </div>
+
+              <div class="card"><h3>⑦ Graduate</h3>
+                <p class="hint" style="margin-bottom:10px">After ~1 year in maintenance and a stable final check → graduate. Timeline → Congratulations!</p>
+                <button class="btn" onclick="toast('🎉 Timeline → Graduation!')">Graduate 🎉</button>
               </div>
             </div>
           </div>
