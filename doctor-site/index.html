@@ -144,8 +144,18 @@
   .cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .cmp .ph{aspect-ratio:4/3;border-radius:10px;background:#e2e8f0;display:flex;align-items:flex-end;
     padding:8px;color:#475569;font-size:12px;font-weight:600}
-  .recs .rec{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px}
+  .recs .rec{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;cursor:pointer}
+  .recs .rec:hover{background:#fafeff}
   .recs .rec .rh{display:flex;justify-content:space-between;font-size:13px;font-weight:700}
+  .recs .rec .chev{display:inline-block;transition:.2s;color:var(--teal)}
+  .recs .rec.open .chev{transform:rotate(90deg)}
+  .rec-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+  .recs .rec.open .rec-detail{display:block}
+  .comp-row{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:13px}
+  .comp-row .cn{flex:1}.comp-row .cv{width:44px;text-align:right;font-weight:700}
+  .uprow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .uprow .un{flex:1}.uprow .ucount{font-size:11px;color:var(--muted)}
+  .up-lock{color:#64748b;font-size:11px;font-weight:700}
   .recs .rec .rx{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
   .gear{display:inline-flex;align-items:center;gap:6px;background:#f0fdfa;border:1px solid #99f6e4;
     padding:6px 10px;border-radius:8px;font-size:12px;margin:4px 6px 0 0}
@@ -385,6 +395,18 @@
           <div class="pd-body">
             <!-- basic -->
             <div class="pv on" id="pv-basic">
+              <div class="card"><h3>📋 Information &amp; data completion <span class="pill">early-stage tracker</span></h3>
+                <p class="hint" style="margin-bottom:12px">A profile can be created before every scan/report arrives. This tracks what's captured and lets you upload the rest as it comes in.</p>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px">
+                  <div style="flex:1;min-width:150px"><div style="font-size:12px;color:var(--muted)">Information completion</div><div style="font-size:26px;font-weight:800;color:#16a34a">100%</div><div class="hint">profile + questionnaire</div></div>
+                  <div style="flex:1;min-width:150px"><div style="font-size:12px;color:var(--muted)">Data completion</div><div style="font-size:26px;font-weight:800;color:#b45309">62%</div><div class="hint">images + reports</div></div>
+                </div>
+                <div class="kv"><b>Profile &amp; consent</b> <span style="color:#16a34a">✓ complete</span></div>
+                <div class="kv"><b>Questionnaire (初診評估表)</b> <span style="color:#16a34a">✓ complete</span></div>
+                <div style="padding:9px 0;border-bottom:1px solid var(--line)"><div style="display:flex;justify-content:space-between;font-size:13px"><b>Initial images</b><span>4 / 8</span></div><div class="progline" style="margin-top:6px"><i style="width:50%"></i></div><div class="hint" style="margin-top:3px">Missing: Pano · Lateral ceph · CBCT · MSKAlign</div></div>
+                <div style="padding:9px 0"><div style="display:flex;justify-content:space-between;font-size:13px"><b>Reports</b><span>2 / 5</span></div><div class="progline" style="margin-top:6px"><i style="width:40%"></i></div><div class="hint" style="margin-top:3px">Missing: S+ · Schwartz · Sleep test</div></div>
+                <button class="btn" style="margin-top:12px" onclick="pv('images')">⬆ Upload missing images &amp; reports</button>
+              </div>
               <div class="card"><h3>⭐ Patient satisfaction <span class="pill">quality hold-back signal</span></h3>
                 <p class="hint" style="margin-bottom:12px">The patient's own repeated ratings. Give low-scoring patients extra care — it protects their experience and your bonus hold-back. (ATC sees the ATC score; dentist sees the dentist score.)</p>
                 <div class="sat-grid">
@@ -419,10 +441,38 @@
                 <textarea>Fatigue, unrefreshing sleep, bruxism. Ortho with extractions age 13…</textarea>
                 <div class="voice" style="margin-top:6px">🎙️ Dictate with AI recorder → auto-summary (Phase 3)</div>
               </div>
+              <div class="card"><h3>Completed questionnaire · 初診患者症狀評估表 <span class="pill">read view</span></h3>
+                <p class="hint" style="margin-bottom:10px">Filled at onboarding (consent + first payment). Read-only summary — edit in the intake form.</p>
+                <div class="kv"><b>Consent / payment</b> ✓ signed · first payment made</div>
+                <div class="kv"><b>Goals (二)</b> Poor sleep · Chronic fatigue · Nasal congestion</div>
+                <div class="kv"><b>Symptom scores (三)</b> Sleep 3.4 · Breathing 3.0 · Oral 2.7 · Neuro 2.1 · Body 2.3 <span style="color:#b45309;font-weight:700">(avg 2.7 / 4)</span></div>
+                <div class="kv"><b>History (四)</b> Ortho + extraction · Chronic allergy · Long-term sleeping pills</div>
+                <div class="kv"><b>Top-3 concerns (五)</b> 1) Wake exhausted · 2) Grinding · 3) Nasal blockage</div>
+                <div class="kv"><b>Clinical obs (六)</b> Chin retruded · Forward head · Low tongue · Mallampati III · OSA risk: High</div>
+                <button class="btn ghost" style="margin-top:10px" onclick="toast('Open full questionnaire (read / edit)')">View full form</button>
+              </div>
             </div>
             <!-- images -->
             <div class="pv" id="pv-images">
               <div class="banner">Pick <b>any two records</b> to compare — the AMD chooses the "before" and "after" dates (not just baseline-vs-latest). Drag the divider to compare. This same comparison is what the patient sees in their app's Progress tab.</div>
+
+              <div class="card"><h3>📤 Upload &amp; manage records <span class="pill">clinic captures</span></h3>
+                <p class="hint" style="margin-bottom:6px">Upload each scan/photo as it's captured — a profile can be created before they all arrive. The two analyses are produced off-site and appear here view-only.</p>
+                <div style="font-size:11px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 2px">Captured in clinic · AMD / ATC upload</div>
+                <div class="uprow"><span class="un">Extraoral photos</span><span class="ucount">3 on file · latest Jul 12</span><button class="btn ghost sm" onclick="toast('Upload extraoral photos')">Upload</button></div>
+                <div class="uprow"><span class="un">Intraoral photos</span><span class="ucount">4 on file · latest Jul 12</span><button class="btn ghost sm" onclick="toast('Upload intraoral photos')">Upload</button></div>
+                <div class="uprow"><span class="un">CBCT</span><span class="ucount">2 on file · Apr, Jul</span><button class="btn ghost sm" onclick="toast('Upload CBCT (DICOM)')">Upload</button></div>
+                <div class="uprow"><span class="un">Oral scan · STL digital impression</span><span class="ucount">1 on file · Apr 2</span><button class="btn ghost sm" onclick="toast('Upload oral scan (.stl)')">Upload</button></div>
+                <div class="uprow"><span class="un">Lateral cephalogram</span><span class="ucount">2 on file · Apr, Jul</span><button class="btn ghost sm" onclick="toast('Upload lateral ceph')">Upload</button></div>
+                <div class="uprow"><span class="un">Pano</span><span class="ucount">2 on file</span><button class="btn ghost sm" onclick="toast('Upload pano')">Upload</button></div>
+                <div class="uprow"><span class="un">MSKAlign posture (LIDAR)</span><span class="ucount">3 on file</span><button class="btn ghost sm" onclick="toast('Upload MSKAlign scan')">Upload</button></div>
+                <div class="uprow"><span class="un">Sleep test</span><span class="ucount">1 on file</span><button class="btn ghost sm" onclick="toast('Upload sleep test report')">Upload</button></div>
+                <div class="uprow"><span class="un">Blood work</span><span class="ucount">1 on file</span><button class="btn ghost sm" onclick="toast('Upload blood work report')">Upload</button></div>
+                <div style="font-size:11px;font-weight:800;color:#6d28d9;text-transform:uppercase;letter-spacing:.5px;margin:14px 0 2px">Analyses · produced off-site · view only</div>
+                <div class="uprow"><span class="un">Schwarz analysis</span><span class="ucount">from STA Lab · from the oral-scan STL</span><span class="up-lock">🔒 view</span></div>
+                <div class="uprow"><span class="un">Sassoni+ (S+) analysis</span><span class="ucount">from AMD Taiwan (us)</span><span class="up-lock">🔒 view</span></div>
+              </div>
+
               <div class="card"><h3>Compare records</h3>
                 <div class="row" style="margin-bottom:14px">
                   <div><label>Type</label><select><option>Extraoral — profile</option><option>Extraoral — frontal</option><option>Intraoral — occlusal</option><option>MSKAlign posture (LIDAR)</option><option>CBCT airway</option><option>Pano</option><option>Lateral cephalogram</option></select></div>
@@ -452,7 +502,7 @@
                   <tr><td class="type">Lateral cephalogram</td><td><span class="datechip">Apr 2</span><span class="datechip">Jul 12</span></td><td>AMD/ATC</td></tr>
                   <tr><td class="type">CBCT</td><td><span class="datechip">Apr 2</span><span class="datechip">Jul 12</span></td><td>AMD/ATC</td></tr>
                   <tr><td class="type">MSKAlign posture (LIDAR)</td><td><span class="datechip">Apr 2</span><span class="datechip">Jun 14</span><span class="datechip">Jul 12</span></td><td>AMD/ATC</td></tr>
-                  <tr><td class="type">S+ analysis</td><td><span class="datechip hq">Apr 18 🔒</span></td><td>HQ (read-only)</td></tr>
+                  <tr><td class="type">Sassoni+ (S+) analysis</td><td><span class="datechip hq">Apr 18 🔒</span></td><td>AMD Taiwan (view)</td></tr>
                   <tr><td class="type">Schwarz analysis</td><td><span class="datechip hq">Apr 18 🔒</span></td><td>HQ (read-only)</td></tr>
                   <tr><td class="type">Sleep test (ESS)</td><td><span class="datechip">Apr 2</span><span class="datechip none">next: Oct</span></td><td>AMD/ATC</td></tr>
                   <tr><td class="type">Blood work</td><td><span class="datechip">Apr 2</span><span class="datechip none">next: Oct</span></td><td>AMD/ATC</td></tr>
@@ -478,7 +528,7 @@
 
               <div class="card"><h3>① Diagnostics &amp; data complete <span class="pill green">ready to design</span></h3>
                 <div class="step-tags">
-                  <span class="tag">CBCT + lateral ceph</span><span class="tag">Susuoni+ (S+)</span><span class="tag">Schwartz (STA Lab)</span>
+                  <span class="tag">CBCT + lateral ceph</span><span class="tag">Sassoni+ (S+) · us</span><span class="tag">Schwarz (STA Lab)</span>
                   <span class="tag">Clinical photos</span><span class="tag">Digital impression</span><span class="tag">Sleep study (if indicated)</span>
                 </div>
                 <p class="hint" style="margin-top:8px">AMD + ATC notified when everything is in — design can begin.</p>
@@ -517,7 +567,7 @@
                 <p class="hint" style="margin-bottom:10px">The AMD builds the patient-facing report from the approved spec. HQ's AI can draft the wording, but the <b>clinical content and approval are the AMD's</b>.</p>
                 <div class="rptbuild">
                   <div class="sec"><span>Cover · patient + clinic + difficulty</span><span class="pill green">auto</span></div>
-                  <div class="sec"><span>Findings · S+ / Schwartz summary</span><span class="pill green">auto from data</span></div>
+                  <div class="sec"><span>Findings · Sassoni+ / Schwarz summary</span><span class="pill green">auto from data</span></div>
                   <div class="sec"><span>Diagnosis narrative</span><span class="hint">AMD writes</span></div>
                   <div class="sec"><span>Treatment plan &amp; timeline</span><span class="hint">AMD writes / approves</span></div>
                   <div class="sec"><span>Prescription → lab</span><span class="hint">AMD issues · legal anchor</span></div>
@@ -547,13 +597,40 @@
             </div>
             <!-- records -->
             <div class="pv" id="pv-records">
-              <div class="card recs"><h3>Follow-up records <span class="pill">every visit → patient app</span></h3>
-                <div class="rec"><div class="rh"><span>Visit 7 · Jul 12</span><span style="color:var(--muted)">Dr. Chen (AMD)</span></div>
-                  <div class="rx">Feedback: sleeping better, less grinding. STA: turn 2 gears ½ each, Sun & Wed. Areas to strengthen: tongue posture at rest.</div></div>
-                <div class="rec"><div class="rh"><span>Visit 6 · Jun 14</span><span style="color:var(--muted)">Nurse Lin (ATC)</span></div>
-                  <div class="rx">STA adjustment continued. Added green smoothie to daily tasks.</div></div>
-                <div class="rec"><div class="rh"><span>Visit 1 · May 24 — STA delivery</span><span style="color:var(--muted)">Dr. Chen</span></div>
-                  <div class="rx">STA delivered. No turning this visit (all gears ✗).</div></div>
+              <div class="card recs"><h3>Follow-up records <span class="pill">click a record to expand</span></h3>
+                <div class="rec" onclick="toggleRec(this)"><div class="rh"><span><span class="chev">▸</span> Visit 7 · Jul 12</span><span style="color:var(--muted)">Dr. Chen (AMD)</span></div>
+                  <div class="rx">Feedback: sleeping better, less grinding.</div>
+                  <div class="rec-detail">
+                    <div class="kv"><b>Revisit questionnaire</b> Sleep 3.4 → 2.6 · Breathing 3.0 → 2.4 (improving)</div>
+                    <div class="kv"><b>Patient feedback</b> Sleeping better, less grinding; STA tight the first day.</div>
+                    <div class="kv"><b>Consultation notes</b> Airway response good; continue current rate.</div>
+                    <div class="kv"><b>Areas to strengthen</b> Tongue posture at rest; nasal-breathing drills.</div>
+                    <div class="kv"><b>STA adjustment</b> Upper · Gear 1 ½ · Gear 2 ¼ · Gear 3 hold · Sun &amp; Wed</div>
+                    <div class="kv"><b>Daily tasks set</b> Tongue-to-palate · Myofunctional · Bone broth · Green smoothie</div>
+                    <div class="kv"><b>Images uploaded</b> Extraoral · Intraoral · MSKAlign</div>
+                    <div class="kv"><b>Internal note</b> <span style="color:#b91c1c">Hidden from patient — watch dentist-satisfaction dip</span></div>
+                    <div class="kv"><b>Next appointment</b> Aug 9 · Dr. Chen</div>
+                    <div class="kv"><b>Author</b> Dr. Chen (AMD)</div>
+                  </div></div>
+                <div class="rec" onclick="toggleRec(this)"><div class="rh"><span><span class="chev">▸</span> Visit 6 · Jun 14</span><span style="color:var(--muted)">Nurse Lin (ATC)</span></div>
+                  <div class="rx">STA adjustment continued. Added green smoothie.</div>
+                  <div class="rec-detail">
+                    <div class="kv"><b>Patient feedback</b> Getting used to the appliance; energy slightly up.</div>
+                    <div class="kv"><b>STA adjustment</b> Upper · Gear 1 ½ · Gear 2 ½ · Sun &amp; Wed</div>
+                    <div class="kv"><b>Daily tasks set</b> + Green smoothie added</div>
+                    <div class="kv"><b>Images uploaded</b> Intraoral · MSKAlign</div>
+                    <div class="kv"><b>Next appointment</b> Jul 12</div>
+                    <div class="kv"><b>Author</b> Nurse Lin (ATC)</div>
+                  </div></div>
+                <div class="rec" onclick="toggleRec(this)"><div class="rh"><span><span class="chev">▸</span> Visit 1 · May 24 — STA delivery</span><span style="color:var(--muted)">Dr. Chen</span></div>
+                  <div class="rx">STA delivered. No turning this visit.</div>
+                  <div class="rec-detail">
+                    <div class="kv"><b>STA fit-check</b> ✓ Passed · payment released to lab</div>
+                    <div class="kv"><b>STA adjustment</b> All gears ✗ (no turning — delivery visit)</div>
+                    <div class="kv"><b>Patient education</b> How to wear/clean; turning starts at 3-week revisit.</div>
+                    <div class="kv"><b>Next appointment</b> Jun 14 (first turning)</div>
+                    <div class="kv"><b>Author</b> Dr. Chen (AMD)</div>
+                  </div></div>
               </div>
             </div>
             <!-- add record (the big form) -->
@@ -597,6 +674,20 @@
             <!-- tasks -->
             <div class="pv" id="pv-tasks">
               <div class="banner">Re-set at each visit. Tick what the patient must do daily — grouped by category (per PRD: diet, supplements, oral myofunctional, physical therapy). Every task is worth <b>equal points</b> (per Jul 23 feedback).</div>
+              <div class="card"><h3>📊 Currently assigned &amp; adherence <span class="pill">last 30 days</span></h3>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px">
+                  <div style="flex:1;min-width:110px"><div style="font-size:12px;color:var(--muted)">Completion rate</div><div style="font-size:26px;font-weight:800;color:#16a34a">82%</div></div>
+                  <div style="flex:1;min-width:110px"><div style="font-size:12px;color:var(--muted)">Current streak</div><div style="font-size:26px;font-weight:800;color:#b45309">🔥 12</div></div>
+                  <div style="flex:1;min-width:110px"><div style="font-size:12px;color:var(--muted)">Reward points</div><div style="font-size:26px;font-weight:800;color:var(--teal)">340</div></div>
+                </div>
+                <div class="hint" style="margin-bottom:6px">5 tasks currently assigned · per-task completion (last 30 days):</div>
+                <div class="comp-row"><span class="cn">Tongue-to-palate</span><div class="progline" style="width:130px"><i style="width:95%"></i></div><span class="cv">95%</span></div>
+                <div class="comp-row"><span class="cn">Myofunctional training</span><div class="progline" style="width:130px"><i style="width:88%"></i></div><span class="cv">88%</span></div>
+                <div class="comp-row"><span class="cn">Bone broth</span><div class="progline" style="width:130px"><i style="width:70%"></i></div><span class="cv">70%</span></div>
+                <div class="comp-row"><span class="cn">Green smoothie</span><div class="progline" style="width:130px"><i style="width:64%"></i></div><span class="cv">64%</span></div>
+                <div class="comp-row"><span class="cn">Daily vitamins <span style="color:#b91c1c;font-weight:700">low</span></span><div class="progline" style="width:130px"><i style="width:40%;background:#f87171"></i></div><span class="cv">40%</span></div>
+                <p class="hint" style="margin-top:8px">💡 Vitamins adherence is low — reminder nudge or reorder link suggested.</p>
+              </div>
               <div class="card"><h3>Daily-task assignment · this visit</h3>
                 <div class="task-assign">
                   <div class="cat">🥣 Diet</div>
@@ -761,6 +852,7 @@ const SYMPTOMS=[
  ["D · Neurological 神經系統",["Brain fog 注意力不集中（腦霧）","Anxiety / tension 焦慮或緊張","Headache / migraine 頭痛或偏頭痛","Mood swings / irritable 情緒起伏/易怒","Poor memory 記憶力差/健忘","Slurred / stuttering speech 口齒不清"]],
  ["E · Body function 身體功能",["Neck / shoulder pain 肩頸痠痛","GERD 胃食道逆流","Frequent fatigue 常覺得疲勞","Slow exercise recovery 運動恢復慢","Poor coordination / falls 協調差/易跌倒"]],
 ];
+function toggleRec(el){el.classList.toggle('open');}
 function renderSymptoms(){
   const c=document.getElementById('symptomTable');if(!c)return;let n=0,h='';
   SYMPTOMS.forEach(g=>{h+=`<div class="q-grp">${g[0]}</div>`;
