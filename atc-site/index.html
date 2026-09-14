@@ -402,11 +402,26 @@
             <label style="margin-top:10px">Draft notes for the AMD</label><textarea placeholder="Transverse target, staging, anything to flag…"></textarea>
             <div style="margin-top:10px"><button class="btn" onclick="toast('Draft spec + notes submitted → Dr. Chen to finalise & approve')">Submit draft to AMD</button></div>
           </div>
+          <div class="card"><h3>Contract &amp; issue STA to Lab <span class="pill">ATC can issue</span></h3>
+            <p class="hint" style="margin-bottom:10px">After the AMD releases the plan and the patient signs the contract (off-system), you can issue the approved STA spec to the Lab. The AMD's <b>written prescription is the legal anchor</b> (AMD signs it) — issuing the spec to the Lab can be done by the <b>AMD or a senior ATC</b>.</p>
+            <label class="chk"><input type="checkbox" onchange="toast('Contract recorded — STA issuance unlocked')"> Patient agreed &amp; signed the contract (off-system) · 1st installment paid</label>
+            <div class="locked" style="margin:8px 0">🔒 Sign the written prescription (legal anchor) <span class="amd-only">AMD only</span></div>
+            <button class="btn" style="margin-top:6px" onclick="toast('STA device spec issued → STA Lab to manufacture')">🚚 Issue STA spec → Lab</button>
+          </div>
+          <div class="card"><h3>STA delivery — QC <span class="pill amber">accept / reject</span></h3>
+            <p class="hint" style="margin-bottom:10px">When the Lab delivers, inspect the STA. Payment stays held until accepted. If it doesn't meet spec, reject it — the Lab must remanufacture.</p>
+            <div class="kv"><b>Order</b> STA-2041 · received from Conova Lab · Jul 28</div>
+            <div class="kv"><b>Fit-check</b> <span style="color:var(--amber);font-weight:700">awaiting QC</span></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+              <button class="btn" onclick="toast('✅ STA accepted → payment released → proceed to delivery/fitting')">✅ Accept &amp; release payment</button>
+              <button class="btn" style="background:var(--red)" onclick="toast('❌ STA rejected → returned to Lab to remanufacture · payment held')">❌ Reject → remanufacture</button>
+            </div>
+          </div>
           <div class="card"><h3>Doctor-on-Record only <span class="pill blue">Dr. Chen (AMD)</span></h3>
-            <div class="locked">🔒 Approve the spec &amp; issue the <b>prescription to the STA Lab</b> <span class="amd-only">AMD only</span></div>
+            <div class="locked">🔒 Sign the written prescription (legal anchor) <span class="amd-only">AMD only</span></div>
             <div class="locked">🔒 Send the <b>specialist (Dr. Felix) consult</b> <span class="amd-only">AMD only</span></div>
             <div class="locked">🔒 <b>Release the treatment plan / report to the patient</b> (report reading) <span class="amd-only">AMD only</span></div>
-            <p class="hint" style="margin-top:8px">These require the treating dentist's licence &amp; clinical responsibility, so they can only be done by <b>Dr. Chen</b> on the AMD site.</p>
+            <p class="hint" style="margin-top:8px">These require the treating dentist's licence &amp; clinical responsibility, so they can only be done by <b>Dr. Chen</b> on the AMD site. (Issuing the spec to the Lab and QC-ing the delivered device can be done by the ATC.)</p>
           </div>
         </div>
 
