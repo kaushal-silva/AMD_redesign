@@ -162,6 +162,21 @@
     .hs-chip{font-size:11px;background:#f5f3ff;border:1px solid #e9d5ff;color:#6d28d9;padding:4px 9px;border-radius:20px;font-weight:600}
     .hs-chip .up{color:var(--good);font-weight:800}
     .hs-chip .dn{color:var(--coral);font-weight:800}
+
+    /* ===== REWARDS UPDATE (v3) =====
+       Small helper so new markup can be bilingual without growing the I18N map.
+       applyLang() sets a `zh` class on <body>; existing data-i18n keys are unchanged. */
+    body.zh .en{display:none}body:not(.zh) .zh-t{display:none}body.zh .zh-t{display:inline}
+    .seg{display:flex;background:#e8eeed;border-radius:14px;padding:4px;margin-bottom:14px;gap:4px}
+    .seg button{flex:1;border:0;background:transparent;font-family:inherit;font-size:13px;font-weight:600;
+      color:var(--muted);padding:9px 6px;border-radius:11px;cursor:pointer}
+    .seg button.on{background:#fff;color:var(--teal);box-shadow:0 1px 4px rgba(15,60,55,.12)}
+    .mepane{display:none}.mepane.on{display:block}
+    .rwpts{font-size:12px;font-weight:800;color:var(--teal);flex:0 0 auto;white-space:nowrap}
+    .rwpts.off{color:var(--muted)}
+    .me-row.locked{opacity:.5;cursor:default}
+    .code{font-family:ui-monospace,Menlo,monospace;font-size:26px;letter-spacing:.2em;text-align:center;
+      background:var(--mint);color:var(--teal-d);border-radius:16px;padding:16px;margin:14px 0}
   </style>
 </head>
 <body>
@@ -366,46 +381,113 @@
 
   <!-- ME -->
   <section class="screen" id="s-me">
-    <div class="section-title" data-i18n="ach">My health achievements</div>
-    <div class="ach-grid" style="margin-bottom:14px">
-      <div class="ach"><div class="n">96</div><div class="l" data-i18n="daysTx">days in treatment</div></div>
-      <div class="ach"><div class="n">7</div><div class="l" data-i18n="visits">visits completed</div></div>
-      <div class="ach pts"><div class="n">120</div><div class="l" data-i18n="points">reward points</div></div>
-      <div class="ach strk"><div class="n">12</div><div class="l" data-i18n="streak2">day check-in streak</div></div>
-    </div>
-    <div class="card pts" style="background:linear-gradient(120deg,#ecfeff,#ccfbf1)">
-      <h3 data-i18n="reward">🎁 45 points to your next reward</h3>
-      <div class="progbar"><i style="width:70%"></i></div>
-      <div class="sub" data-i18n="rewardx">Redeem for a free green smoothie at your next visit</div>
+    <div class="seg">
+      <button class="on" data-me="rewards" onclick="meTab('rewards')">🎁 <span class="en">Rewards</span><span class="zh-t">好禮</span></button>
+      <button data-me="progress" onclick="meTab('progress')">🏅 <span class="en">Progress</span><span class="zh-t">進度</span></button>
+      <button data-me="settings" onclick="meTab('settings')">⚙️ <span class="en">Settings</span><span class="zh-t">設定</span></button>
     </div>
 
-    <div class="card" id="leaderboardCard">
-      <h3 data-i18n="leaderboard">Leaderboard <span class="phase2">Phase 2</span></h3>
-      <div class="sub" style="margin-bottom:8px" data-i18n="lbx">Friends & people like you. Opt out anytime in settings.</div>
-      <div class="lb"><div class="rk">1</div><div class="who">Amy C.</div><div class="pts2">210</div></div>
-      <div class="lb mine"><div class="rk me">2</div><div class="who" data-i18n="you">You</div><div class="pts2">120</div></div>
-      <div class="lb"><div class="rk">3</div><div class="who">Ken L.</div><div class="pts2">95</div></div>
-      <button class="btn-ghost" style="width:100%;margin-top:10px" onclick="toast(t('addFriend'))" data-i18n="addFriendBtn">+ Add a friend by link</button>
-      <button class="btn-teal" style="margin-top:8px" onclick="toast(t('socialShare'))" data-i18n="shareSocial">↗ Share my progress to social</button>
+    <!-- ===== REWARDS ===== -->
+    <div class="mepane on" id="me-rewards">
+      <div class="card pts" style="background:linear-gradient(120deg,#ecfeff,#ccfbf1)">
+        <h3>🎁 <span class="en">You have 200 points</span><span class="zh-t">你目前有 200 點</span></h3>
+        <div class="sub"><span class="en">Ask your care coordinator at your next visit. They'll hand the item over and take the points off for you — nothing to do in the app.</span><span class="zh-t">下次回診時告訴照護協調師。他們會交給你並代為扣點——App 裡不用做任何事。</span></div>
+      </div>
+
+      <div class="section-title"><span class="en">Available at your clinic</span><span class="zh-t">診所可領取</span></div>
+      <div class="card pts">
+        <div class="me-row" style="cursor:default">
+          <div class="ic">🥤</div>
+          <div class="m-t"><span class="en">Green smoothie</span><span class="zh-t">綠色果智</span>
+            <div class="sub"><span class="en">You have enough points</span><span class="zh-t">點數已足夠</span></div></div>
+          <span class="rwpts">80 <span class="en">pts</span><span class="zh-t">點</span></span>
+        </div>
+        <div class="me-row" style="cursor:default">
+          <div class="ic">🃏</div>
+          <div class="m-t"><span class="en">Breathing practice card set</span><span class="zh-t">呼吸練習卡組</span>
+            <div class="sub"><span class="en">You have enough points</span><span class="zh-t">點數已足夠</span></div></div>
+          <span class="rwpts">120 <span class="en">pts</span><span class="zh-t">點</span></span>
+        </div>
+        <div class="me-row locked">
+          <div class="ic">👃</div>
+          <div class="m-t"><span class="en">Nasal strips · pack of 30</span><span class="zh-t">鼻貼 · 30 片裝</span>
+            <div class="sub"><span class="en">80 more points to go</span><span class="zh-t">尚差 80 點</span></div></div>
+          <span class="rwpts off">200 <span class="en">pts</span><span class="zh-t">點</span></span>
+        </div>
+        <div class="me-row locked">
+          <div class="ic">🧳</div>
+          <div class="m-t"><span class="en">Travel case</span><span class="zh-t">隨身收納盒</span>
+            <div class="sub"><span class="en">300 more points to go</span><span class="zh-t">尚差 300 點</span></div></div>
+          <span class="rwpts off">500 <span class="en">pts</span><span class="zh-t">點</span></span>
+        </div>
+        <div class="sub" style="margin-top:12px;font-size:11px"><span class="en">Points have no cash value and cannot be transferred or exchanged for money.</span><span class="zh-t">點數不具現金價值，不得轉讓或兌換現金。</span></div>
+      </div>
+
+      <div class="section-title"><span class="en">Rewards you've received</span><span class="zh-t">你已領取的好禮</span></div>
+      <div class="card">
+        <div class="me-row" style="cursor:default">
+          <div class="ic">🧳</div>
+          <div class="m-t"><span class="en">Travel case</span><span class="zh-t">隨身收納盒</span>
+            <div class="sub"><span class="en">24 Sep · Daan Perfect Smile</span><span class="zh-t">9月24日 · 大安診所</span></div></div>
+          <span class="rwpts off">−500</span>
+        </div>
+        <div class="me-row" style="cursor:default">
+          <div class="ic">🥤</div>
+          <div class="m-t"><span class="en">Green smoothie</span><span class="zh-t">綠色果智</span>
+            <div class="sub"><span class="en">12 Aug · Daan Perfect Smile</span><span class="zh-t">8月12日 · 大安診所</span></div></div>
+          <span class="rwpts off">−80</span>
+        </div>
+        <div class="me-row" style="cursor:default">
+          <div class="ic">🃏</div>
+          <div class="m-t"><span class="en">Breathing practice card set</span><span class="zh-t">呼吸練習卡組</span>
+            <div class="sub"><span class="en">3 Jul · Daan Perfect Smile</span><span class="zh-t">7月3日 · 大安診所</span></div></div>
+          <span class="rwpts off">−120</span>
+        </div>
+      </div>
     </div>
 
-    <div class="card">
-      <h3 data-i18n="gami">Gamification</h3>
-      <div class="sub" style="margin-bottom:6px" data-i18n="gamix">On by default. Turn off anything that feels like pressure.</div>
-      <div class="tog"><div class="m-t" data-i18n="tgLeader">Leaderboard & competition</div><div class="switch on" data-g="leader" onclick="toggleG(this)"></div></div>
-      <div class="tog"><div class="m-t" data-i18n="tgPoints">Points & XP</div><div class="switch on" data-g="points" onclick="toggleG(this)"></div></div>
-      <div class="tog"><div class="m-t" data-i18n="tgStreak">Streaks</div><div class="switch on" data-g="streak" onclick="toggleG(this)"></div></div>
+    <!-- ===== PROGRESS ===== -->
+    <div class="mepane" id="me-progress">
+      <div class="section-title" data-i18n="ach">My health achievements</div>
+      <div class="ach-grid" style="margin-bottom:14px">
+        <div class="ach"><div class="n">96</div><div class="l" data-i18n="daysTx">days in treatment</div></div>
+        <div class="ach"><div class="n">7</div><div class="l" data-i18n="visits">visits completed</div></div>
+        <div class="ach pts"><div class="n">200</div><div class="l" data-i18n="points">reward points</div></div>
+        <div class="ach strk"><div class="n">12</div><div class="l" data-i18n="streak2">day check-in streak</div></div>
+      </div>
+
+      <div class="card" id="leaderboardCard">
+        <h3 data-i18n="leaderboard">Leaderboard <span class="phase2">Phase 2</span></h3>
+        <div class="sub" style="margin-bottom:8px" data-i18n="lbx">Friends &amp; people like you. Opt out anytime in settings.</div>
+        <div class="lb"><div class="rk">1</div><div class="who">Amy C.</div><div class="pts2">210</div></div>
+        <div class="lb mine"><div class="rk me">2</div><div class="who" data-i18n="you">You</div><div class="pts2">200</div></div>
+        <div class="lb"><div class="rk">3</div><div class="who">Ken L.</div><div class="pts2">95</div></div>
+        <button class="btn-ghost" style="width:100%;margin-top:10px" onclick="toast(t('addFriend'))" data-i18n="addFriendBtn">+ Add a friend by link</button>
+        <button class="btn-teal" style="margin-top:8px" onclick="toast(t('socialShare'))" data-i18n="shareSocial">↗ Share my progress to social</button>
+      </div>
+
+      <div class="card">
+        <h3 data-i18n="gami">Gamification</h3>
+        <div class="sub" style="margin-bottom:6px" data-i18n="gamix">On by default. Turn off anything that feels like pressure.</div>
+        <div class="tog"><div class="m-t" data-i18n="tgLeader">Leaderboard &amp; competition</div><div class="switch on" data-g="leader" onclick="toggleG(this)"></div></div>
+        <div class="tog"><div class="m-t" data-i18n="tgPoints">Points &amp; XP</div><div class="switch on" data-g="points" onclick="toggleG(this)"></div></div>
+        <div class="tog"><div class="m-t" data-i18n="tgStreak">Streaks</div><div class="switch on" data-g="streak" onclick="toggleG(this)"></div></div>
+      </div>
     </div>
 
-    <div class="card">
-      <div class="me-row" onclick="go('rate')"><div class="ic">⭐</div><div class="m-t" data-i18n="rateCare">Rate my ATC & dentist</div><span class="arr">›</span></div>
-      <div class="me-row" onclick="go('chat')"><div class="ic">💬</div><div class="m-t" data-i18n="contact">Message my ATC (care manager)</div><span class="arr">›</span></div>
-      <div class="me-row" onclick="toggleLang()"><div class="ic">🌐</div><div class="m-t"><span data-i18n="language">Language</span> · <span id="langLbl">English</span></div><span class="arr">›</span></div>
-      <div class="me-row" onclick="toast(t('acct'))"><div class="ic">👤</div><div class="m-t" data-i18n="account">Account & password</div><span class="arr">›</span></div>
-      <div class="me-row" onclick="toast(t('notifSet'))"><div class="ic">🔔</div><div class="m-t" data-i18n="notif">Notifications</div><span class="arr">›</span></div>
-      <div class="me-row" onclick="toast(t('feedback'))"><div class="ic">⭐</div><div class="m-t" data-i18n="fb">How are you liking the app?</div><span class="arr">›</span></div>
+    <!-- ===== SETTINGS ===== -->
+    <div class="mepane" id="me-settings">
+      <div class="card">
+        <div class="me-row" onclick="go('rate')"><div class="ic">⭐</div><div class="m-t" data-i18n="rateCare">Rate my ATC &amp; dentist</div><span class="arr">›</span></div>
+        <div class="me-row" onclick="go('chat')"><div class="ic">💬</div><div class="m-t" data-i18n="contact">Message my ATC (care manager)</div><span class="arr">›</span></div>
+        <div class="me-row" onclick="toggleLang()"><div class="ic">🌐</div><div class="m-t"><span data-i18n="language">Language</span> · <span id="langLbl">English</span></div><span class="arr">›</span></div>
+        <div class="me-row" onclick="toast(t('acct'))"><div class="ic">👤</div><div class="m-t" data-i18n="account">Account &amp; password</div><span class="arr">›</span></div>
+        <div class="me-row" onclick="toast(t('notifSet'))"><div class="ic">🔔</div><div class="m-t" data-i18n="notif">Notifications</div><span class="arr">›</span></div>
+        <div class="me-row" onclick="toast(t('feedback'))"><div class="ic">⭐</div><div class="m-t" data-i18n="fb">How are you liking the app?</div><span class="arr">›</span></div>
+      </div>
     </div>
   </section>
+
 
   <!-- CHAT -->
   <section class="screen" id="s-chat">
@@ -509,7 +591,7 @@ const I18N={
   restock:{en:"Running low on supplements?",zh:"保健品快用完了嗎？"},restockx:{en:"Reorder bone broth, greens & vitamins · earn XP",zh:"補購大骨湯、蔬果與維生素・賺XP"},shop:{en:"Shop",zh:"商城"},
   refer:{en:"Refer a friend",zh:"推薦朋友"},referx:{en:"You both get rewards · +100 XP",zh:"雙方都有獎勵・+100 XP"},invite:{en:"Invite",zh:"邀請"},
   ach:{en:"My health achievements",zh:"我的健康成就"},daysTx:{en:"days in treatment",zh:"療程天數"},visits:{en:"visits completed",zh:"完成回診"},points:{en:"reward points",zh:"獎勵積分"},streak2:{en:"day check-in streak",zh:"連續打卡天數"},
-  reward:{en:"🎁 45 points to your next reward",zh:"🎁 再45分即可兌換獎勵"},rewardx:{en:"Redeem for a free green smoothie at your next visit",zh:"下次回診可兌換免費green smoothie"},
+  /* reward / rewardx keys removed — replaced by the rewards list (v3) */
   leaderboard:{en:"Leaderboard",zh:"排行榜"},lbx:{en:"Friends & people like you. Opt out anytime in settings.",zh:"朋友與相似的人。可隨時在設定中關閉。"},you:{en:"You",zh:"你"},
   addFriendBtn:{en:"+ Add a friend by link",zh:"+ 用連結加朋友"},shareSocial:{en:"↗ Share my progress to social",zh:"↗ 分享進度到社群"},
   gami:{en:"Gamification",zh:"遊戲化設定"},gamix:{en:"On by default. Turn off anything that feels like pressure.",zh:"預設開啟。任何造成壓力的都可以關閉。"},
@@ -579,6 +661,7 @@ function renderTimeline(){
 function applyLang(){
   document.querySelectorAll('[data-i18n]').forEach(n=>{const k=n.getAttribute('data-i18n');if(I18N[k])n.textContent=I18N[k][lang];});
   document.querySelectorAll('[data-i18n-ph]').forEach(n=>{const k=n.getAttribute('data-i18n-ph');if(I18N[k])n.placeholder=I18N[k][lang];});
+  document.body.classList.toggle('zh',lang==='zh');
   document.getElementById('langBtn').textContent=lang==='en'?'中文':'EN';
   document.getElementById('langLbl').textContent=lang==='en'?'English':'中文';
   document.documentElement.lang=lang==='en'?'en':'zh-Hant';
@@ -624,6 +707,15 @@ function initBA(){
 function sendMsg(){const inp=document.getElementById('chatIn');if(!inp.value.trim())return;
   const d=document.createElement('div');d.className='msg me';d.textContent=inp.value;
   document.getElementById('chatLog').appendChild(d);inp.value='';}
+/* ===== REWARDS UPDATE (v3) =====
+   The patient does nothing in the app. The catalogue and the history are read-only.
+   The ATC issues the reward at the clinic and the points come off there. */
+function meTab(v){
+  document.querySelectorAll('.mepane').forEach(function(x){x.classList.toggle('on',x.id==='me-'+v);});
+  document.querySelectorAll('.seg button').forEach(function(b){b.classList.toggle('on',b.dataset.me===v);});
+  window.scrollTo(0,0);
+}
+
 let tT;function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>el.classList.remove('show'),1900);}
 
 /* ---------- satisfaction rating ---------- */
