@@ -176,6 +176,8 @@
       margin-bottom:10px;box-shadow:var(--shadow);cursor:pointer}
     .chan .ic{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;
       justify-content:center;font-size:18px;flex:0 0 auto}
+    .tickc{width:50px;height:50px;border-radius:50%;background:var(--mint);color:var(--teal);
+      display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700}
     .seg{display:flex;background:#e8eeed;border-radius:14px;padding:4px;margin-bottom:14px;gap:4px}
     .seg button{flex:1;border:0;background:transparent;font-family:inherit;font-size:13px;font-weight:600;
       color:var(--muted);padding:9px 6px;border-radius:11px;cursor:pointer}
@@ -388,16 +390,16 @@
     <div class="mepane on" id="me-rewards">
       <div class="card pts" style="background:linear-gradient(120deg,#ecfeff,#ccfbf1)">
         <h3>🎁 <span class="en">You have <span id="ptsNow">150</span> points</span><span class="zh-t">你目前有 <span id="ptsNow2">150</span> 點</span></h3>
-        <div class="sub"><span class="en">When you have enough points, message us and we'll post it to you. Nothing to do in the app.</span><span class="zh-t">點數足夠時，傳訊息給我們，我們會寄送給你。App 裡不用做任何事。</span></div>
+        <div class="sub"><span class="en">Tap anything you have enough points for, tell us where to send it, and we'll post it out.</span><span class="zh-t">點選點數足夠的項目，告訴我們寄送地址，我們就會寄出。</span></div>
       </div>
 
       <div class="section-title"><span class="en">Posted to your address</span><span class="zh-t">寄送到你的地址</span></div>
       <div class="card pts">
-        <div class="me-row" style="cursor:default">
+        <div class="me-row" onclick="pickReward('cards',120)">
           <div class="ic">🃏</div>
           <div class="m-t"><span class="en">Breathing practice card set</span><span class="zh-t">呼吸練習卡組</span>
-            <div class="sub"><span class="en">You have enough points</span><span class="zh-t">點數已足夠</span></div></div>
-          <span class="rwpts">120 <span class="en">pts</span><span class="zh-t">點</span></span>
+            <div class="sub"><span class="en">Tap to have this posted to you</span><span class="zh-t">點選即可寄送給你</span></div></div>
+          <span class="rwpts">120 <span class="en">pts</span><span class="zh-t">點</span> ›</span>
         </div>
         <div class="me-row locked">
           <div class="ic">👃</div>
@@ -450,6 +452,32 @@
         <div class="me-row" onclick="toast(t('notifSet'))"><div class="ic">🔔</div><div class="m-t"><span data-i18n="notif">Notifications</span></div><span class="arr">›</span></div>
         <div class="me-row" onclick="toast(t('feedback'))"><div class="ic">⭐</div><div class="m-t"><span data-i18n="fb">How are you liking the app?</span></div><span class="arr">›</span></div>
       </div>
+    </div>
+  </section>
+
+  <!-- SEND IT TO ME (community only — posted, not collected at a clinic) -->
+  <section class="screen" id="s-send">
+    <div class="section-title"><span class="en">Where should we send it?</span><span class="zh-t">寄送到哪裡？</span></div>
+    <div class="card">
+      <h3 id="sendName"></h3>
+      <div class="sub" style="margin-top:4px"><span class="en">We post within Taiwan only. Your address is used for this delivery and removed 90 days after it's sent.</span><span class="zh-t">僅寄送台灣境內。你的地址僅用於本次寄送，寄出後 90 天內刪除。</span></div>
+      <div class="fld"><label><span class="en">Recipient name</span><span class="zh-t">收件人姓名</span></label><input type="text" /></div>
+      <div class="fld"><label><span class="en">Address</span><span class="zh-t">地址</span></label><input type="text" /></div>
+      <div class="fld"><label><span class="en">City / district</span><span class="zh-t">縣市／區</span></label><input type="text" /></div>
+      <div class="fld"><label><span class="en">Postcode</span><span class="zh-t">郵遞區號</span></label><input type="text" /></div>
+      <div class="chk"><input type="checkbox" id="cAddr" />
+        <label for="cAddr"><span class="en">I agree to AMD using my delivery address for this one delivery. It is deleted 90 days after it's sent and is not used for anything else.</span><span class="zh-t">我同意 AMD 將我的地址用於本次寄送。寄出後 90 天內刪除，不作其他用途。</span></label></div>
+      <button class="btn-teal" onclick="sendIt()"><span class="en">Send it to me</span><span class="zh-t">寄給我</span></button>
+      <button class="btn-ghost" style="width:100%;margin-top:8px" onclick="go('me')"><span class="en">Cancel</span><span class="zh-t">取消</span></button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-sent">
+    <div class="card" style="text-align:center">
+      <div class="tickc" style="margin:8px auto 12px">✓</div>
+      <h3><span class="en">On its way</span><span class="zh-t">已安排寄出</span></h3>
+      <div class="sub" style="margin-top:6px"><span class="en">We'll post it within five working days and let you know when it's gone out.</span><span class="zh-t">我們會在五個工作天內寄出，寄出後會通知你。</span></div>
+      <button class="btn-teal" style="margin-top:16px" onclick="go('learn')"><span class="en">Back to Learn</span><span class="zh-t">回到學習</span></button>
     </div>
   </section>
 
@@ -655,14 +683,31 @@ function sendMsg(){const inp=document.getElementById('chatIn');if(!inp.value.tri
    - verified() is the OTP success callback; it creates a community_member (never a patient record)
    - openChannel targets come from config, not hardcoded
    - readArt awards points server-side, once per article
-   - the member does nothing to claim: the rewards list and the history are read-only.
-     AMD issues the reward from the ATC portal, posts it, and the points come off there.
+   - the member taps a reward they can afford and gives a delivery address there and then.
+     The address is collected only at that moment — never stored ahead of time — and is
+     deleted 90 days after posting. The order lands in the ATC portal to be packed and sent.
 */
 let POINTS=150, ARTS=6;
 const CHANNELS={line:'https://line.me/R/ti/p/@amdtaiwan', mail:'mailto:hello@amd.example'};
 function syncCounters(){
   ['ptsNow','ptsNow2','ptsNow3','gPts'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=POINTS;});
   ['aArts','gArts'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=ARTS;});
+}
+const RW={cards:{en:'Breathing practice card set',zh:'呼吸練習卡組',c:120}};
+let PICK=null;
+function pickReward(id,cost){
+  if(POINTS<cost){toast(lang==='en'?'Not enough points yet':'點數尚不足');return;}
+  PICK=id;
+  document.getElementById('sendName').textContent=RW[id][lang];
+  go('send');
+}
+function sendIt(){
+  if(!document.getElementById('cAddr').checked){
+    toast(lang==='en'?'Please agree to the delivery-address terms':'請先同意寄送地址條款');return;
+  }
+  POINTS-=RW[PICK].c;                /* deducted on order — no holds, no expiry */
+  syncCounters();
+  go('sent');
 }
 function meTab(v){
   document.querySelectorAll('.mepane').forEach(function(x){x.classList.toggle('on',x.id==='me-'+v);});
