@@ -126,6 +126,7 @@
       <a class="senior-only" data-s="specs" onclick="go('specs')">📐 Draft specs <span class="b">2</span></a>
       <a data-s="appts" onclick="go('appts')">📅 Appointments</a>
       <a data-s="tasks" onclick="go('tasks')">✅ Follow-up tasks</a>
+      <a data-s="rewards" onclick="go('rewards')">🎁 Rewards to hand out <span class="b">2</span></a>
     </nav>
     <div class="role">Account</div>
     <nav class="nav">
@@ -291,6 +292,49 @@
           <div class="taskrow"><input type="checkbox"> <span style="flex:1"><b>Chen Zhiming</b> — 6-month workup due; schedule comprehensive collection</span><span class="pill amber">for Dr. Wu</span></div>
           <div class="taskrow"><input type="checkbox" checked> <span style="flex:1;color:var(--muted);text-decoration:line-through"><b>Li Meihua</b> — confirm supplement reorder</span><span class="done">done</span></div>
           <div style="margin-top:12px;display:flex;gap:8px"><input placeholder="New follow-up task…" style="flex:1" /><button class="btn" onclick="toast('Task added → AMD notified to review')">Add task</button></div>
+        </div>
+      </section>
+
+      <!-- REWARDS (v3) -->
+      <section class="screen" id="s-rewards">
+        <div class="banner">🎁 <b>You issue the rewards.</b> Patients and community members only see what they have enough points for — they can't claim anything in the app. When a patient comes in, pick them below and give them the item. Points come off here. Community members are posted instead.</div>
+
+        <div class="card"><h3>Issue a reward · patient at the clinic</h3>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px">
+            <div style="flex:1;min-width:220px">
+              <label style="font-size:11px;color:var(--muted)">Patient</label>
+              <select id="rwPatient" onchange="rwPick()">
+                <option value="0">Wang Xiaoming · AMD-0021 · 200 points</option>
+                <option value="1">Li Meihua · AMD-0018 · 130 points</option>
+                <option value="2">Chen Zhiming · AMD-0012 · 60 points</option>
+              </select>
+            </div>
+            <div class="pill blue" id="rwBalance" style="padding:8px 14px">200 points available</div>
+          </div>
+          <table>
+            <tr><th>Reward</th><th>Points</th><th>Status</th><th></th></tr>
+            <tbody id="rwList"></tbody>
+          </table>
+          <p class="hint" style="margin-top:10px">Issuing deducts the points straight away and adds it to the patient's "Rewards you've received" list in the app.</p>
+        </div>
+
+        <div class="card"><h3>Community members · to post <span class="pill amber">2 waiting</span></h3>
+          <div class="banner" style="margin-bottom:12px">Community members have no clinic. They message us when they want something; enter the address they give you, post it, then mark it sent. The address is deleted 90 days after posting.</div>
+          <table>
+            <tr><th>Member</th><th>Points</th><th>Asked for</th><th>Address on file</th><th></th></tr>
+            <tr><td><b>Chen Yuting</b><br><span class="hint">community · joined 12 Aug</span></td><td>150</td><td>Breathing practice card set · 120</td><td>Da'an Dist., Taipei · 106<br><span class="hint">given 28 Sep</span></td><td><button class="btn" onclick="toast('Posted ✓ · 120 points deducted · address scheduled for deletion 29 Dec')">Mark posted</button></td></tr>
+            <tr><td><b>Huang Peiyu</b><br><span class="hint">community · joined 3 Sep</span></td><td>210</td><td>Nasal strips · 30 · 200</td><td><span class="hint">not given yet</span></td><td><button class="btn" onclick="toast('Ask for the delivery address before posting')">Request address</button></td></tr>
+          </table>
+        </div>
+
+        <div class="card"><h3>Recently issued</h3>
+          <table>
+            <tr><th>Who</th><th>Reward</th><th>Points</th><th>Date</th><th>How</th><th>By</th></tr>
+            <tr><td>Chen Zhiming · AMD-0012</td><td>Travel case</td><td>500</td><td>24 Sep</td><td>At the clinic</td><td>Nancy Cheng</td></tr>
+            <tr><td>Lin Yiting · AMD-0034</td><td>Green smoothie</td><td>80</td><td>22 Sep</td><td>At the clinic</td><td>Junior ATC</td></tr>
+            <tr><td>Wu Jiahao · community</td><td>Airway habits booklet</td><td>100</td><td>14 Aug</td><td>Posted</td><td>Nancy Cheng</td></tr>
+          </table>
+          <p class="hint" style="margin-top:8px">Every issue records who did it and when, so HQ can see what has gone out.</p>
         </div>
       </section>
 
@@ -576,12 +620,32 @@ function setRole(){
   if(!senior && document.getElementById('s-specs').classList.contains('on')) go('patients');
   toast(senior?'Senior ATC — can design specs & oversee multiple clinics':'Junior ATC — admin only (no spec design)');
 }
-const TITLES={patients:'My patients',add:'Add patient',specs:'Draft specs',appts:'Appointments',tasks:'Follow-up tasks',patient:'Patient'};
+/* ===== REWARDS (v3) =====
+   The ATC issues; patients and community members never claim in the app.
+   One rule: does the person have enough points? Nothing else gates it. */
+const RW_CAT=[{n:'Green smoothie',c:80},{n:'Breathing practice card set',c:120},
+              {n:'Nasal strips · pack of 30',c:200},{n:'Travel case',c:500}];
+const RW_PTS=[200,130,60];
+function rwPick(){
+  const i=+document.getElementById('rwPatient').value, bal=RW_PTS[i];
+  document.getElementById('rwBalance').textContent=bal+' points available';
+  document.getElementById('rwList').innerHTML=RW_CAT.map(function(r){
+    const ok=bal>=r.c;
+    return '<tr><td>'+r.n+'</td><td>'+r.c+'</td><td>'+
+      (ok?'<span class="pill blue">Can have this</span>':'<span class="hint">'+(r.c-bal)+' points short</span>')+
+      '</td><td>'+(ok?'<button class="btn" onclick="rwIssue(\''+r.n+'\','+r.c+')">Issue</button>':'')+'</td></tr>';
+  }).join('');
+}
+function rwIssue(name,cost){
+  toast('Issued: '+name+' · '+cost+' points deducted · logged to Nancy Cheng');
+}
+
+const TITLES={patients:'My patients',add:'Add patient',specs:'Draft specs',appts:'Appointments',tasks:'Follow-up tasks',rewards:'Rewards to hand out',patient:'Patient'};
 function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
   document.getElementById('s-'+s).classList.add('on');
   document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
   document.getElementById('title').textContent=TITLES[s];window.scrollTo(0,0);
-  if(s==='specs')renderSpecs();}
+  if(s==='specs')renderSpecs();if(s==='rewards')rwPick();}
 function pv(v){document.querySelectorAll('.pv').forEach(x=>x.classList.remove('on'));
   const el=document.getElementById('pv-'+v); if(el)el.classList.add('on');
   document.querySelectorAll('.subnav a').forEach(a=>a.classList.toggle('on',a.dataset.pv===v));
