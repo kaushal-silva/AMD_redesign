@@ -132,6 +132,8 @@
     </nav>
     <div class="role">Insight</div>
     <nav class="nav">
+      <a data-s="library" onclick="go('library')">📚 Learn library</a>
+      <a data-s="rewards" onclick="go('rewards')">🎁 Rewards</a>
       <a data-s="kpi" onclick="go('kpi')">📈 Analytics</a>
       <a data-s="sat" onclick="go('sat')">⭐ Satisfaction &amp; bonuses <span class="b">2</span></a>
       <a data-s="msg" onclick="go('msg')">💬 Message hub <span class="b">2</span></a>
@@ -292,6 +294,66 @@
       </section>
 
       <!-- ===== ANALYTICS ===== -->
+      <!-- LEARN LIBRARY (v3) -->
+      <section class="screen" id="s-library">
+        <div class="banner">📚 <b>Articles that appear in the app's Learn tab.</b> Write them here, tag them, set the points, and choose who sees them. <b>Public</b> = anyone with a free community account. <b>Off</b> = patients only. A clinician still approves the content before it can be published — HQ publishes, it does not approve.</div>
+        <div class="card"><h3>Articles <button class="btn" style="float:right" onclick="toast('New article draft created → sent for clinical review')">+ New article</button></h3>
+          <table>
+            <tr><th>Article</th><th>Tags</th><th>Public</th><th>Points</th><th>Clinical review</th><th>Status</th></tr>
+            <tr><td>Why nasal breathing matters</td><td><span class="pill">breathing</span> <span class="pill">basics</span></td><td><b style="color:var(--grn)">ON</b></td><td>10</td><td><span class="pill g">Approved · Dr. Chen</span></td><td>Published</td></tr>
+            <tr><td>Tongue posture 101</td><td><span class="pill">exercises</span></td><td><b style="color:var(--grn)">ON</b></td><td>10</td><td><span class="pill g">Approved · Dr. Chen</span></td><td>Published</td></tr>
+            <tr><td>Sleep position and your morning</td><td><span class="pill">sleep</span></td><td><b style="color:var(--grn)">ON</b></td><td>10</td><td><span class="pill g">Approved · Dr. Wu</span></td><td>Published</td></tr>
+            <tr><td>Wearing your appliance overnight</td><td><span class="pill">appliance</span> <span class="pill">STA</span></td><td><b style="color:var(--muted)">OFF</b></td><td>10</td><td><span class="pill g">Approved · Dr. Wu</span></td><td>Patients only</td></tr>
+            <tr><td>What to expect in week 6</td><td><span class="pill">journey</span></td><td><b style="color:var(--muted)">OFF</b></td><td>10</td><td><span class="pill a">In review</span></td><td>Draft</td></tr>
+          </table>
+          <p class="hint" style="margin-top:10px">Switching an article to Public makes it visible outside the clinic, so every change records who did it and when.</p>
+        </div>
+        <div class="card"><h3>Education disclaimer</h3>
+          <p class="hint">Shown at the top of every article, in both languages. Edited here so it can change without an app release.</p>
+          <div style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:11px 14px;font-size:12.5px;line-height:1.6;margin-top:8px">
+            <b>For education only.</b> This is general information about breathing and sleep. It is not a diagnosis and not advice about your own health. Please speak to a qualified medical or dental professional before making any change that could affect your health.</div>
+          <button class="btn" style="margin-top:10px" onclick="toast('Disclaimer updated → live in the app')">Save disclaimer</button>
+        </div>
+      </section>
+
+      <!-- REWARDS (v3) -->
+      <section class="screen" id="s-rewards">
+        <div class="banner">🎁 <b>What has been given out.</b> Nobody claims anything in the app — the list there is read-only. An ATC issues the reward at the clinic, or posts it for a community member, and the points come off then. If something runs low, turn it off in the catalogue below.</div>
+        <div class="kpis">
+          <div class="kpi"><div class="n">38</div><div class="l">Issued · September</div></div>
+          <div class="kpi"><div class="n">29</div><div class="l">Given at clinics</div></div>
+          <div class="kpi"><div class="n">14</div><div class="l">Posted · community</div></div>
+          <div class="kpi"><div class="n">7</div><div class="l">Community · waiting to post</div></div>
+        </div>
+        <div class="card"><h3>Reward catalogue <button class="btn" style="float:right" onclick="toast('New reward added to the catalogue')">+ Add reward</button></h3>
+          <table>
+            <tr><th>Reward</th><th>Points</th><th>How it is given</th><th>Issued</th><th>This month</th><th>Visible in app</th></tr>
+            <tr><td>Green smoothie</td><td>80</td><td>At the clinic</td><td>19</td><td>18</td><td><b style="color:var(--grn)">ON</b></td></tr>
+            <tr><td>Breathing practice card set</td><td>120</td><td>Clinic or posted</td><td>12</td><td>9</td><td><b style="color:var(--grn)">ON</b></td></tr>
+            <tr><td>Nasal strips · pack of 30</td><td>200</td><td>Clinic or posted</td><td>21</td><td>17</td><td><b style="color:var(--grn)">ON</b></td></tr>
+            <tr><td>Travel case</td><td>500</td><td>At the clinic</td><td>5</td><td>3</td><td><b style="color:var(--muted)">OFF</b></td></tr>
+          </table>
+          <p class="hint" style="margin-top:10px">Turning a reward off hides it from everyone's list in the app immediately, and stops ATCs issuing it. That is how stock is managed — there is no inventory count.</p>
+        </div>
+        <div class="card"><h3>By clinic</h3>
+          <table>
+            <tr><th>Clinic</th><th>Issued</th><th>This month</th><th>Points spent</th><th>Last issued</th></tr>
+            <tr><td>Daan Perfect Smile · Dr. Chen</td><td>16</td><td>6</td><td>2,840</td><td>29 Sep</td></tr>
+            <tr><td>Taichung Airway Clinic · Dr. Wu</td><td>9</td><td>4</td><td>1,520</td><td>28 Sep</td></tr>
+            <tr><td>Kaohsiung Sleep &amp; Smile · Dr. Lin</td><td>4</td><td>2</td><td>700</td><td>19 Sep</td></tr>
+            <tr><td>Community members (posted)</td><td>14</td><td>5</td><td>1,640</td><td>28 Sep</td></tr>
+          </table>
+          <p class="hint" style="margin-top:8px">Points spent is the budget line — it is what the rewards actually cost us each month.</p>
+        </div>
+        <div class="card"><h3>Community members</h3>
+          <div class="kpis" style="margin-bottom:0">
+            <div class="kpi"><div class="n">412</div><div class="l">Free accounts</div></div>
+            <div class="kpi"><div class="n">1,284</div><div class="l">Articles read</div></div>
+            <div class="kpi"><div class="n">31</div><div class="l">Became patients</div></div>
+          </div>
+        </div>
+      </section>
+
       <section class="screen" id="s-kpi">
         <div class="banner">Cross-clinic analytics. The AI Q&amp;A over this database is a later phase (needs clean, consistent data first).</div>
         <div class="card"><h3>Clinical KPIs</h3>
@@ -498,7 +560,7 @@ function openThread(k){
 /* helpers */
 function markDone(btn,msg){const up=btn.closest('.up');up.classList.add('done');btn.textContent='✓ Uploaded';btn.disabled=true;toast(msg);}
 function grade(el){document.querySelectorAll('.grade span').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');toast('Difficulty grade set');}
-const TITLES={dash:'Dashboard',clinics:'Clinics & people',upload:'Case monitoring',sta:'STA orchestration',kpi:'Analytics',sat:'Satisfaction & bonuses',msg:'Message hub'};
+const TITLES={dash:'Dashboard',clinics:'Clinics & people',upload:'Case monitoring',sta:'STA orchestration',library:'Learn library',rewards:'Rewards',kpi:'Analytics',sat:'Satisfaction & bonuses',msg:'Message hub'};
 function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
   document.getElementById('s-'+s).classList.add('on');
   document.querySelectorAll('.nav a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
