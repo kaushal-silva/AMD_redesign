@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AMD Platform · Prototype Portal</title>
+<style>
+  :root{--teal:#0f766e;--teal-d:#0b5c55;--teal-l:#14b8a6;--bg:#f4f7f6;--card:#fff;
+    --ink:#12211f;--muted:#6b7c79;--line:#e6ecea;--shadow:0 4px 20px rgba(15,60,55,.08)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC","Microsoft JhengHei",sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 24px 60px}
+  header{text-align:center;margin-bottom:8px}
+  .logo{width:56px;height:56px;border-radius:16px;background:linear-gradient(150deg,var(--teal),var(--teal-l));
+    color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;margin:0 auto 14px}
+  h1{font-size:26px;letter-spacing:-.5px}
+  .tag{color:var(--muted);margin-top:6px;font-size:14px}
+  .banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:12px;
+    padding:12px 16px;font-size:13px;margin:22px 0 26px;text-align:center}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+  a.card{display:block;background:var(--card);border-radius:18px;padding:20px;box-shadow:var(--shadow);
+    text-decoration:none;color:inherit;border:1px solid var(--line);transition:.15s;position:relative}
+  a.card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(15,60,55,.14)}
+  .card .ic{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    font-size:22px;margin-bottom:12px}
+  .card h3{font-size:16px;margin-bottom:4px}
+  .card p{font-size:12.5px;color:var(--muted);line-height:1.5}
+  .role{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--teal);
+    margin-bottom:10px;display:inline-block}
+  .chip{position:absolute;top:16px;right:16px;font-size:9px;font-weight:700;padding:3px 8px;border-radius:20px}
+  .mvp{background:#d1fae5;color:#065f46}.p2{background:#fef3c7;color:#92400e}
+  .device{font-size:11px;color:var(--muted);margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:36px;line-height:1.6}
+  .i-teal{background:#ccfbf1;color:#0f766e}.i-blue{background:#dbeafe;color:#1e40af}
+  .i-purple{background:#ede9fe;color:#6d28d9}.i-amber{background:#fef3c7;color:#b45309}
+  .i-slate{background:#e2e8f0;color:#334155}.i-rose{background:#ffe4e6;color:#be123c}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">A</div>
+    <h1>AMD Platform — Prototype Portal</h1>
+    <div class="tag">Airway Mouth Doctor · Taiwan · clickable mock for feedback (not production)</div>
+  </header>
+
+  <div class="banner">⚠️ These are <b>front-end mocks with sample data</b> — no login, no real records. One shared patient record sits behind all surfaces. <b>v3:</b> adds the free <b>Community account</b> — same app, self sign-up, learn + points + rewards; plus rewards tracking in ATC and HQ.</div>
+
+  <div class="grid">
+    <a class="card" href="patient-app/index.html">
+      <span class="chip mvp">MVP</span>
+      <div class="ic i-teal">📱</div>
+      <span class="role">Patient</span>
+      <h3>Patient App (native)</h3>
+      <p>Native iOS / Android app: daily task card, STA reminder, journey timeline, before/after progress, health score, learn, chat.</p>
+      <div class="device">📱 App Store &amp; Google Play</div>
+    </a>
+
+    <a class="card" href="patient-app-community/index.html">
+      <span class="chip mvp">MVP</span>
+      <div class="ic i-teal">🌱</div>
+      <span class="role">Community member (free)</span>
+      <h3>Patient App — Community</h3>
+      <p>Same native app, free self-registered account. Learn library + points + rewards. Home, Appts and Journey explain what they do instead of showing clinical data.</p>
+      <div class="device">📱 Same app · no clinic needed</div>
+    </a>
+
+    <a class="card" href="patient-app-community/index.html">
+      <span class="chip mvp">MVP</span>
+      <div class="ic i-teal">🌱</div>
+      <span class="role">Community member (free)</span>
+      <h3>Patient App — Community</h3>
+      <p>Same native app, free self-registered account. Learn library + points + rewards. Home, Appts and Journey explain what they do instead of showing clinical data.</p>
+      <div class="device">📱 Same app · no clinic needed</div>
+    </a>
+
+    <a class="card" href="doctor-site/index.html">
+      <span class="chip mvp">MVP</span>
+      <div class="ic i-blue">🩺</div>
+      <span class="role">AMD (Doctor on Record)</span>
+      <h3>Doctor Site</h3>
+      <p>AMD owns diagnosis &amp; device design (delegable to a senior ATC). Report builder + versioning, follow-up records, referrals, Felix consult gate, prescription → lab.</p>
+      <div class="device">💻 Desktop / iPad</div>
+    </a>
+
+    <a class="card" href="atc-site/index.html">
+      <span class="chip mvp">MVP</span>
+      <div class="ic i-teal">🧑‍💼</div>
+      <span class="role">ATC (senior / junior)</span>
+      <h3>ATC Portal</h3>
+      <p>Create patients, oversee clinic(s), draft device specs for the AMD, book appointments, track progress, flag follow-up tasks.</p>
+      <div class="device">💻 Desktop / iPad</div>
+    </a>
+
+    <a class="card" href="hq-site/index.html">
+      <span class="chip mvp">MVP core</span>
+      <div class="ic i-purple">🏛️</div>
+      <span class="role">AMD Taiwan HQ</span>
+      <h3>HQ Site</h3>
+      <p>Managerial only (compliance): monitor SLAs &amp; delays, escalate, manage clinics &amp; people (AMDs/ATCs), analytics. No clinical authoring.</p>
+      <div class="device">💻 Desktop</div>
+    </a>
+
+    <a class="card" href="md-pt-site/index.html">
+      <span class="chip p2">Phase 2</span>
+      <div class="ic i-amber">🧑‍⚕️</div>
+      <span class="role">MD / PT specialist</span>
+      <h3>MD / PT Site</h3>
+      <p>Referred patients only. Add follow-up records + chat. Least-access: sees referral info, not full history.</p>
+      <div class="device">💻 Desktop</div>
+    </a>
+
+    <a class="card" href="felix-site/index.html">
+      <span class="chip p2">Phase 2</span>
+      <div class="ic i-rose">🌏</div>
+      <span class="role">Dr. Liao (US)</span>
+      <h3>Felix Site</h3>
+      <p>Advisory-only specialist consult (dentist's choice). Receives a watermarked de-identified packet (lateral ceph + analysis + spec) and returns written advice — no authoring.</p>
+      <div class="device">💻 Desktop · advisory only</div>
+    </a>
+
+    <a class="card" href="fmd-site/index.html">
+      <span class="chip p2">Premium</span>
+      <div class="ic i-amber">🧪</div>
+      <span class="role">Functional Medicine</span>
+      <h3>FMD Site</h3>
+      <p>Premium add-on. Reviews blood/sleep → diet &amp; supplement report; referral support. Least-access data view.</p>
+      <div class="device">💻 Desktop · limited-access</div>
+    </a>
+
+    <a class="card" href="lab-site/index.html">
+      <span class="chip p2">Phase 2</span>
+      <div class="ic i-slate">🔧</div>
+      <span class="role">Dental lab</span>
+      <h3>Lab Site</h3>
+      <p>Incoming STA design orders, production + shipping status, tracking that feeds back to the Doctor site.</p>
+      <div class="device">💻 Desktop</div>
+    </a>
+  </div>
+
+  <footer>
+    Each site is a separate folder so it can be edited independently after feedback.<br>
+    Deploy the whole <code>amd-portal</code> folder to Netlify · v1 draft · Jul 2026
+  </footer>
+</div>
+<script>
+/* Self-heal: remove any stale service worker + caches left by an earlier
+   version of the patient app, so this portal is never shadowed by old cache. */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister()));
+}
+if (window.caches && caches.keys) {
+  caches.keys().then(ks => ks.forEach(k => caches.delete(k)));
+}
+</script>
+</body>
+</html>
